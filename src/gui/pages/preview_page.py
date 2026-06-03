@@ -11,7 +11,7 @@ from qfluentwidgets import (
     FluentIcon as FIcon, CardWidget, Slider, StrongBodyLabel,
 )
 
-from ...core.eve_parser import parse_eve_file, EVEChart
+from ...core.eve_parser import load_chart_info, ChartInfo
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
 
@@ -72,7 +72,7 @@ class PreviewPage(ScrollArea):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName("previewPage")
-        self._chart: EVEChart | None = None
+        self._chart: ChartInfo | None = None
         self._frame_idx = 0
         self._frames: list = []
         self._playing = False
@@ -165,13 +165,19 @@ class PreviewPage(ScrollArea):
     def _load_chart(self, path: str):
         from pathlib import Path
         try:
-            self._chart = parse_eve_file(Path(path))
+            self._chart = load_chart_info(Path(path))
             self.eve_path_label.setText(Path(path).name)
             self.eve_path_label.setStyleSheet("color: white;")
-            bpm = self._chart.bpm_changes[0].bpm if self._chart.bpm_changes else 0
-            note_count = len(self._chart.tap_notes) + len(self._chart.long_notes)
-            self.bpm_label.setText(f"BPM: {bpm:.1f}")
-            self.notes_label.setText(f"音符数: {note_count}")
+            bpms = [bpm for _, bpm in self._chart.bpms]
+            if len(bpms) > 1:
+                bpm_min, bpm_max = min(bpms), max(bpms)
+                bpm_str = f"BPM: {bpm_min:.1f}-{bpm_max:.1f}" if bpm_min != bpm_max else f"BPM: {bpm_min:.1f}"
+            elif bpms:
+                bpm_str = f"BPM: {bpms[0]:.1f}"
+            else:
+                bpm_str = "BPM: Unknown"
+            self.bpm_label.setText(bpm_str)
+            self.notes_label.setText(f"音符数: {self._chart.note_count}")
             self._build_frames()
             self._render_frame(0)
         except Exception as e:
@@ -183,30 +189,64 @@ class PreviewPage(ScrollArea):
             self._load_chart(data["path"])
 
     def _build_frames(self):
-        """将谱面按时间排序，构建逐帧数据"""
+        """将谱面按时间排序，构建逐帧数据
+        
+        每个音符在网格上只短暂显示（类似游戏中的判定闪烁），
+        tap 音符出现后下一帧消失，长按音符持续到 end_beat。
+        """
         if not self._chart:
             return
-        # 合并所有音符事件，按 beat 排序
+
+        # 构建 (beat, position, type) 事件列表
         events = []
-        for tap in self._chart.tap_notes:
-            events.append((tap.beat, tap.position, "tap"))
-        for ln in self._chart.long_notes:
-            events.append((ln.beat, ln.position, "long_start"))
-            events.append((ln.end_beat, ln.end_position, "long_end"))
+        for beat, pos in self._chart.tap_notes:
+            events.append((beat, pos, "tap"))
+        for beat, pos, end_beat, end_pos in self._chart.long_notes:
+            events.append((beat, pos, "long_start"))
+            events.append((end_beat, end_pos, "long_end"))
         events.sort(key=lambda e: float(e[0]))
 
-        # 逐帧: 每个事件对应一帧 4×4 网格快照
-        grid = [[0] * 4 for _ in range(4)]
+        if not events:
+            return
+
+        # 按时间窗口构建帧：每个音符只在其 beat 时刻闪烁
+        # tap: 出现一帧后消失; long: 从 start 到 end 持续显示
         self._frames = []
-        for beat, pos, kind in events:
-            row, col = pos // 4, pos % 4
-            if kind == "tap":
-                grid[row][col] = 1
-            elif kind == "long_start":
-                grid[row][col] = 2
-            elif kind == "long_end":
-                grid[row][col] = 0  # 长按结束
-            # 深拷贝当前帧
+        long_active = {}  # position -> True，当前正在长按的位置
+
+        # 收集所有需要渲染的时间点（去重）
+        beat_times = sorted(set(e[0] for e in events))
+
+        for beat_time in beat_times:
+            # 处理此时刻的所有事件
+            for beat, pos, kind in events:
+                if beat != beat_time:
+                    continue
+                row, col = pos // 4, pos % 4
+                if kind == "tap":
+                    pass  # tap 只在当前帧闪烁
+                elif kind == "long_start":
+                    long_active[pos] = True
+                elif kind == "long_end":
+                    long_active.pop(pos, None)
+
+            # 构建当前帧：tap 闪烁 + 长按持续
+            grid = [[0] * 4 for _ in range(4)]
+            # 先画长按
+            for pos in long_active:
+                r, c = pos // 4, pos % 4
+                grid[r][c] = 2  # 长按持续
+            # 再画 tap 闪烁（覆盖长按也没关系，tap 优先显示）
+            for beat, pos, kind in events:
+                if beat != beat_time:
+                    continue
+                if kind == "tap":
+                    r, c = pos // 4, pos % 4
+                    grid[r][c] = 1
+                elif kind == "long_start":
+                    r, c = pos // 4, pos % 4
+                    grid[r][c] = 2  # 长按起始也用2
+
             self._frames.append([r[:] for r in grid])
 
     def _render_frame(self, idx: int):

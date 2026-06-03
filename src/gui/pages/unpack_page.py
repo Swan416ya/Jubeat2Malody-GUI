@@ -133,7 +133,7 @@ class UnpackPage(ScrollArea):
 
         # --- 操作按钮 ---
         btn_row = QHBoxLayout()
-        self.unpack_btn = PushButton(FIcon.UNPACK, "开始解包", container)
+        self.unpack_btn = PushButton(FIcon.ZIP_FOLDER, "开始解包", container)
         self.unpack_btn.setDisabled(True)
         self.stop_btn = PushButton(FIcon.CANCEL, "停止", container)
         self.stop_btn.setDisabled(True)

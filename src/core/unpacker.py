@@ -46,11 +46,30 @@ def load_music_info(music_info_path: Path) -> dict:
             continue
         music_id = int(music_id_elem.text)
 
+        # 优先使用 ascii_name（罗马音/英文），没有时用 name_string（日文原名）
+        ascii_elem = data_elem.find("ascii_name")
         name_elem = data_elem.find("name_string")
-        name = decode_name_string(name_elem.text) if name_elem is not None else f"unknown_{music_id}"
+        ascii_name = decode_name_string(ascii_elem.text) if ascii_elem is not None and ascii_elem.text else ""
+        japanese_name = decode_name_string(name_elem.text) if name_elem is not None else ""
+        # 显示名优先用 ascii，没有则用日文名
+        name = ascii_name or japanese_name or f"unknown_{music_id}"
 
+        bpm_min_elem = data_elem.find("bpm_min")
         bpm_max_elem = data_elem.find("bpm_max")
-        bpm_max = float(bpm_max_elem.text) if bpm_max_elem is not None else 0
+        # music_info.xml 中 BPM 可能是实际值或编码值
+        # 先读取原始值，后续根据范围判断是否需要转换
+        bpm_min_raw = int(bpm_min_elem.text) if bpm_min_elem is not None and bpm_min_elem.text else 0
+        bpm_max_raw = int(bpm_max_elem.text) if bpm_max_elem is not None and bpm_max_elem.text else 0
+
+        # 判断 BPM 编码方式：
+        # 如果值 > 1000，很可能是微秒/拍编码 (value = 60,000,000 / BPM)
+        # 如果值 <= 300，是实际 BPM 值
+        if bpm_max_raw > 1000:
+            bpm_min = round(60_000_000 / bpm_min_raw, 2) if bpm_min_raw > 0 else 0
+            bpm_max = round(60_000_000 / bpm_max_raw, 2) if bpm_max_raw > 0 else 0
+        else:
+            bpm_min = float(bpm_min_raw)
+            bpm_max = float(bpm_max_raw)
 
         levels = {}
         for diff in ["bsc", "adv", "ext"]:
@@ -64,6 +83,9 @@ def load_music_info(music_info_path: Path) -> dict:
 
         info[music_id] = {
             "name": name,
+            "japanese_name": japanese_name,
+            "ascii_name": ascii_name,
+            "bpm_min": bpm_min,
             "bpm_max": bpm_max,
             "levels": levels,
         }
@@ -184,7 +206,19 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path) -> Optiona
     with open(info_path, "w", encoding="utf-8") as f:
         f.write(f"Music ID: {music_id}\n")
         f.write(f"Name: {song_name}\n")
-        f.write(f"BPM: {song_info.get('bpm_max', 'Unknown')}\n")
+        japanese_name = song_info.get("japanese_name", "")
+        if japanese_name and japanese_name != song_name:
+            f.write(f"Japanese Name: {japanese_name}\n")
+        ascii_name_val = song_info.get("ascii_name", "")
+        if ascii_name_val and ascii_name_val != song_name:
+            f.write(f"ASCII Name: {ascii_name_val}\n")
+        # XML 中的 BPM 只是参考值，实际 BPM 变化在谱面 TEMPO 事件中
+        bpm_min = song_info.get("bpm_min", 0)
+        bpm_max = song_info.get("bpm_max", 0)
+        if bpm_min and bpm_min != bpm_max:
+            f.write(f"BPM (ref): {bpm_min}-{bpm_max}\n")
+        else:
+            f.write(f"BPM (ref): {bpm_max}\n")
         for diff, lev in song_info.get("levels", {}).items():
             f.write(f"Level {diff.upper()}: {lev['level']} ({lev['detail']})\n")
         f.write(f"\nFiles:\n")

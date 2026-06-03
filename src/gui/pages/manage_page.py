@@ -96,7 +96,7 @@ class ManagePage(ScrollArea):
             row = [
                 QStandardItem(info.get("name", song_dir.name)),
                 QStandardItem(info.get("music_id", "")),
-                QStandardItem(str(info.get("bpm", ""))),
+                QStandardItem(str(info.get("bpm_max", info.get("bpm", "")))),
                 QStandardItem(levels.get("BSC", "-")),
                 QStandardItem(levels.get("ADV", "-")),
                 QStandardItem(levels.get("EXT", "-")),

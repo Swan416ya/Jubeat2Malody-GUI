@@ -1,121 +1,110 @@
 """
-EVE 谱面解析模块
+EVE 谱面解析模块 — 基于 jubeatools
 
-解析 Jubeat EVE 格式谱面文件，转换为内部数据结构。
-依赖: jubeatools (长按音符解析)
+核心逻辑全部复用 jubeatools:
+- EVE 事件解析: jubeatools.formats.konami.eve.load
+- tick→beat 转换: jubeatools TimeMap (tick→seconds→beats)
+- TEMPO→BPM 转换: jubeatools value_to_bpm (微秒/拍 → BPM)
+- 长按音符解码: jubeatools EveLong (position/direction/duration 编码)
 """
 
 from pathlib import Path
-from fractions import Fraction
 from dataclasses import dataclass, field
-from typing import List, Optional
-from collections import Counter
+from typing import List, Tuple
+
+from jubeatools import song
+from jubeatools.formats.konami.eve.load import iter_events, load_file
+from jubeatools.formats.konami.load_tools import make_chart_from_events
+
+
+# 文件名 → 难度名称映射
+FILENAME_TO_DIFFICULTY = {
+    "bsc": "BSC",
+    "adv": "ADV",
+    "ext": "EXT",
+    "basic": "BSC",
+    "advanced": "ADV",
+    "extreme": "EXT",
+}
 
 
 @dataclass
-class BPMChange:
-    beat: Fraction
-    bpm: float
+class ChartInfo:
+    """谱面预览信息 (GUI 用，与 jubeatools 内部类型解耦)"""
+    bpms: List[Tuple[float, float]] = field(default_factory=list)      # [(beat, bpm), ...]
+    tap_notes: List[Tuple[float, int]] = field(default_factory=list)   # [(beat, position_index), ...]
+    long_notes: List[Tuple[float, int, float, int]] = field(default_factory=list)  # [(beat, pos, end_beat, end_pos), ...]
+
+    @property
+    def note_count(self) -> int:
+        return len(self.tap_notes) + len(self.long_notes)
 
 
-@dataclass
-class TapNote:
-    beat: Fraction
-    position: int  # 0-15
+def _chart_to_info(chart: song.Chart) -> ChartInfo:
+    """将 jubeatools Chart 转换为 GUI 友好的 ChartInfo"""
+    info = ChartInfo()
+
+    # BPM 事件
+    if chart.timing:
+        for ev in chart.timing.events:
+            info.bpms.append((float(ev.time), float(ev.BPM)))
+    elif chart.timing is None:
+        # chart.timing=None 时使用 song.common_timing，由调用方处理
+        pass
+
+    # 音符
+    for note in chart.notes:
+        if isinstance(note, song.TapNote):
+            info.tap_notes.append((float(note.time), note.position.index))
+        elif isinstance(note, song.LongNote):
+            info.long_notes.append((
+                float(note.time),
+                note.position.index,
+                float(note.time + note.duration),
+                note.tail_tip.index,
+            ))
+
+    return info
 
 
-@dataclass
-class LongNote:
-    beat: Fraction
-    position: int  # 0-15
-    end_beat: Fraction
-    end_position: int  # 0-15
+def load_eve_chart(eve_path: Path, beat_snap: int = 240) -> song.Chart:
+    """加载单个 EVE 文件，返回 jubeatools Chart 对象
+
+    Args:
+        eve_path: .eve 文件路径
+        beat_snap: 节拍量化精度 (默认 240，即 1/240 拍)
+    """
+    lines = load_file(eve_path)
+    events = list(iter_events(lines))
+    return make_chart_from_events(events, beat_snap=beat_snap)
 
 
-@dataclass
-class EVEChart:
-    bpm_changes: List[BPMChange] = field(default_factory=list)
-    tap_notes: List[TapNote] = field(default_factory=list)
-    long_notes: List[LongNote] = field(default_factory=list)
-    ticks_per_beat: int = 0
+def load_eve_song(directory: Path, beat_snap: int = 240) -> song.Song:
+    """加载目录中所有 EVE 文件，返回 jubeatools Song 对象
+
+    自动根据文件名 (bsc/adv/ext) 映射难度。
+    """
+    charts = {}
+
+    for eve_file in sorted(directory.glob("*.eve")):
+        diff_name = FILENAME_TO_DIFFICULTY.get(
+            eve_file.stem.lower(), eve_file.stem.upper()
+        )
+        chart = load_eve_chart(eve_file, beat_snap=beat_snap)
+        charts[diff_name] = chart
+
+    return song.Song(metadata=song.Metadata(), charts=charts)
 
 
-@dataclass
-class EVEEvent:
-    tick: int
-    command: str
-    value: int
+def load_chart_info(eve_path: Path, beat_snap: int = 240) -> ChartInfo:
+    """加载单个 EVE 文件并返回 GUI 友好的 ChartInfo
 
+    用于预览页面等不需要完整 Song 对象的场景。
+    """
+    chart = load_eve_chart(eve_path, beat_snap=beat_snap)
+    info = _chart_to_info(chart)
 
-def parse_eve_file(filepath: Path) -> EVEChart:
-    """解析 EVE 谱面文件，返回 EVEChart 数据结构"""
-    chart = EVEChart()
-    events: List[EVEEvent] = []
-
-    with open(filepath, 'r', encoding='utf-8-sig') as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            parts = [p.strip() for p in line.split(',')]
-            if len(parts) != 3:
-                continue
-            try:
-                tick = int(parts[0])
-                command = parts[1].strip()
-                value = int(parts[2])
-                events.append(EVEEvent(tick, command, value))
-            except (ValueError, IndexError):
-                continue
-
-    if not events:
-        return chart
-
-    # 从 HAKU 事件计算 ticks_per_beat
-    haku_ticks = [e.tick for e in events if e.command == 'HAKU']
-    if len(haku_ticks) >= 2:
-        intervals = [haku_ticks[i] - haku_ticks[i - 1]
-                     for i in range(1, len(haku_ticks))
-                     if haku_ticks[i] - haku_ticks[i - 1] > 0]
-        if intervals:
-            chart.ticks_per_beat = Counter(intervals).most_common(1)[0][0]
-
-    if chart.ticks_per_beat == 0:
-        chart.ticks_per_beat = 92  # fallback
-
-    tpb = chart.ticks_per_beat
-
-    # 解析 TEMPO 事件
-    for e in events:
-        if e.command == 'TEMPO':
-            bpm = e.value / 1000.0
-            beat = Fraction(e.tick, tpb)
-            chart.bpm_changes.append(BPMChange(beat=beat, bpm=bpm))
-
-    # 解析 PLAY 事件 (tap notes)
-    for e in events:
-        if e.command == 'PLAY':
-            beat = Fraction(e.tick, tpb)
-            chart.tap_notes.append(TapNote(beat=beat, position=e.value))
-
-    # 使用 jubeatools 解析长按音符
-    try:
-        from jubeatools.formats.konami.eve.load import load_eve as jt_load_eve
-        from jubeatools.song import LongNote as JTLongNote
-
-        jt_song = jt_load_eve(filepath)
-        for _, jt_chart in jt_song.charts.items():
-            for note in jt_chart.notes:
-                if isinstance(note, JTLongNote):
-                    pos = note.position.y * 4 + note.position.x
-                    end_pos = note.tail_tip.y * 4 + note.tail_tip.x
-                    chart.long_notes.append(LongNote(
-                        beat=note.time,
-                        position=pos,
-                        end_beat=note.time + note.duration,
-                        end_position=end_pos
-                    ))
-    except Exception:
-        pass  # 长按音符解析失败不影响基本功能
-
-    return chart
+    # 如果 chart 没有 timing，说明需要从 common_timing 获取
+    # 单文件加载时没有 common_timing，此时 BPM 列表为空
+    # 但 make_chart_from_events 总是会设置 chart.timing
+    return info
