@@ -15,7 +15,7 @@ from qfluentwidgets import (
     InfoBar, InfoBarPosition,
 )
 
-from ...core.unpacker import extract_song, load_music_info, is_ifs_encrypted
+from ...core.unpacker import extract_song, load_music_info, is_ifs_encrypted, load_word_info
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
 
@@ -45,6 +45,14 @@ class UnpackWorker(QThread):
             music_info = load_music_info(music_info_path)
             self.log.emit(f"已加载歌曲元数据: {len(music_info)} 首")
 
+        # 查找 word_info.xml (可能包含更完整的曲名)
+        word_info_path = ifs_path / "word_info.xml"
+        word_info = {}
+        if word_info_path.exists():
+            word_info = load_word_info(word_info_path)
+            if word_info:
+                self.log.emit(f"已加载文本信息: {len(word_info)} 首")
+
         # 查找所有 IFS 文件
         ifs_files = sorted(ifs_path.rglob("*_msc.ifs"))
         if not ifs_files:
@@ -62,7 +70,7 @@ class UnpackWorker(QThread):
                 continue
 
             try:
-                song_dir = extract_song(ifs_file, music_info, output_path)
+                song_dir = extract_song(ifs_file, music_info, output_path, ifs_dir=ifs_path)
                 if song_dir:
                     self.log.emit(f"解包成功: {song_dir.name}")
                     success_count += 1
@@ -167,6 +175,9 @@ class UnpackPage(ScrollArea):
         # 输入变化时启用/禁用按钮
         self.ifs_dir_edit.textChanged.connect(self._update_btn_state)
         self.output_dir_edit.textChanged.connect(self._update_btn_state)
+
+        # 初始化按钮状态（config 预填充的文本在信号连接前已设置，需手动触发一次）
+        self._update_btn_state()
 
     def _browse_ifs_dir(self):
         path = QFileDialog.getExistingDirectory(self, "选择游戏数据目录")

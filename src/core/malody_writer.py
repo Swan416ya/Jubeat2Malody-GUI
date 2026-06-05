@@ -32,8 +32,17 @@ def _generate_mc_bytes(
     metadata: song.Metadata,
     diff_name: str,
     chart: song.Chart,
+    audio_filename: Optional[str] = None,
 ) -> bytes:
-    """使用 jubeatools 生成 .mc 文件内容 (bytes)"""
+    """使用 jubeatools 生成 .mc 文件内容 (bytes)
+
+    在 jubeatools 输出基础上补全 Malody 必需字段:
+    - meta.mode_ext: 模式扩展参数 (Malody V 要求)
+    - extra: 编辑器附加信息 (Malody V 要求)
+
+    Args:
+        audio_filename: 实际音频文件名，用于修正 Sound 事件中的路径
+    """
     # chart.timing 为 None 时使用空 timing
     timing = chart.timing or song.Timing(
         events=[song.BPMEvent(time=0, BPM=Decimal("120"))],
@@ -42,14 +51,40 @@ def _generate_mc_bytes(
 
     malody_chart = dump_malody_chart(metadata, diff_name, chart, timing)
     json_chart = malody.CHART_SCHEMA.dump(malody_chart)
+
+    # 补全 Malody V 必需字段
+    # 1. meta.mode_ext — 真实 PAD 谱面测试数据中包含此字段
+    if "mode_ext" not in json_chart.get("meta", {}):
+        json_chart["meta"]["mode_ext"] = {}
+
+    # 2. extra — Malody 编辑器附加信息，真实谱面均包含此字段
+    if "extra" not in json_chart:
+        json_chart["extra"] = {
+            diff_name: {
+                "divide": 4,
+                "speed": 100,
+                "save": 0,
+                "lock": 0,
+                "edit_mode": 0,
+            }
+        }
+
+    # 3. 修正 Sound 事件中的音频文件名
+    #    如果音频转换后文件名变了（如 wav→ogg 失败回退），需要同步更新
+    if audio_filename:
+        for note in json_chart.get("note", []):
+            if note.get("type") == 1 and "sound" in note:
+                note["sound"] = audio_filename
+
     return simplejson.dumps(json_chart, indent=4, use_decimal=True).encode("utf-8")
 
 
 def parse_song_info(info_path: Path) -> dict:
     """解析 song_info.txt，返回歌曲元数据字典"""
     info = {
-        "music_id": "", "name": "", "japanese_name": "", "ascii_name": "",
-        "bpm_min": 120.0, "bpm_max": 120.0, "levels": {}, "files": [],
+        "music_id": "", "name": "", "title_name": "", "japanese_name": "",
+        "ascii_name": "", "bpm_min": 120.0, "bpm_max": 120.0,
+        "levels": {}, "files": [], "jacket": "",
     }
     with open(info_path, "r", encoding="utf-8") as f:
         section = None
@@ -59,10 +94,14 @@ def parse_song_info(info_path: Path) -> dict:
                 info["music_id"] = line.split(":", 1)[1].strip()
             elif line.startswith("Name:"):
                 info["name"] = line.split(":", 1)[1].strip()
+            elif line.startswith("Title Name:"):
+                info["title_name"] = line.split(":", 1)[1].strip()
             elif line.startswith("Japanese Name:"):
                 info["japanese_name"] = line.split(":", 1)[1].strip()
             elif line.startswith("ASCII Name:"):
                 info["ascii_name"] = line.split(":", 1)[1].strip()
+            elif line.startswith("Jacket:"):
+                info["jacket"] = line.split(":", 1)[1].strip()
             elif line.startswith("BPM (ref):") or line.startswith("BPM:"):
                 bpm_str = line.split(":", 1)[1].strip()
                 if "-" in bpm_str:
@@ -101,12 +140,21 @@ def convert_wav_to_ogg(wav_path: Path, ogg_path: Path) -> bool:
         return False
 
 
-def _find_image(song_dir: Path) -> Tuple[str, Optional[Path]]:
+def _find_image(song_dir: Path, info: dict = None) -> Tuple[str, Optional[Path]]:
     """在歌曲目录中查找封面/背景图片"""
+    import fnmatch
+
+    # 如果 song_info.txt 中指定了 Jacket 文件名，优先使用
+    if info and info.get("jacket"):
+        jkt_name = info["jacket"]
+        jkt_path = song_dir / jkt_name
+        if jkt_path.exists():
+            return jkt_name, jkt_path
+
+    # 按优先级搜索图片
     for pattern in ["jkt*", "jacket*", "cover*", "art*"]:
         for f in song_dir.iterdir():
             if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg"):
-                import fnmatch
                 if fnmatch.fnmatch(f.name.lower(), pattern.lower()):
                     return f.name, f
     for f in song_dir.iterdir():
@@ -143,7 +191,8 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
         return None
 
     info = parse_song_info(info_path)
-    song_name = info["name"] or info["music_id"] or song_dir.name
+    # 曲名优先级: title_name > name > music_id > 目录名
+    song_name = info.get("title_name") or info.get("name") or info["music_id"] or song_dir.name
     safe_name = "".join(
         c if c.isalnum() or c in " _-()（）" else "_" for c in song_name
     ) or song_dir.name
@@ -157,7 +206,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
         return None
 
     # 查找封面图
-    img_filename, img_path = _find_image(song_dir)
+    img_filename, img_path = _find_image(song_dir, info)
 
     # 使用 jubeatools 加载所有 EVE 文件
     try:
@@ -168,30 +217,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not jt_song.charts:
         return None
 
-    # 设置元数据
-    audio_for_metadata = Path(audio_filename) if audio_filename else None
-    cover_for_metadata = Path(img_filename) if img_filename else None
-    jt_song.metadata = _build_metadata(
-        song_name, "Konami", audio_for_metadata, cover_for_metadata
-    )
-
-    # 生成各难度的 .mc 文件
-    mc_files = []
-    for diff_name, chart in jt_song.charts.items():
-        try:
-            mc_bytes = _generate_mc_bytes(jt_song.metadata, diff_name, chart)
-            mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
-            mc_path = song_output_dir / mc_filename
-            song_output_dir.mkdir(parents=True, exist_ok=True)
-            mc_path.write_bytes(mc_bytes)
-            mc_files.append((mc_filename, mc_path))
-        except Exception:
-            continue
-
-    if not mc_files:
-        return None
-
-    # 音频处理
+    # 音频处理（先生成音频，再生成 .mc，确保文件名一致）
     try:
         dest_audio = song_output_dir / audio_filename
         if bgm_ogg.exists():
@@ -202,6 +228,31 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
                 audio_filename = "bgm.wav"
     except Exception:
         pass
+
+    # 设置元数据
+    audio_for_metadata = Path(audio_filename) if audio_filename else None
+    cover_for_metadata = Path(img_filename) if img_filename else None
+    jt_song.metadata = _build_metadata(
+        song_name, "Konami", audio_for_metadata, cover_for_metadata
+    )
+
+    # 生成各难度的 .mc 文件（传入实际音频文件名）
+    mc_files = []
+    for diff_name, chart in jt_song.charts.items():
+        try:
+            mc_bytes = _generate_mc_bytes(
+                jt_song.metadata, diff_name, chart, audio_filename=audio_filename
+            )
+            mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
+            mc_path = song_output_dir / mc_filename
+            song_output_dir.mkdir(parents=True, exist_ok=True)
+            mc_path.write_bytes(mc_bytes)
+            mc_files.append((mc_filename, mc_path))
+        except Exception:
+            continue
+
+    if not mc_files:
+        return None
 
     # 打包 .mcz (文件放在 0/ 目录下，Malody 导入要求此结构)
     mcz_path = output_dir / f"{safe_name}.mcz"
@@ -248,10 +299,10 @@ def convert_single_song(
     if info_path.exists():
         info = parse_song_info(info_path)
 
-    song_name = info.get("name", "") or song_dir.name
+    song_name = info.get("title_name") or info.get("name", "") or song_dir.name
 
     # 查找封面图
-    img_filename, img_path = _find_image(song_dir)
+    img_filename, img_path = _find_image(song_dir, info)
 
     # 查找音频文件
     audio_src = None
@@ -281,38 +332,7 @@ def convert_single_song(
     if audio_src is None:
         return None
 
-    # 使用 jubeatools 加载所有 EVE 文件
-    try:
-        jt_song = load_eve_song(song_dir)
-    except Exception:
-        return None
-
-    if not jt_song.charts:
-        return None
-
-    # 设置元数据
-    audio_for_metadata = Path(audio_filename) if audio_filename else None
-    cover_for_metadata = Path(img_filename) if img_filename else None
-    jt_song.metadata = _build_metadata(
-        song_name, "Konami", audio_for_metadata, cover_for_metadata
-    )
-
-    # 生成各难度的 .mc 文件
-    mc_files = []
-    for diff_name, chart in jt_song.charts.items():
-        try:
-            mc_bytes = _generate_mc_bytes(jt_song.metadata, diff_name, chart)
-            mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
-            mc_path = song_dir / mc_filename  # 临时写到源目录
-            mc_path.write_bytes(mc_bytes)
-            mc_files.append((mc_filename, mc_path))
-        except Exception:
-            continue
-
-    if not mc_files:
-        return None
-
-    # 音频处理
+    # 音频处理（先生成音频，再生成 .mc，确保文件名一致）
     output_dir.mkdir(parents=True, exist_ok=True)
     temp_dir = output_dir / safe_name
     temp_dir.mkdir(parents=True, exist_ok=True)
@@ -338,6 +358,39 @@ def convert_single_song(
         else:
             shutil.copy2(audio_src, dest_audio)
     except Exception:
+        return None
+
+    # 使用 jubeatools 加载所有 EVE 文件
+    try:
+        jt_song = load_eve_song(song_dir)
+    except Exception:
+        return None
+
+    if not jt_song.charts:
+        return None
+
+    # 设置元数据
+    audio_for_metadata = Path(final_audio_filename) if final_audio_filename else None
+    cover_for_metadata = Path(img_filename) if img_filename else None
+    jt_song.metadata = _build_metadata(
+        song_name, "Konami", audio_for_metadata, cover_for_metadata
+    )
+
+    # 生成各难度的 .mc 文件（传入实际音频文件名）
+    mc_files = []
+    for diff_name, chart in jt_song.charts.items():
+        try:
+            mc_bytes = _generate_mc_bytes(
+                jt_song.metadata, diff_name, chart, audio_filename=final_audio_filename
+            )
+            mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
+            mc_path = song_dir / mc_filename  # 临时写到源目录
+            mc_path.write_bytes(mc_bytes)
+            mc_files.append((mc_filename, mc_path))
+        except Exception:
+            continue
+
+    if not mc_files:
         return None
 
     # 打包 .mcz
