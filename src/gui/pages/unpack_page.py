@@ -15,7 +15,11 @@ from qfluentwidgets import (
     InfoBar, InfoBarPosition,
 )
 
-from ...core.unpacker import extract_song, load_music_info, is_ifs_encrypted, load_word_info
+from ...core.unpacker import (
+    extract_song, load_music_info, is_ifs_encrypted, load_word_info,
+    load_word_dictionary, find_metadata_xml,
+)
+from ...core.song_database import update_db_from_music_info
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
 
@@ -38,20 +42,34 @@ class UnpackWorker(QThread):
         ifs_path = Path(self.ifs_dir)
         output_path = Path(self.output_dir)
 
-        # 查找 music_info.xml
-        music_info_path = ifs_path / "music_info.xml"
-        music_info = {}
-        if music_info_path.exists():
-            music_info = load_music_info(music_info_path)
-            self.log.emit(f"已加载歌曲元数据: {len(music_info)} 首")
+        # 查找 music_info.xml (支持 music_info/music_info.xml 等常见路径)
+        word_info_path = find_metadata_xml(ifs_path, "word_info.xml")
+        word_dict = load_word_dictionary(word_info_path) if word_info_path else {}
 
-        # 查找 word_info.xml (可能包含更完整的曲名)
-        word_info_path = ifs_path / "word_info.xml"
+        music_info_path = find_metadata_xml(ifs_path, "music_info.xml")
+        music_info = {}
+        if music_info_path:
+            music_info = load_music_info(music_info_path, word_dict=word_dict)
+            added = update_db_from_music_info(music_info)
+            self.log.emit(
+                f"已加载歌曲元数据: {len(music_info)} 首 ({music_info_path})"
+            )
+            if added:
+                self.log.emit(f"已更新本地曲名库: +{added} 首")
+        else:
+            self.log.emit(
+                "警告: 未找到 music_info.xml，曲名将显示为 unknown_*。"
+                "请选择包含 music_info/ 目录的游戏数据根目录 (如 contents/data)。"
+            )
+
+        # 查找 word_info.xml (可能包含更完整的曲名/艺术家)
         word_info = {}
-        if word_info_path.exists():
+        if word_info_path:
             word_info = load_word_info(word_info_path)
             if word_info:
-                self.log.emit(f"已加载文本信息: {len(word_info)} 首")
+                self.log.emit(f"已加载文本信息: {len(word_info)} 首 ({word_info_path})")
+        else:
+            self.log.emit("提示: 未找到 word_info.xml，将仅使用 music_info 中的曲名")
 
         # 查找所有 IFS 文件
         ifs_files = sorted(ifs_path.rglob("*_msc.ifs"))
@@ -70,7 +88,10 @@ class UnpackWorker(QThread):
                 continue
 
             try:
-                song_dir = extract_song(ifs_file, music_info, output_path, ifs_dir=ifs_path)
+                song_dir = extract_song(
+                    ifs_file, music_info, output_path,
+                    ifs_dir=ifs_path, word_info=word_info,
+                )
                 if song_dir:
                     self.log.emit(f"解包成功: {song_dir.name}")
                     success_count += 1

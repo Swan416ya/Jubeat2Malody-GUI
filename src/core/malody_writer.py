@@ -25,14 +25,146 @@ from jubeatools.formats.malody.dump import dump_malody_chart
 from jubeatools.formats.malody import schema as malody
 import simplejson
 
-from .eve_parser import load_eve_chart, load_eve_song, FILENAME_TO_DIFFICULTY
+from .eve_parser import load_eve_song
+from .unpacker import resolve_display_title, resolve_artist
+
+# Malody Jubeat 谱面使用 1/4 拍精度 (与 extra.divide=4 一致)
+MALODY_BEAT_DIVIDE = 4
+MALODY_BEAT_SNAP = 4
+
+
+def _beat_to_float(beat) -> float:
+    return beat[0] + beat[1] / beat[2]
+
+
+def _float_to_beat(value: float, divide: int = MALODY_BEAT_DIVIDE) -> List[int]:
+    """将拍数转换为 Malody 分数拍格式 [小节, 分子, 分母]"""
+    if value < 0:
+        value = 0.0
+    measure = int(value)
+    frac = value - measure
+    num = round(frac * divide)
+    if num >= divide:
+        measure += 1
+        num = 0
+    return [measure, num, divide]
+
+
+def _normalize_malody_chart(json_chart: dict) -> None:
+    """将 beat 统一量化到 1/4 拍，并精简 BPM 段（Malody 无法处理 1/240 精度）"""
+    divide = MALODY_BEAT_DIVIDE
+
+    normalized_time: List[dict] = []
+    last_bpm = None
+    for entry in sorted(json_chart.get("time", []), key=lambda e: _beat_to_float(e["beat"])):
+        beat = _float_to_beat(_beat_to_float(entry["beat"]), divide)
+        bpm = float(entry["bpm"])
+        if last_bpm is not None and abs(bpm - last_bpm) < 1.0:
+            continue
+        if normalized_time and beat == normalized_time[-1]["beat"]:
+            normalized_time[-1]["bpm"] = bpm
+        else:
+            normalized_time.append({"beat": beat, "bpm": bpm})
+        last_bpm = bpm
+
+    if not normalized_time:
+        normalized_time = [{"beat": [0, 0, divide], "bpm": 120.0}]
+    json_chart["time"] = normalized_time[:16]
+
+    normalized_notes: List[dict] = []
+    for note in json_chart.get("note", []):
+        n = dict(note)
+        if "beat" in n:
+            n["beat"] = _float_to_beat(_beat_to_float(n["beat"]), divide)
+        if "endbeat" in n:
+            n["endbeat"] = _float_to_beat(_beat_to_float(n["endbeat"]), divide)
+            if _beat_to_float(n["endbeat"]) <= _beat_to_float(n["beat"]):
+                continue
+        normalized_notes.append(n)
+
+    normalized_notes.sort(
+        key=lambda n: (
+            _beat_to_float(n.get("beat", [0, 0, 1])),
+            0 if "sound" in n else 1,
+            n.get("index", -1),
+        )
+    )
+    json_chart["note"] = normalized_notes
+
+
+def _simplify_timing_for_malody(
+    timing: song.Timing, threshold: float = 1.0, max_events: int = 16
+) -> song.Timing:
+    """精简 BPM 变化列表，避免 Malody 因过多变速段卡死
+
+    Jubeat 谱面常有数百个渐变 TEMPO 事件，Malody 只需关键 BPM 节点。
+    """
+    if not timing.events:
+        return timing
+
+    events = sorted(timing.events, key=lambda e: e.time)
+    if len(events) <= max_events:
+        return timing
+
+    simplified: List[song.BPMEvent] = [events[0]]
+    for ev in events[1:]:
+        prev = simplified[-1]
+        if ev.time == prev.time:
+            simplified[-1] = ev
+            continue
+        if abs(float(ev.BPM) - float(prev.BPM)) < threshold:
+            continue
+        simplified.append(ev)
+
+    if len(simplified) > max_events and threshold < 8:
+        return _simplify_timing_for_malody(
+            timing, threshold=threshold * 2, max_events=max_events
+        )
+
+    return song.Timing(
+        events=simplified,
+        beat_zero_offset=timing.beat_zero_offset,
+    )
+
+
+def _resolve_timing(
+    timing: Optional[song.Timing], info: Optional[dict] = None
+) -> song.Timing:
+    """解析/补全 timing，确保 beat 0 有 BPM 事件
+
+    优先使用 EVE 解析结果；无 TEMPO 时回退到 song_info 参考 BPM。
+    """
+    ref_bpm = Decimal(str(
+        (info or {}).get("bpm_max")
+        or (info or {}).get("bpm_min")
+        or 120
+    ))
+
+    if timing is None or not timing.events:
+        return song.Timing(
+            events=[song.BPMEvent(time=0, BPM=ref_bpm)],
+            beat_zero_offset=Decimal("0"),
+        )
+
+    events = sorted(timing.events, key=lambda e: e.time)
+    if events[0].time != 0:
+        events = [song.BPMEvent(time=0, BPM=events[0].BPM), *events]
+
+    resolved = song.Timing(
+        events=events,
+        beat_zero_offset=timing.beat_zero_offset,
+    )
+    return _simplify_timing_for_malody(resolved)
 
 
 def _generate_mc_bytes(
     metadata: song.Metadata,
     diff_name: str,
     chart: song.Chart,
+    timing: song.Timing,
     audio_filename: Optional[str] = None,
+    level: Optional[str] = None,
+    cover_filename: Optional[str] = None,
 ) -> bytes:
     """使用 jubeatools 生成 .mc 文件内容 (bytes)
 
@@ -41,23 +173,29 @@ def _generate_mc_bytes(
     - extra: 编辑器附加信息 (Malody V 要求)
 
     Args:
+        timing: 由 iter_charts_with_applicable_timing 或 _resolve_timing 提供
         audio_filename: 实际音频文件名，用于修正 Sound 事件中的路径
+        level: 难度等级 (来自 music_info.xml)
+        cover_filename: 曲绘文件名，写入 meta.background
     """
-    # chart.timing 为 None 时使用空 timing
-    timing = chart.timing or song.Timing(
-        events=[song.BPMEvent(time=0, BPM=Decimal("120"))],
-        beat_zero_offset=Decimal("0"),
-    )
-
     malody_chart = dump_malody_chart(metadata, diff_name, chart, timing)
     json_chart = malody.CHART_SCHEMA.dump(malody_chart)
 
-    # 补全 Malody V 必需字段
-    # 1. meta.mode_ext — 真实 PAD 谱面测试数据中包含此字段
-    if "mode_ext" not in json_chart.get("meta", {}):
-        json_chart["meta"]["mode_ext"] = {}
+    meta = json_chart.setdefault("meta", {})
 
-    # 2. extra — Malody 编辑器附加信息，真实谱面均包含此字段
+    # 1. meta.mode_ext — 真实 PAD 谱面测试数据中包含此字段
+    if "mode_ext" not in meta:
+        meta["mode_ext"] = {}
+
+    # 2. 封面 — Malody 通过 meta.background 关联曲绘文件
+    if cover_filename:
+        meta["background"] = cover_filename
+
+    # 3. 难度等级
+    if level:
+        meta["level"] = level
+
+    # 4. extra — Malody 编辑器附加信息，真实谱面均包含此字段
     if "extra" not in json_chart:
         json_chart["extra"] = {
             diff_name: {
@@ -69,21 +207,48 @@ def _generate_mc_bytes(
             }
         }
 
-    # 3. 修正 Sound 事件中的音频文件名
-    #    如果音频转换后文件名变了（如 wav→ogg 失败回退），需要同步更新
+    # 5. 将节拍统一量化到 1/4 拍，避免 Malody 解析 1/240 精度时卡死
+    _normalize_malody_chart(json_chart)
+
+    # 6. 修正 Sound 事件中的音频文件名
     if audio_filename:
         for note in json_chart.get("note", []):
-            if note.get("type") == 1 and "sound" in note:
+            if "sound" in note:
                 note["sound"] = audio_filename
 
     return simplejson.dumps(json_chart, indent=4, use_decimal=True).encode("utf-8")
+
+
+def _metadata_from_info(
+    info: dict,
+    audio_path: Optional[Path] = None,
+    cover_path: Optional[Path] = None,
+) -> song.Metadata:
+    """从 song_info 构建 jubeatools Metadata"""
+    song_name = resolve_display_title(info) or info.get("name", "")
+    artist = resolve_artist(info)
+    return _build_metadata(song_name, artist, audio_path, cover_path)
+
+
+def _level_for_diff(info: dict, diff_name: str) -> Optional[str]:
+    """从 song_info 获取对应难度的等级"""
+    levels = info.get("levels", {})
+    diff_key = diff_name.lower()
+    if diff_key in levels:
+        lev = levels[diff_key]
+        if isinstance(lev, dict):
+            detail = lev.get("detail")
+            return str(detail) if detail is not None else str(lev.get("level", ""))
+        return str(lev)
+    return None
 
 
 def parse_song_info(info_path: Path) -> dict:
     """解析 song_info.txt，返回歌曲元数据字典"""
     info = {
         "music_id": "", "name": "", "title_name": "", "japanese_name": "",
-        "ascii_name": "", "bpm_min": 120.0, "bpm_max": 120.0,
+        "ascii_name": "", "artist": "", "artist_name": "", "copyright_name": "",
+        "bpm_min": 120.0, "bpm_max": 120.0,
         "levels": {}, "files": [], "jacket": "",
     }
     with open(info_path, "r", encoding="utf-8") as f:
@@ -100,6 +265,9 @@ def parse_song_info(info_path: Path) -> dict:
                 info["japanese_name"] = line.split(":", 1)[1].strip()
             elif line.startswith("ASCII Name:"):
                 info["ascii_name"] = line.split(":", 1)[1].strip()
+            elif line.startswith("Artist:"):
+                info["artist"] = line.split(":", 1)[1].strip()
+                info["artist_name"] = info["artist"]
             elif line.startswith("Jacket:"):
                 info["jacket"] = line.split(":", 1)[1].strip()
             elif line.startswith("BPM (ref):") or line.startswith("BPM:"):
@@ -151,13 +319,13 @@ def _find_image(song_dir: Path, info: dict = None) -> Tuple[str, Optional[Path]]
         if jkt_path.exists():
             return jkt_name, jkt_path
 
-    # 按优先级搜索图片
+    # 按优先级搜索图片（含子目录）
     for pattern in ["jkt*", "jacket*", "cover*", "art*"]:
-        for f in song_dir.iterdir():
+        for f in song_dir.rglob("*"):
             if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg"):
                 if fnmatch.fnmatch(f.name.lower(), pattern.lower()):
                     return f.name, f
-    for f in song_dir.iterdir():
+    for f in song_dir.rglob("*"):
         if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg"):
             return f.name, f
     return "", None
@@ -191,8 +359,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
         return None
 
     info = parse_song_info(info_path)
-    # 曲名优先级: title_name > name > music_id > 目录名
-    song_name = info.get("title_name") or info.get("name") or info["music_id"] or song_dir.name
+    song_name = resolve_display_title(info) or info.get("name") or info.get("music_id") or song_dir.name
     safe_name = "".join(
         c if c.isalnum() or c in " _-()（）" else "_" for c in song_name
     ) or song_dir.name
@@ -205,12 +372,14 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not bgm_wav.exists() and not bgm_ogg.exists():
         return None
 
-    # 查找封面图
+    # 查找封面图（仅当文件真实存在时才打包）
     img_filename, img_path = _find_image(song_dir, info)
+    if not img_path or not img_path.exists():
+        img_filename, img_path = "", None
 
     # 使用 jubeatools 加载所有 EVE 文件
     try:
-        jt_song = load_eve_song(song_dir)
+        jt_song = load_eve_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
     except Exception:
         return None
 
@@ -232,16 +401,20 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     # 设置元数据
     audio_for_metadata = Path(audio_filename) if audio_filename else None
     cover_for_metadata = Path(img_filename) if img_filename else None
-    jt_song.metadata = _build_metadata(
-        song_name, "Konami", audio_for_metadata, cover_for_metadata
+    jt_song.metadata = _metadata_from_info(
+        info, audio_for_metadata, cover_for_metadata
     )
 
     # 生成各难度的 .mc 文件（传入实际音频文件名）
     mc_files = []
-    for diff_name, chart in jt_song.charts.items():
+    for diff_name, chart, timing in jt_song.iter_charts_with_applicable_timing():
         try:
+            resolved_timing = _resolve_timing(timing, info)
+            level = _level_for_diff(info, diff_name)
             mc_bytes = _generate_mc_bytes(
-                jt_song.metadata, diff_name, chart, audio_filename=audio_filename
+                jt_song.metadata, diff_name, chart, resolved_timing,
+                audio_filename=audio_filename, level=level,
+                cover_filename=img_filename or None,
             )
             mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
             mc_path = song_output_dir / mc_filename
@@ -263,7 +436,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
             audio_path = song_output_dir / audio_filename
             if audio_path.exists():
                 zf.write(audio_path, f"0/{audio_filename}")
-            if img_path and img_path.exists():
+            if img_filename and img_path and img_path.exists():
                 zf.write(img_path, f"0/{img_filename}")
     except Exception:
         return None
@@ -299,10 +472,12 @@ def convert_single_song(
     if info_path.exists():
         info = parse_song_info(info_path)
 
-    song_name = info.get("title_name") or info.get("name", "") or song_dir.name
+    song_name = resolve_display_title(info) or info.get("name", "") or song_dir.name
 
-    # 查找封面图
+    # 查找封面图（仅当文件真实存在时才打包）
     img_filename, img_path = _find_image(song_dir, info)
+    if not img_path or not img_path.exists():
+        img_filename, img_path = "", None
 
     # 查找音频文件
     audio_src = None
@@ -362,7 +537,7 @@ def convert_single_song(
 
     # 使用 jubeatools 加载所有 EVE 文件
     try:
-        jt_song = load_eve_song(song_dir)
+        jt_song = load_eve_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
     except Exception:
         return None
 
@@ -372,16 +547,20 @@ def convert_single_song(
     # 设置元数据
     audio_for_metadata = Path(final_audio_filename) if final_audio_filename else None
     cover_for_metadata = Path(img_filename) if img_filename else None
-    jt_song.metadata = _build_metadata(
-        song_name, "Konami", audio_for_metadata, cover_for_metadata
+    jt_song.metadata = _metadata_from_info(
+        info, audio_for_metadata, cover_for_metadata
     )
 
     # 生成各难度的 .mc 文件（传入实际音频文件名）
     mc_files = []
-    for diff_name, chart in jt_song.charts.items():
+    for diff_name, chart, timing in jt_song.iter_charts_with_applicable_timing():
         try:
+            resolved_timing = _resolve_timing(timing, info)
+            level = _level_for_diff(info, diff_name)
             mc_bytes = _generate_mc_bytes(
-                jt_song.metadata, diff_name, chart, audio_filename=final_audio_filename
+                jt_song.metadata, diff_name, chart, resolved_timing,
+                audio_filename=final_audio_filename, level=level,
+                cover_filename=img_filename or None,
             )
             mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
             mc_path = song_dir / mc_filename  # 临时写到源目录
@@ -401,7 +580,7 @@ def convert_single_song(
             audio_path = temp_dir / final_audio_filename
             if audio_path.exists():
                 zf.write(audio_path, f"0/{final_audio_filename}")
-            if img_path and img_path.exists():
+            if img_filename and img_path and img_path.exists():
                 zf.write(img_path, f"0/{img_filename}")
     except Exception:
         return None

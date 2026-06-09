@@ -13,7 +13,7 @@ from dataclasses import dataclass, field
 from typing import List, Tuple
 
 from jubeatools import song
-from jubeatools.formats.konami.eve.load import iter_events, load_file
+from jubeatools.formats.konami.eve.load import iter_events, load_eve, load_file
 from jubeatools.formats.konami.load_tools import make_chart_from_events
 
 
@@ -82,18 +82,9 @@ def load_eve_chart(eve_path: Path, beat_snap: int = 240) -> song.Chart:
 def load_eve_song(directory: Path, beat_snap: int = 240) -> song.Song:
     """加载目录中所有 EVE 文件，返回 jubeatools Song 对象
 
-    自动根据文件名 (bsc/adv/ext) 映射难度。
+    复用 jubeatools.load_eve，自动合并各难度共用的 timing (common_timing)。
     """
-    charts = {}
-
-    for eve_file in sorted(directory.glob("*.eve")):
-        diff_name = FILENAME_TO_DIFFICULTY.get(
-            eve_file.stem.lower(), eve_file.stem.upper()
-        )
-        chart = load_eve_chart(eve_file, beat_snap=beat_snap)
-        charts[diff_name] = chart
-
-    return song.Song(metadata=song.Metadata(), charts=charts)
+    return load_eve(directory, beat_snap=beat_snap)
 
 
 def load_chart_info(eve_path: Path, beat_snap: int = 240) -> ChartInfo:

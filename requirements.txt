@@ -1,3 +1,4 @@
+PySide6>=6.5
 PySide6-Fluent-Widgets>=1.7
 jubeatools>=3.0
 ifstools>=2.0
