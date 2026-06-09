@@ -5,7 +5,7 @@
 
 from pathlib import Path
 
-from PySide6.QtCore import Qt, QTimer, QRectF
+from PySide6.QtCore import Qt, QTimer, QRectF, QThread, Signal
 from PySide6.QtGui import QPainter, QColor, QPen, QBrush, QFont
 from PySide6.QtWidgets import QVBoxLayout, QHBoxLayout, QWidget, QFileDialog
 from qfluentwidgets import (
@@ -20,6 +20,23 @@ from ...core.song_resources import (
 from ..common.audio_player import ChartAudioPlayer
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
+
+
+class AudioPrepareWorker(QThread):
+    """后台准备可播放音频（bgm.bin ADPCM 解码可能较慢）。"""
+
+    finished = Signal(object)
+
+    def __init__(self, song_dir: Path, parent=None):
+        super().__init__(parent)
+        self.song_dir = song_dir
+
+    def run(self):
+        try:
+            path = ensure_playable_audio(self.song_dir)
+        except Exception:
+            path = None
+        self.finished.emit(path)
 
 
 class ChartGridWidget(QWidget):
@@ -84,10 +101,14 @@ class PreviewPage(ScrollArea):
         self._end_time = 0.0
         self._playing = False
         self._virtual_time = 0.0
+        self._audio_worker: AudioPrepareWorker | None = None
+        self._pending_play = False
         self._timer = QTimer(self)
         self._timer.setInterval(16)
         self._timer.timeout.connect(self._tick)
         self._audio = ChartAudioPlayer(self)
+        self._audio.media_ready.connect(self._on_audio_ready)
+        self._audio.media_error.connect(self._on_audio_error)
         self._setup_ui()
         self._connect_signals()
 
@@ -118,12 +139,14 @@ class PreviewPage(ScrollArea):
         self.bpm_label = BodyLabel("BPM: --")
         self.notes_label = BodyLabel("音符数: --")
         self.audio_label = BodyLabel("音频: --")
+        self.time_label = BodyLabel("0:00 / 0:00")
         self.diff_combo = ComboBox(info_card)
         self.diff_combo.addItems(list(DIFFICULTIES))
         self.diff_combo.setCurrentText("EXT")
         il.addWidget(self.bpm_label)
         il.addWidget(self.notes_label)
         il.addWidget(self.audio_label)
+        il.addWidget(self.time_label)
         il.addStretch(1)
         il.addWidget(BodyLabel("难度:"))
         il.addWidget(self.diff_combo)
@@ -210,13 +233,60 @@ class PreviewPage(ScrollArea):
             self.eve_path_label.setStyleSheet("color: red;")
             return
 
-        audio_path = ensure_playable_audio(song_dir)
-        if audio_path:
-            self._audio.load(audio_path)
-            self.audio_label.setText(f"音频: {audio_path.name}")
-        else:
-            self.audio_label.setText("音频: 未找到")
+        self._prepare_audio(song_dir)
         self._load_chart(str(eve_path))
+
+    def _prepare_audio(self, song_dir: Path) -> None:
+        if self._audio_worker and self._audio_worker.isRunning():
+            self._audio_worker.finished.disconnect()
+            self._audio_worker.wait(200)
+
+        self._audio.stop()
+        self.audio_label.setText("音频: 准备中...")
+        self.time_label.setText("0:00 / 0:00")
+        self.play_btn.setDisabled(True)
+
+        self._audio_worker = AudioPrepareWorker(song_dir, self)
+        self._audio_worker.finished.connect(self._on_audio_prepared)
+        self._audio_worker.start()
+
+    def _on_audio_prepared(self, audio_path):
+        if self.sender() is not self._audio_worker:
+            return
+        if not audio_path:
+            self.audio_label.setText("音频: 未找到")
+            self.play_btn.setEnabled(bool(self._time_frames))
+            return
+        path = Path(audio_path)
+        self._audio.load(path)
+        self.audio_label.setText(f"音频: {path.name}（加载中）")
+        if self._pending_play and self._audio.is_ready():
+            self._start_playback()
+
+    def _on_audio_ready(self) -> None:
+        duration = self._audio.duration_ms()
+        loaded = self._audio.loaded_path
+        self.audio_label.setText(f"音频: {loaded.name if loaded else '已就绪'}")
+        self._update_time_label(self._audio.position_ms(), duration)
+        self.play_btn.setEnabled(bool(self._time_frames))
+        if self._pending_play:
+            self._start_playback()
+
+    def _on_audio_error(self, message: str) -> None:
+        self.audio_label.setText(f"音频: {message}")
+        self.play_btn.setEnabled(bool(self._time_frames))
+
+    @staticmethod
+    def _format_time(ms: int) -> str:
+        total_sec = max(0, ms) // 1000
+        return f"{total_sec // 60}:{total_sec % 60:02d}"
+
+    def _update_time_label(self, pos_ms: int, dur_ms: int | None = None) -> None:
+        if dur_ms is None:
+            dur_ms = self._audio.duration_ms()
+        self.time_label.setText(
+            f"{self._format_time(pos_ms)} / {self._format_time(dur_ms)}"
+        )
 
     def _load_chart(self, path: str):
         try:
@@ -317,6 +387,19 @@ class PreviewPage(ScrollArea):
     def _play(self):
         if not self._time_frames:
             return
+        self._pending_play = True
+        if self._audio.is_ready():
+            self._start_playback()
+        elif self._audio.is_loaded():
+            self.play_btn.setDisabled(True)
+        else:
+            self.play_btn.setDisabled(True)
+
+    def _start_playback(self) -> None:
+        if not self._time_frames:
+            self._pending_play = False
+            return
+        self._pending_play = False
         self._playing = True
         self._virtual_time = 0.0
         self.play_btn.setDisabled(True)
@@ -324,12 +407,14 @@ class PreviewPage(ScrollArea):
         self.stop_btn.setEnabled(True)
         speed = cfg.preview_speed
         self._audio.set_playback_rate(speed)
-        if self._audio.is_loaded():
-            self._audio.play()
+        self._audio.stop()
+        self._audio.play(0)
+        self._render_at_time(0.0)
         self._timer.start()
 
     def _pause(self):
         self._playing = False
+        self._pending_play = False
         self._timer.stop()
         self.play_btn.setEnabled(True)
         self.pause_btn.setDisabled(True)
@@ -337,28 +422,33 @@ class PreviewPage(ScrollArea):
 
     def _stop(self):
         self._playing = False
+        self._pending_play = False
         self._timer.stop()
         self._virtual_time = 0.0
         self._audio.stop()
         self._render_at_time(0.0)
-        self.play_btn.setEnabled(True)
+        self._update_time_label(0)
+        self.play_btn.setEnabled(bool(self._time_frames))
         self.pause_btn.setDisabled(True)
         self.stop_btn.setDisabled(True)
 
     def _tick(self):
-        if not self._time_frames:
+        if not self._time_frames or not self._playing:
             return
 
-        if self._audio.is_loaded() and self._audio.duration_ms() > 0:
-            pos_sec = self._audio.position_ms() / 1000.0
+        if self._audio.is_ready():
+            pos_ms = self._audio.position_ms()
+            pos_sec = pos_ms / 1000.0
             self._render_at_time(pos_sec)
-            if self._audio.position_ms() >= max(0, self._audio.duration_ms() - 80):
+            self._update_time_label(pos_ms)
+            if pos_ms >= max(0, self._audio.duration_ms() - 80):
                 self._stop()
             return
 
         interval = self._timer.interval() / 1000.0
         self._virtual_time += interval * cfg.preview_speed
         self._render_at_time(self._virtual_time)
+        self._update_time_label(int(self._virtual_time * 1000), int(self._end_time * 1000))
         if self._virtual_time >= self._end_time:
             self._stop()
 

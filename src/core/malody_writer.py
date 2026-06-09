@@ -13,6 +13,7 @@ Malody .mc 格式生成模块 — 基于 jubeatools
 """
 
 import json
+import re
 import zipfile
 import subprocess
 import shutil
@@ -26,7 +27,7 @@ from jubeatools.formats.malody import schema as malody
 import simplejson
 
 from .eve_parser import load_eve_song
-from .unpacker import resolve_display_title, resolve_artist
+from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
 # Malody Jubeat 谱面使用 1/4 拍精度 (与 extra.divide=4 一致)
 MALODY_BEAT_DIVIDE = 4
@@ -219,15 +220,27 @@ def _generate_mc_bytes(
     return simplejson.dumps(json_chart, indent=4, use_decimal=True).encode("utf-8")
 
 
+def enrich_song_info(info: dict) -> dict:
+    """合并参考库 / atwiki / 用户表，补全曲名与曲师。"""
+    try:
+        music_id = int(info.get("music_id") or 0)
+    except (TypeError, ValueError):
+        music_id = 0
+    if music_id <= 0:
+        return info
+    return _finalize_song_info(info, music_id, None)
+
+
 def _metadata_from_info(
     info: dict,
     audio_path: Optional[Path] = None,
     cover_path: Optional[Path] = None,
 ) -> song.Metadata:
     """从 song_info 构建 jubeatools Metadata"""
+    info = enrich_song_info(info)
     song_name = resolve_display_title(info) or info.get("name", "")
     artist = resolve_artist(info)
-    return _build_metadata(song_name, artist, audio_path, cover_path)
+    return _build_metadata(song_name, artist or "Unknown Artist", audio_path, cover_path)
 
 
 def _level_for_diff(info: dict, diff_name: str) -> Optional[str]:
@@ -286,8 +299,16 @@ def parse_song_info(info_path: Path) -> dict:
                         pass
             elif line.startswith("Level "):
                 parts = line.split(":", 1)
-                diff = parts[0].replace("Level", "").strip()
-                info["levels"][diff] = parts[1].strip().split("(")[0].strip()
+                diff = parts[0].replace("Level", "").strip().upper()
+                level_text = parts[1].strip()
+                level_val = level_text.split("(")[0].strip()
+                detail_match = re.search(r"\(([\d.]+)\)", level_text)
+                try:
+                    detail = float(detail_match.group(1)) if detail_match else float(level_val)
+                    level_num = int(float(level_val))
+                except ValueError:
+                    continue
+                info["levels"][diff] = {"level": level_num, "detail": detail}
             elif line == "Files:":
                 section = "files"
             elif section == "files" and line:
@@ -358,7 +379,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not info_path.exists():
         return None
 
-    info = parse_song_info(info_path)
+    info = enrich_song_info(parse_song_info(info_path))
     song_name = resolve_display_title(info) or info.get("name") or info.get("music_id") or song_dir.name
     safe_name = "".join(
         c if c.isalnum() or c in " _-()（）" else "_" for c in song_name

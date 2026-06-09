@@ -814,12 +814,7 @@ def _finalize_song_info(
     song_info: dict, music_id: int, word_info: Optional[dict] = None
 ) -> dict:
     """合并 word_info / 参考曲名库，并重新计算最终曲名与曲师"""
-    from .song_database import (
-        get_reference_song_artist,
-        get_reference_song_name,
-        get_song_artist,
-        load_reference_tsv,
-    )
+    from .song_database import get_song_artist, load_reference_tsv
 
     load_reference_tsv()
     info = dict(song_info)
@@ -836,6 +831,13 @@ def _finalize_song_info(
             info["artist"] = wi["artist"]
             info["artist_name"] = wi["artist"]
 
+    from .metadata_sources import load_user_metadata_tsv, lookup_atwiki_by_levels
+    from .song_database import get_reference_song_artist, get_reference_song_name
+
+    user_titles, user_artists = load_user_metadata_tsv()
+    if music_id in user_titles:
+        info["title_name"] = user_titles[music_id]
+
     name = resolve_display_title(info)
     ref_name = get_reference_song_name(music_id)
     if ref_name and (
@@ -846,11 +848,23 @@ def _finalize_song_info(
     ):
         name = ref_name
 
+    if (not name or _is_katakana_dominant(name) or str(name).startswith("unknown_")):
+        atwiki = lookup_atwiki_by_levels(info)
+        if atwiki:
+            name = atwiki[0]
+            if not resolve_artist(info) and atwiki[1]:
+                info["artist"] = atwiki[1]
+                info["artist_name"] = atwiki[1]
+
     info["name"] = name or f"unknown_{music_id}"
 
     artist = resolve_artist(info)
     if not artist:
-        artist = get_reference_song_artist(music_id) or ""
+        artist = get_reference_song_artist(music_id) or user_artists.get(music_id, "")
+    if not artist:
+        atwiki = lookup_atwiki_by_levels(info)
+        if atwiki and atwiki[1]:
+            artist = atwiki[1]
     if artist:
         info["artist"] = artist
         info["artist_name"] = artist

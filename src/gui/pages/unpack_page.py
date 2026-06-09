@@ -59,6 +59,12 @@ class CatalogLoadWorker(QThread):
                 update_db_from_music_info(music_info)
             load_reference_tsv()
 
+            self.progress.emit("加载 atwiki 曲名索引...")
+            from ...core.metadata_sources import load_atwiki_index
+            atwiki_count = load_atwiki_index()
+            if atwiki_count:
+                self.progress.emit(f"atwiki 索引: {atwiki_count} 首")
+
             word_info = load_word_info(word_info_path) if word_info_path else {}
 
             self.progress.emit("扫描封面索引（首次较慢）...")

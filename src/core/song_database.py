@@ -228,16 +228,22 @@ def _update_db_from_html(html: str, found: dict) -> None:
 
 
 def update_db_from_music_info(music_info: dict) -> int:
-    """从 music_info.xml 解析结果更新内置数据库
+    """从 music_info.xml 解析结果更新内置曲名/曲师库。
 
     Returns:
         新增的歌曲数量
     """
-    global _BUILTIN_SONG_DB
+    global _BUILTIN_SONG_DB, _BUILTIN_ARTIST_DB
     added = 0
     for mid, info in music_info.items():
-        name = info.get("name", "")
+        name = info.get("title_name") or info.get("name", "")
         if name and not name.startswith("unknown_") and mid not in _BUILTIN_SONG_DB:
             _BUILTIN_SONG_DB[mid] = name
             added += 1
+        for key in ("artist", "artist_name"):
+            artist = (info.get(key) or "").strip()
+            if artist and artist.upper() not in ("KONAMI", "UNKNOWN", "COPYRIGHT"):
+                if mid not in _BUILTIN_ARTIST_DB:
+                    _BUILTIN_ARTIST_DB[mid] = artist
+                break
     return added
