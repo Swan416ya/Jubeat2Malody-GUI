@@ -8,7 +8,6 @@ Jubeat IFS 解包模块
 import os
 import re
 import struct
-import wave
 import shutil
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -563,39 +562,40 @@ def load_word_info(word_info_path: Path) -> dict:
     return info
 
 
+def _convert_song_audio(song_dir: Path, extracted: List[str]) -> None:
+    """将解包出的 bgm .bin 转为标准 WAV（Beyond Ave 多为 bgm_1.bin）。
+
+    idx.bin 为较短的游戏内预览/同步片段，Malody 谱面只需完整 bgm，故不转换 idx。
+    """
+    bgm_bins: list[Path] = []
+
+    for filename in extracted:
+        lower = filename.lower()
+        path = song_dir / filename
+        if not path.is_file():
+            continue
+        if lower.startswith("bgm") and lower.endswith(".bin"):
+            bgm_bins.append(path)
+
+    primary_bgm: Optional[Path] = None
+    for preferred in ("bgm.bin", "bgm_1.bin"):
+        candidate = song_dir / preferred
+        if candidate in bgm_bins:
+            primary_bgm = candidate
+            break
+    if primary_bgm is None and bgm_bins:
+        bgm_bins.sort(key=lambda p: (len(p.name), -p.stat().st_size))
+        primary_bgm = bgm_bins[0]
+
+    if primary_bgm:
+        convert_bmp_to_wav(primary_bgm, song_dir / "bgm.wav")
+
+
 def convert_bmp_to_wav(bmp_path: Path, wav_path: Path) -> bool:
-    """将 Konami BMP 格式音频转换为标准 WAV"""
-    try:
-        with open(bmp_path, "rb") as f:
-            data = f.read()
+    """将 Konami BMP (OKI4S ADPCM) 转换为标准 WAV"""
+    from .konami_bmp import convert_bmp_file
 
-        if len(data) < 32 or data[:4] != b"BMP\x00":
-            return False
-
-        data_size = struct.unpack(">I", data[4:8])[0]
-        channels = struct.unpack(">H", data[16:18])[0]
-        bits = struct.unpack(">H", data[18:20])[0]
-        sample_rate = struct.unpack(">I", data[20:24])[0]
-
-        if channels not in (1, 2) or bits != 16 or sample_rate == 0:
-            channels = struct.unpack("<H", data[16:18])[0]
-            bits = struct.unpack("<H", data[18:20])[0]
-            sample_rate = struct.unpack(">I", data[20:24])[0]
-
-        if channels not in (1, 2) or bits != 16 or sample_rate == 0:
-            return False
-
-        pcm_data = data[32:]
-
-        with wave.open(str(wav_path), "wb") as wav:
-            wav.setnchannels(channels)
-            wav.setsampwidth(bits // 8)
-            wav.setframerate(sample_rate)
-            wav.writeframes(pcm_data)
-
-        return True
-    except Exception:
-        return False
+    return convert_bmp_file(bmp_path, wav_path)
 
 
 def is_ifs_encrypted(ifs_path: Path) -> bool:
@@ -939,15 +939,8 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     if not extracted:
         return None
 
-    # 转换音频
-    for filename in extracted:
-        file_path = song_dir / filename
-        if filename == "bgm.bin":
-            wav_path = song_dir / "bgm.wav"
-            convert_bmp_to_wav(file_path, wav_path)
-        elif filename == "idx.bin":
-            wav_path = song_dir / "idx.wav"
-            convert_bmp_to_wav(file_path, wav_path)
+    # 转换音频 (Konami BMP → bgm.wav)
+    _convert_song_audio(song_dir, extracted)
 
     # 提取封面图片
     jacket_copied = False

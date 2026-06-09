@@ -370,6 +370,13 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     audio_filename = "bgm.ogg"
 
     if not bgm_wav.exists() and not bgm_ogg.exists():
+        from .unpacker import convert_bmp_to_wav
+
+        for candidate in sorted(song_dir.glob("bgm*.bin")):
+            if convert_bmp_to_wav(candidate, bgm_wav):
+                break
+
+    if not bgm_wav.exists() and not bgm_ogg.exists():
         return None
 
     # 查找封面图（仅当文件真实存在时才打包）
@@ -482,13 +489,11 @@ def convert_single_song(
     # 查找音频文件
     audio_src = None
     audio_filename = "bgm.ogg"
-    for candidate in ["bgm.ogg", "bgm.wav", "bgm.bin"]:
+    for candidate in ["bgm.ogg", "bgm.wav", "bgm.bin", "bgm_1.bin"]:
         p = song_dir / candidate
         if p.exists():
             audio_src = p
-            if candidate == "bgm.wav":
-                audio_filename = "bgm.ogg"
-            elif candidate == "bgm.bin":
+            if candidate in ("bgm.wav", "bgm.bin", "bgm_1.bin"):
                 audio_filename = "bgm.ogg"
             else:
                 audio_filename = candidate
