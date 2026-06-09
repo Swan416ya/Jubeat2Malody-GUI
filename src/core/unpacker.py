@@ -58,18 +58,8 @@ def decode_name_string(encoded: str) -> str:
     return encoded
 
 
-def find_metadata_xml(root: Path, filename: str) -> Optional[Path]:
-    """在 Jubeat 数据目录中查找 music_info.xml / word_info.xml
-
-    常见路径:
-    - {root}/music_info.xml
-    - {root}/music_info/music_info.xml
-    - {root}/word_info/word_info.xml
-    - 任意子目录中的同名文件 (rglob)
-    """
-    if not root.exists():
-        return None
-
+def _find_metadata_xml_in_tree(root: Path, filename: str) -> Optional[Path]:
+    """在单个目录树下查找 metadata XML"""
     direct = root / filename
     if direct.is_file():
         return direct
@@ -89,6 +79,28 @@ def find_metadata_xml(root: Path, filename: str) -> Optional[Path]:
     return matches[0]
 
 
+def find_metadata_xml(root: Path, filename: str, search_parents: int = 6) -> Optional[Path]:
+    """在 Jubeat 数据目录中查找 music_info.xml / word_info.xml
+
+    常见路径:
+    - {root}/music_info/music_info.xml
+    - {root}/word_info/word_info.xml
+    - 向上搜索父目录 (用户可能只选了 ifs_pack 子目录)
+    """
+    if not root.exists():
+        return None
+
+    current = root.resolve()
+    for _ in range(search_parents + 1):
+        found = _find_metadata_xml_in_tree(current, filename)
+        if found:
+            return found
+        if current.parent == current:
+            break
+        current = current.parent
+    return None
+
+
 def _parse_xml_float(elem: Optional[ET.Element], default: float = 0.0) -> float:
     """安全解析 XML 元素中的数值（支持整数和小数）"""
     if elem is None or not elem.text:
@@ -104,9 +116,9 @@ def _parse_bpm_fields(
 ) -> tuple[float, float]:
     """解析 music_info.xml 中的 BPM 字段
 
-    兼容两种格式:
-    - 微秒/拍 (如 3000000) → 转换为标准 BPM
-    - 直接 BPM 值 (如 139.5)
+    兼容:
+    - 微秒/拍 (如 3000000)
+    - 直接 BPM 浮点 (Beyond Ave: bpm_max=140, bpm_min=-1)
     """
     bpm_min_raw = _parse_xml_float(bpm_min_elem)
     bpm_max_raw = _parse_xml_float(bpm_max_elem)
@@ -118,7 +130,38 @@ def _parse_bpm_fields(
         bpm_min = bpm_min_raw
         bpm_max = bpm_max_raw
 
+    # Beyond Ave 等版本: bpm_min=-1 表示无变速，仅用 bpm_max
+    if bpm_max > 0 and bpm_min < 0:
+        bpm_min = bpm_max
+
     return bpm_min, bpm_max
+
+
+def resolve_bpm(info: dict) -> float:
+    """从元数据字典取得有效 BPM 值"""
+    bpm_min = float(info.get("bpm_min") or 0)
+    bpm_max = float(info.get("bpm_max") or 0)
+    if bpm_max > 0:
+        return bpm_max
+    if bpm_min > 0:
+        return bpm_min
+    return 0.0
+
+
+def _parse_bpm_from_eve(song_dir: Path) -> float:
+    """从解包后的 EVE 谱面读取首个 TEMPO 作为 BPM 回退"""
+    for name in ("bsc.eve", "bsc_1.eve", "adv.eve", "adv_1.eve", "ext.eve", "ext_1.eve"):
+        eve_path = song_dir / name
+        if not eve_path.is_file():
+            continue
+        try:
+            for line in eve_path.read_text(encoding="utf-8", errors="replace").splitlines():
+                parts = [p.strip() for p in line.split(",")]
+                if len(parts) >= 3 and parts[1].upper() == "TEMPO":
+                    return round(float(parts[2]) / 1000.0, 2)
+        except (OSError, ValueError):
+            continue
+    return 0.0
 
 
 def _is_katakana_dominant(text: str) -> bool:
@@ -154,12 +197,89 @@ def resolve_display_title(info: dict) -> str:
 
 
 def resolve_artist(info: dict) -> str:
-    """选择艺术家名（copyright_name 是版权方，不是曲师）"""
+    """选择艺术家名（copyright_name 是版权方 KONAMI，不是曲师）"""
     for key in ("artist", "artist_name"):
         value = (info.get(key) or "").strip()
-        if value and value.upper() not in ("KONAMI", "KONAMI AMUSEMENT", "COPYRIGHT"):
-            return value
+        if not value:
+            continue
+        upper = value.upper()
+        if upper in ("KONAMI", "KONAMI AMUSEMENT", "COPYRIGHT"):
+            continue
+        if value.startswith("unknown_") or upper == "UNKNOWN":
+            continue
+        return value
     return ""
+
+
+def _parse_xml_root(xml_path: Path) -> ET.Element:
+    """解析 XML，兼容 UTF-8 / Shift-JIS 等编码（参考 bemaniutils）"""
+    try:
+        return ET.parse(xml_path).getroot()
+    except ET.ParseError:
+        pass
+
+    raw = xml_path.read_bytes()
+    for encoding in ("utf-8", "utf-8-sig", "cp932", "shift_jis", "shift_jisx0213", "euc_jp"):
+        try:
+            text = raw.decode(encoding)
+            return ET.fromstring(text)
+        except (UnicodeDecodeError, ET.ParseError):
+            continue
+
+    raise ValueError(f"无法解析 XML: {xml_path}")
+
+
+def _parse_music_id_from_ifs(ifs_path: Path) -> int:
+    """从 IFS 文件名提取 music_id（兼容 10000001_msc / d123_10000001_msc 等）"""
+    match = re.search(r"(\d{5,10})_msc\.ifs$", ifs_path.name, re.IGNORECASE)
+    if match:
+        return int(match.group(1))
+
+    nums = re.findall(r"\d{5,10}", ifs_path.stem)
+    if nums:
+        return int(nums[-1])
+    return 0
+
+
+def _parse_music_id_from_jacket(path: Path) -> int:
+    """从封面资源文件名提取 music_id"""
+    match = re.search(
+        r"(\d{5,10})_(?:jkt|ifs)\.(?:ifs|bin)$", path.name, re.IGNORECASE
+    )
+    if match:
+        return int(match.group(1))
+    return 0
+
+
+def build_jacket_index(data_dir: Path) -> dict[int, Path]:
+    """一次性扫描目录，建立 music_id → 封面资源路径索引
+
+    支持:
+    - 旧版: ifs_pack/{id}_jkt.ifs
+    - Beyond Ave 等: data/d3/model/tex_l44_bnr_big_id{id}.bin
+    """
+    from .texbin_extractor import build_texbin_jacket_index
+
+    index: dict[int, Path] = build_texbin_jacket_index(data_dir)
+    data_dir = data_dir.resolve()
+
+    ifs_pack_dirs = sorted(p for p in data_dir.rglob("ifs_pack") if p.is_dir())
+    scan_roots = ifs_pack_dirs if ifs_pack_dirs else [data_dir]
+
+    patterns = ("*_jkt.ifs", "*_jkt.bin", "*_ifs.ifs")
+    for scan_root in scan_roots:
+        if not scan_root.exists():
+            continue
+        for pattern in patterns:
+            for candidate in scan_root.rglob(pattern):
+                music_id = _parse_music_id_from_jacket(candidate)
+                if not music_id or music_id in index:
+                    continue
+                if candidate.suffix.lower() == ".ifs" and is_ifs_encrypted(candidate):
+                    continue
+                index[music_id] = candidate
+
+    return index
 
 
 def _resolve_word_id(
@@ -193,23 +313,78 @@ def _extract_text_field(data_elem: ET.Element, field_names: List[str]) -> str:
     return ""
 
 
+def _resolve_ids_from_word_dict(
+    data_elem: ET.Element, word_dict: dict
+) -> tuple[str, str]:
+    """扫描 music_info 中所有 *_id 字段，从 word_info 词库解析曲名/曲师"""
+    title = ""
+    artist = ""
+
+    for child in data_elem:
+        tag = child.tag.lower()
+        if not tag.endswith("_id") or not child.text:
+            continue
+        try:
+            word_id = int(child.text.strip())
+        except ValueError:
+            continue
+        text = word_dict.get(word_id, "")
+        if not text:
+            continue
+
+        if "artist" in tag:
+            artist = artist or text
+        elif any(k in tag for k in ("title", "name", "word", "string")):
+            if "ascii" in tag or "yomi" in tag or "reading" in tag:
+                continue
+            title = title or text
+
+    return title, artist
+
+
 def load_word_dictionary(word_info_path: Path) -> dict:
-    """解析 word_info.xml 中的全局词库 {word_id: text}"""
+    """解析 word_info.xml 中的全局词库 {word_id: text}
+
+    Jubeat 曲名/曲师通常通过 word_id 引用此词库，而非直接写在 music_info.xml 中。
+    """
     word_dict = {}
     if not word_info_path.exists():
         return word_dict
 
     try:
-        tree = ET.parse(word_info_path)
-        root = tree.getroot()
+        root = _parse_xml_root(word_info_path)
         for data_elem in _iter_music_data_elements(root):
+            word_id = None
+            if data_elem.get("word_id"):
+                try:
+                    word_id = int(data_elem.get("word_id"))
+                except ValueError:
+                    pass
+
             word_id_elem = data_elem.find("word_id")
-            if word_id_elem is None or not word_id_elem.text:
+            if word_id is None and word_id_elem is not None and word_id_elem.text:
+                word_id = int(word_id_elem.text.strip())
+
+            if word_id is None:
                 continue
-            word_id = int(word_id_elem.text.strip())
+
             text = _extract_text_field(
-                data_elem, ["word", "word_string", "name", "text", "word_name"]
+                data_elem,
+                [
+                    "word", "word_string", "string", "str", "name",
+                    "text", "word_name", "data",
+                ],
             )
+            if not text:
+                best = ""
+                for child in data_elem:
+                    if child.tag.lower() == "word_id" or not child.text:
+                        continue
+                    candidate = decode_name_string(child.text) or child.text.strip()
+                    if len(candidate) > len(best):
+                        best = candidate
+                text = best
+
             if text:
                 word_dict[word_id] = text
     except Exception:
@@ -247,8 +422,7 @@ def load_music_info(music_info_path: Path, word_dict: Optional[dict] = None) -> 
         return info
 
     word_dict = word_dict or {}
-    tree = ET.parse(music_info_path)
-    root = tree.getroot()
+    root = _parse_xml_root(music_info_path)
 
     for data_elem in _iter_music_data_elements(root):
         music_id_elem = data_elem.find("music_id")
@@ -256,27 +430,45 @@ def load_music_info(music_info_path: Path, word_dict: Optional[dict] = None) -> 
             continue
         music_id = int(music_id_elem.text)
 
-        title_name = _extract_text_field(data_elem, ["title_name"])
+        info_elem = data_elem.find("info")
+        lookup_elem = info_elem if info_elem is not None else data_elem
+
+        title_name = _extract_text_field(lookup_elem, ["title_name"])
         if not title_name and word_dict:
             title_name = _resolve_word_id(
-                data_elem,
-                ["title_name_id", "title_id", "name_id", "word_id"],
+                lookup_elem,
+                [
+                    "title_name_id", "title_id", "name_id", "name_string_id",
+                    "sub_title_name_id", "sub_name_string_id", "word_id",
+                ],
                 word_dict,
             )
 
         copyright_elem = data_elem.find("copyright_name")
         copyright_name = copyright_elem.text.strip() if copyright_elem is not None and copyright_elem.text else ""
 
-        ascii_name = _extract_text_field(data_elem, ["ascii_name"])
-        japanese_name = _extract_text_field(data_elem, ["name_string", "japanese_name"])
+        ascii_name = _extract_text_field(data_elem, ["ascii_name", "name_ascii", "reading_name"])
+        japanese_name = _extract_text_field(
+            data_elem, ["name_string", "japanese_name", "sub_name_string"]
+        )
 
-        artist_name = _extract_text_field(data_elem, ["artist_name", "artist_string"])
+        artist_name = _extract_text_field(
+            lookup_elem, ["artist_name", "artist_string", "sub_artist_name"]
+        )
         if not artist_name and word_dict:
             artist_name = _resolve_word_id(
-                data_elem,
-                ["artist_name_id", "artist_id", "artist_word_id"],
+                lookup_elem,
+                [
+                    "artist_name_id", "artist_id", "artist_word_id",
+                    "sub_artist_name_id",
+                ],
                 word_dict,
             )
+
+        if word_dict:
+            scanned_title, scanned_artist = _resolve_ids_from_word_dict(data_elem, word_dict)
+            title_name = title_name or scanned_title
+            artist_name = artist_name or scanned_artist
 
         entry = {
             "title_name": title_name,
@@ -329,8 +521,7 @@ def load_word_info(word_info_path: Path) -> dict:
         return info
 
     try:
-        tree = ET.parse(word_info_path)
-        root = tree.getroot()
+        root = _parse_xml_root(word_info_path)
 
         for data_elem in _iter_music_data_elements(root):
             music_id_elem = data_elem.find("music_id")
@@ -450,93 +641,129 @@ def _unique_dest_path(output_dir: Path, src: Path, ifs_subdir: Path) -> Path:
     return output_dir / f"{src.stem}_{src.stat().st_size}{src.suffix}"
 
 
-def extract_ifs(ifs_path: Path, output_dir: Path) -> list:
-    """使用 ifstools 解包 IFS 文件，返回提取的文件名列表"""
+def extract_ifs(
+    ifs_path: Path,
+    output_dir: Path,
+    *,
+    tex_only: bool = False,
+    dump_canvas: bool = False,
+    rename_dupes: bool = True,
+    flatten: bool = True,
+) -> list:
+    """使用 ifstools 解包 IFS 文件，返回提取的文件名列表
+
+    曲绘 IFS (_jkt.ifs) 需设置 tex_only=True, dump_canvas=True 才能导出完整封面画布。
+    """
     if not HAS_IFSTOOLS:
         raise RuntimeError("ifstools 未安装，无法解包 IFS 文件")
 
     ifs = ifstools.IFS(str(ifs_path))
     output_dir.mkdir(parents=True, exist_ok=True)
-    ifs.extract(path=str(output_dir), progress=False)
+    ifs.extract(
+        path=str(output_dir),
+        progress=False,
+        tex_only=tex_only,
+        dump_canvas=dump_canvas,
+        rename_dupes=rename_dupes,
+    )
 
     extracted_names: List[str] = []
 
+    if not flatten:
+        extracted_names = [f.name for f in ifs.tree.all_files]
+        ifs.close()
+        return extracted_names
+
     # ifstools 会在 output_dir 下创建子目录，需要递归移出所有文件
     ifs_subdir = output_dir / (ifs_path.stem + "_ifs")
-    if ifs_subdir.exists() and ifs_subdir.is_dir():
-        for f in sorted(ifs_subdir.rglob("*")):
+    search_roots = [ifs_subdir] if ifs_subdir.exists() else [output_dir]
+    moved = set()
+
+    for search_root in search_roots:
+        if not search_root.exists():
+            continue
+        for f in sorted(search_root.rglob("*")):
             if not f.is_file():
                 continue
-            dest = _unique_dest_path(output_dir, f, ifs_subdir)
+            dest = _unique_dest_path(output_dir, f, search_root)
+            if dest.resolve() in moved:
+                continue
             shutil.move(str(f), str(dest))
             extracted_names.append(dest.name)
+            moved.add(dest.resolve())
+
+    if ifs_subdir.exists() and ifs_subdir.is_dir():
         shutil.rmtree(ifs_subdir, ignore_errors=True)
-    else:
+
+    if not extracted_names:
         extracted_names = [f.name for f in output_dir.iterdir() if f.is_file()]
 
     ifs.close()
     return extracted_names
 
 
-def _find_jacket_ifs(
-    music_id: int, ifs_dir: Path, msc_ifs_path: Optional[Path] = None
+def _find_jacket_resource(
+    music_id: int,
+    ifs_dir: Path,
+    msc_ifs_path: Optional[Path] = None,
+    jacket_index: Optional[dict[int, Path]] = None,
 ) -> Optional[Path]:
-    """查找与 music_id 对应的封面 IFS 文件
+    """查找与 music_id 对应的封面资源（优先索引 / 同目录，不做全树 rglob）"""
+    if jacket_index and music_id in jacket_index:
+        return jacket_index[music_id]
 
-    Jubeat 封面图可能存储在: {id}_jkt.ifs, {id}_ifs.ifs
-    优先在与 _msc.ifs 同目录查找，再递归搜索整个数据目录。
-    """
     id_str = str(music_id)
     exact_names = [
         f"{id_str}_jkt.ifs",
+        f"{id_str}_jkt.bin",
         f"{id_str}_ifs.ifs",
     ]
 
-    search_roots = []
+    local_dirs: List[Path] = []
     if msc_ifs_path is not None:
-        search_roots.append(msc_ifs_path.parent)
-    if ifs_dir not in search_roots:
-        search_roots.append(ifs_dir)
+        local_dirs.append(msc_ifs_path.parent)
+    if ifs_dir not in local_dirs:
+        local_dirs.append(ifs_dir)
 
-    seen = set()
-
-    def _accept(candidate: Path) -> Optional[Path]:
-        key = str(candidate.resolve())
-        if key in seen:
-            return None
-        seen.add(key)
-        if candidate.is_file() and not is_ifs_encrypted(candidate):
+    for parent in local_dirs:
+        for name in exact_names:
+            candidate = parent / name
+            if not candidate.is_file():
+                continue
+            if candidate.suffix.lower() == ".ifs" and is_ifs_encrypted(candidate):
+                return None
             return candidate
-        return None
-
-    for root in search_roots:
-        for name in exact_names:
-            found = _accept(root / name)
-            if found:
-                return found
-
-        for name in exact_names:
-            for candidate in root.rglob(name):
-                found = _accept(candidate)
-                if found:
-                    return found
-
-        # 宽松匹配: *{music_id}*jkt*.ifs
-        for candidate in root.rglob(f"*{id_str}*jkt*.ifs"):
-            found = _accept(candidate)
-            if found:
-                return found
 
     return None
 
 
 def _extract_jacket_image(
-    jkt_ifs_path: Path, song_dir: Path, music_id: int
+    jacket_path: Path, song_dir: Path, music_id: int
 ) -> Tuple[bool, str]:
-    """从 _jkt.ifs 解包并提取曲绘到歌曲目录，返回 (是否成功, 文件名)"""
+    """从封面资源 (_jkt.ifs / texbin .bin) 提取曲绘，返回 (是否成功, 文件名)"""
+    from .texbin_extractor import extract_texbin_png
+
+    if jacket_path.suffix.lower() == ".bin" and jacket_path.name.lower().find("bnr_big") >= 0:
+        png_data = extract_texbin_png(jacket_path)
+        if png_data:
+            jacket_filename = f"jkt_{music_id}.png"
+            (song_dir / jacket_filename).write_bytes(png_data)
+            return True, jacket_filename
+        return False, ""
+
     jkt_temp = song_dir / "_jkt_temp"
     try:
-        extract_ifs(jkt_ifs_path, jkt_temp)
+        if jacket_path.suffix.lower() == ".bin":
+            try:
+                extract_ifs(jacket_path, jkt_temp, tex_only=True, dump_canvas=True)
+            except Exception:
+                return False, ""
+        else:
+            extract_ifs(
+                jacket_path, jkt_temp,
+                tex_only=True, dump_canvas=True, rename_dupes=True,
+            )
+
         jkt_images = _find_images_in_dir(jkt_temp)
         best_jkt = _pick_best_jacket(jkt_images, music_id)
         if not best_jkt:
@@ -552,12 +779,22 @@ def _extract_jacket_image(
             shutil.rmtree(jkt_temp, ignore_errors=True)
 
 
+def _extract_nested_jacket_ifs(song_dir: Path, music_id: int) -> Tuple[bool, str]:
+    """解包歌曲目录内嵌套的 _jkt*.ifs 并提取曲绘"""
+    for nested_ifs in sorted(song_dir.rglob("*jkt*.ifs")):
+        ok, filename = _extract_jacket_image(nested_ifs, song_dir, music_id)
+        if ok:
+            return ok, filename
+    return False, ""
+
+
 def _finalize_song_info(
     song_info: dict, music_id: int, word_info: Optional[dict] = None
 ) -> dict:
-    """合并 word_info / 本地曲名库，并重新计算最终曲名"""
-    from .song_database import get_song_name
+    """合并 word_info / 参考曲名库，并重新计算最终曲名与曲师"""
+    from .song_database import get_song_name, get_song_artist, load_reference_tsv
 
+    load_reference_tsv()
     info = dict(song_info)
 
     if word_info and music_id in word_info:
@@ -570,6 +807,7 @@ def _finalize_song_info(
                 info["name"] = wi["title"]
         if wi.get("artist"):
             info["artist"] = wi["artist"]
+            info["artist_name"] = wi["artist"]
 
     name = resolve_display_title(info)
     if not name or str(name).startswith("unknown_"):
@@ -580,8 +818,11 @@ def _finalize_song_info(
     info["name"] = name or f"unknown_{music_id}"
 
     artist = resolve_artist(info)
+    if not artist:
+        artist = get_song_artist(music_id, local_db={music_id: info} if info else None) or ""
     if artist:
         info["artist"] = artist
+        info["artist_name"] = artist
 
     return info
 
@@ -601,12 +842,20 @@ def _find_images_in_dir(directory: Path) -> List[Path]:
 def _pick_best_jacket(images: List[Path], music_id: int) -> Optional[Path]:
     """从候选图片中选择最合适的封面图
 
-    优先级: jkt/jacket/cover + id > jkt/jacket/cover > 最大文件
+    优先级: _canvas_ 完整画布 > jkt/jacket/cover + id > 最大正方形图
     """
     if not images:
         return None
 
     id_str = str(music_id)
+
+    canvas_images = [img for img in images if "_canvas_" in img.name.lower()]
+    if canvas_images:
+        try:
+            return max(canvas_images, key=lambda p: p.stat().st_size)
+        except OSError:
+            return canvas_images[0]
+
     for img in images:
         name_lower = img.name.lower()
         if any(kw in name_lower for kw in ("jkt", "jacket", "cover")) and id_str in name_lower:
@@ -614,7 +863,7 @@ def _pick_best_jacket(images: List[Path], music_id: int) -> Optional[Path]:
 
     for img in images:
         name_lower = img.name.lower()
-        if any(kw in name_lower for kw in ("jkt", "jacket", "cover")):
+        if any(kw in name_lower for kw in ("jkt", "jacket", "cover", "artwork")):
             return img
 
     try:
@@ -624,7 +873,8 @@ def _pick_best_jacket(images: List[Path], music_id: int) -> Optional[Path]:
 
 
 def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
-                 ifs_dir: Path = None, word_info: dict = None) -> Optional[Path]:
+                 ifs_dir: Path = None, word_info: dict = None,
+                 jacket_index: Optional[dict[int, Path]] = None) -> Optional[Path]:
     """
     解包单个乐曲 IFS，返回输出目录路径。
     提取谱面 (.eve)、转换音频 (bgm.bin → .wav)、提取封面图片、写入 song_info.txt。
@@ -639,12 +889,7 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     if ifs_dir is None:
         ifs_dir = ifs_path.parent
 
-    stem = ifs_path.stem
-    music_id_str = stem.replace("_msc", "")
-    try:
-        music_id = int(music_id_str)
-    except ValueError:
-        music_id = 0
+    music_id = _parse_music_id_from_ifs(ifs_path)
 
     song_info = _finalize_song_info(
         music_info.get(music_id, {}), music_id, word_info
@@ -682,13 +927,25 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
             shutil.copy2(best_jacket, dest)
         jacket_copied = True
 
-    # 2. 查找并解包封面专用 IFS (_jkt.ifs)
+    # 2. 解包目录内嵌套的 _jkt*.ifs
     if not jacket_copied:
-        jkt_ifs = _find_jacket_ifs(music_id, ifs_dir, msc_ifs_path=ifs_path)
-        if jkt_ifs:
+        jacket_copied, jacket_filename = _extract_nested_jacket_ifs(song_dir, music_id)
+
+    # 3. 查找并解包封面专用资源 (_jkt.ifs / _jkt.bin)
+    if not jacket_copied:
+        jacket_path = _find_jacket_resource(
+            music_id, ifs_dir, msc_ifs_path=ifs_path, jacket_index=jacket_index,
+        )
+        if jacket_path:
             jacket_copied, jacket_filename = _extract_jacket_image(
-                jkt_ifs, song_dir, music_id
+                jacket_path, song_dir, music_id
             )
+
+    if resolve_bpm(song_info) <= 0:
+        eve_bpm = _parse_bpm_from_eve(song_dir)
+        if eve_bpm > 0:
+            song_info["bpm_max"] = eve_bpm
+            song_info["bpm_min"] = eve_bpm
 
     # 写入歌曲信息
     info_path = song_dir / "song_info.txt"
@@ -710,12 +967,14 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
         reading_name = song_info.get("ascii_name", "")
         if reading_name and reading_name != song_name:
             f.write(f"Reading Name: {reading_name}\n")
-        bpm_min = song_info.get("bpm_min", 0)
-        bpm_max = song_info.get("bpm_max", 0)
-        if bpm_min and bpm_min != bpm_max:
-            f.write(f"BPM (ref): {bpm_min}-{bpm_max}\n")
-        else:
-            f.write(f"BPM (ref): {bpm_max}\n")
+        bpm = resolve_bpm(song_info)
+        if bpm > 0:
+            bpm_min = song_info.get("bpm_min", 0)
+            bpm_max = song_info.get("bpm_max", 0)
+            if bpm_min and bpm_max and bpm_min != bpm_max and bpm_min > 0:
+                f.write(f"BPM (ref): {bpm_min}-{bpm_max}\n")
+            else:
+                f.write(f"BPM (ref): {bpm}\n")
         for diff, lev in song_info.get("levels", {}).items():
             f.write(f"Level {diff.upper()}: {lev['level']} ({lev['detail']})\n")
         if jacket_copied and jacket_filename:

@@ -10,3 +10,6 @@ build/
 *.ogg
 *.wav
 output/
+debug_out/
+debug_out36/
+debug_unpack_out/

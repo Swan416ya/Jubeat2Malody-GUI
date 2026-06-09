@@ -5,7 +5,7 @@
 提取谱面 (EVE)、音频 (BGM) 和元数据。
 """
 
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import Qt, QThread, Signal, Slot
 from PySide6.QtWidgets import (
     QVBoxLayout, QHBoxLayout, QWidget, QFileDialog,
 )
@@ -17,9 +17,10 @@ from qfluentwidgets import (
 
 from ...core.unpacker import (
     extract_song, load_music_info, is_ifs_encrypted, load_word_info,
-    load_word_dictionary, find_metadata_xml,
+    load_word_dictionary, find_metadata_xml, build_jacket_index,
 )
-from ...core.song_database import update_db_from_music_info
+from ...core.song_database import update_db_from_music_info, load_reference_tsv
+from ...core.texbin_extractor import datapackage_status
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
 
@@ -37,14 +38,46 @@ class UnpackWorker(QThread):
         self.output_dir = output_dir
 
     def run(self):
+        import traceback
+        from pathlib import Path
+
+        try:
+            self._run_unpack()
+        except Exception as e:
+            self.log.emit(f"致命错误: {e}")
+            self.log.emit(traceback.format_exc())
+            self.error.emit(str(e))
+
+    def _run_unpack(self):
         from pathlib import Path
 
         ifs_path = Path(self.ifs_dir)
         output_path = Path(self.output_dir)
 
+        self.log.emit(f"开始解包: {ifs_path}")
+        self.log.emit(f"输出目录: {output_path}")
+
+        if not ifs_path.is_dir():
+            self.error.emit(f"游戏数据目录不存在: {ifs_path}")
+            return
+        if not output_path.exists():
+            output_path.mkdir(parents=True, exist_ok=True)
+
         # 查找 music_info.xml (支持 music_info/music_info.xml 等常见路径)
         word_info_path = find_metadata_xml(ifs_path, "word_info.xml")
         word_dict = load_word_dictionary(word_info_path) if word_info_path else {}
+        if word_info_path:
+            self.log.emit(
+                f"已加载词库 word_info: {len(word_dict)} 条 ({word_info_path})"
+            )
+            if not word_dict:
+                self.log.emit(
+                    "警告: word_info.xml 解析为空，曲名/曲师可能无法从词库解析。"
+                )
+        else:
+            self.log.emit(
+                "提示: 未找到 word_info.xml，曲名/曲师将依赖 music_info 十六进制字段或参考库。"
+            )
 
         music_info_path = find_metadata_xml(ifs_path, "music_info.xml")
         music_info = {}
@@ -79,28 +112,66 @@ class UnpackWorker(QThread):
 
         self.log.emit(f"找到 {len(ifs_files)} 个 IFS 文件")
 
+        self.log.emit("正在扫描封面文件索引（仅一次）...")
+        jacket_index = build_jacket_index(ifs_path)
+        self.log.emit(f"封面索引: {len(jacket_index)} 个 (texbin/ifs)")
+
+        dp = datapackage_status(ifs_path)
+        if dp.get("exists"):
+            self.log.emit(
+                f"DataPackage 缓存: {dp.get('jacket_bins', 0)} 个曲绘 "
+                f"({dp.get('path', '')})"
+            )
+            if dp.get("jacket_bins", 0) == 0:
+                self.log.emit(
+                    "提示: 旧曲曲绘需游戏联网下载到 datapackage/data；"
+                    "当前为空则旧曲无本地曲绘文件"
+                )
+
+        load_reference_tsv()
+
         success_count = 0
+        skipped_encrypted = 0
+        total = len(ifs_files)
         for i, ifs_file in enumerate(ifs_files):
-            self.progress.emit(i + 1, len(ifs_files))
+            if self.isInterruptionRequested():
+                self.log.emit("解包已中断")
+                break
+
+            current = i + 1
+            self.progress.emit(current, total)
+            self.log.emit(f"[{current}/{total}] 处理: {ifs_file.name}")
 
             if is_ifs_encrypted(ifs_file):
-                self.log.emit(f"跳过(加密): {ifs_file.name}")
+                skipped_encrypted += 1
+                self.log.emit(f"  -> 跳过(加密)")
                 continue
 
             try:
                 song_dir = extract_song(
                     ifs_file, music_info, output_path,
                     ifs_dir=ifs_path, word_info=word_info,
+                    jacket_index=jacket_index,
                 )
                 if song_dir:
-                    self.log.emit(f"解包成功: {song_dir.name}")
+                    has_jkt = any(
+                        f.name.lower().startswith("jkt_")
+                        and f.suffix.lower() in (".png", ".jpg", ".jpeg")
+                        for f in song_dir.iterdir()
+                        if f.is_file()
+                    )
+                    status = "含曲绘" if has_jkt else "无曲绘"
+                    self.log.emit(f"  -> 成功 ({status}): {song_dir.name}")
                     success_count += 1
                 else:
-                    self.log.emit(f"解包失败(空): {ifs_file.name}")
+                    self.log.emit(f"  -> 失败(空)")
             except Exception as e:
-                self.log.emit(f"解包出错: {ifs_file.name} — {e}")
+                self.log.emit(f"  -> 出错: {e}")
 
-        self.log.emit(f"完成! 成功 {success_count}/{len(ifs_files)}")
+        self.log.emit(
+            f"完成! 成功 {success_count}/{total}"
+            + (f"，跳过加密 {skipped_encrypted}" if skipped_encrypted else "")
+        )
         self.finished.emit(self.output_dir)
 
 
@@ -178,13 +249,17 @@ class UnpackPage(ScrollArea):
         self.vBoxLayout.addWidget(self.progress_bar)
 
         # --- 日志 ---
-        self.log_edit = TextEdit(container)
+        self.log_card = CardWidget(container)
+        log_layout = QVBoxLayout(self.log_card)
+        log_layout.setContentsMargins(20, 16, 20, 16)
+        log_layout.addWidget(BodyLabel("解包日志"))
+        self.log_edit = TextEdit(self.log_card)
         self.log_edit.setReadOnly(True)
         self.log_edit.setPlaceholderText("解包日志将在此显示...")
-        self.log_edit.setMinimumHeight(200)
-        self.vBoxLayout.addWidget(self.log_edit, 1)
+        self.log_edit.setMinimumHeight(220)
+        log_layout.addWidget(self.log_edit)
+        self.vBoxLayout.addWidget(self.log_card)
 
-        self.vBoxLayout.addStretch(1)
         self.setWidget(container)
 
     def _connect_signals(self):
@@ -221,31 +296,44 @@ class UnpackPage(ScrollArea):
         output_dir = self.output_dir_edit.text().strip()
 
         self._worker = UnpackWorker(ifs_dir, output_dir)
-        self._worker.progress.connect(self._on_progress)
-        self._worker.finished.connect(self._on_finished)
-        self._worker.error.connect(self._on_error)
-        self._worker.log.connect(self._on_log)
+        self._worker.progress.connect(self._on_progress, Qt.ConnectionType.QueuedConnection)
+        self._worker.finished.connect(self._on_finished, Qt.ConnectionType.QueuedConnection)
+        self._worker.error.connect(self._on_error, Qt.ConnectionType.QueuedConnection)
+        self._worker.log.connect(self._on_log, Qt.ConnectionType.QueuedConnection)
 
         self.unpack_btn.setDisabled(True)
         self.stop_btn.setEnabled(True)
         self.progress_bar.setValue(0)
         self.log_edit.clear()
+        self._on_log("正在启动解包任务...")
 
         signalBus.unpack_started.emit(output_dir)
         self._worker.start()
 
     def _stop_unpack(self):
         if self._worker and self._worker.isRunning():
+            self._worker.requestInterruption()
             self._worker.terminate()
-            self._worker.wait(3000)
+            self._worker.wait(5000)
             self._on_log("用户已停止解包")
-            self._on_finished("")
+        self._cleanup_worker("")
+        self.unpack_btn.setEnabled(True)
+        self.stop_btn.setDisabled(True)
 
     def _on_progress(self, current: int, total: int):
-        self.progress_bar.setValue(int(current / total * 100))
+        if total > 0:
+            self.progress_bar.setValue(int(current / total * 100))
+
+    def _cleanup_worker(self, output_dir: str):
+        if self._worker is not None:
+            if self._worker.isRunning():
+                self._worker.wait(5000)
+            self._worker.deleteLater()
+            self._worker = None
+        return output_dir
 
     def _on_finished(self, output_dir: str):
-        self._worker = None
+        self._cleanup_worker(output_dir)
         self.unpack_btn.setEnabled(True)
         self.stop_btn.setDisabled(True)
         if output_dir:
@@ -256,7 +344,8 @@ class UnpackPage(ScrollArea):
             )
 
     def _on_error(self, msg: str):
-        self._worker = None
+        self._on_log(f"错误: {msg}")
+        self._cleanup_worker("")
         self.unpack_btn.setEnabled(True)
         self.stop_btn.setDisabled(True)
         signalBus.unpack_error.emit(msg)
@@ -265,5 +354,8 @@ class UnpackPage(ScrollArea):
             parent=self, position=InfoBarPosition.TOP, duration=5000,
         )
 
+    @Slot(str)
     def _on_log(self, msg: str):
         self.log_edit.append(msg)
+        bar = self.log_edit.verticalScrollBar()
+        bar.setValue(bar.maximum())

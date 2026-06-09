@@ -13,10 +13,27 @@ import threading
 from pathlib import Path
 from typing import Optional, Dict
 
-# 内置静态数据库: music_id → 曲名
-# 数据来源: 公开音游 wiki (bemani.cc, RemyWiki, jubeat@Wiki)
-# 仅包含常见曲目，用户可通过在线查询补充
+# 内置静态数据库: music_id → 曲名 / 曲师
+# 数据来源: 公开音游 wiki (bemani.cc, RemyWiki)、bemaniutils jubeat.tsv
 _BUILTIN_SONG_DB: Dict[int, str] = {}
+_BUILTIN_ARTIST_DB: Dict[int, str] = {}
+_REFERENCE_TSV_LOADED = False
+
+_METADATA_TSV = Path(__file__).resolve().parents[2] / "data" / "jubeat_metadata.tsv"
+
+
+def get_song_artist(music_id: int, local_db: dict = None) -> Optional[str]:
+    """查询曲师名（参考库 / music_info 解析结果）"""
+    if local_db and music_id in local_db:
+        for key in ("artist", "artist_name"):
+            artist = (local_db[music_id].get(key) or "").strip()
+            if artist and artist.upper() not in ("KONAMI", "UNKNOWN", "COPYRIGHT"):
+                return artist
+
+    if music_id in _BUILTIN_ARTIST_DB:
+        return _BUILTIN_ARTIST_DB[music_id]
+
+    return None
 
 
 def get_song_name(music_id: int, local_db: dict = None) -> Optional[str]:
@@ -68,7 +85,47 @@ def load_builtin_db(db_path: Path = None) -> int:
         except Exception:
             pass
 
+    load_reference_tsv()
     return len(_BUILTIN_SONG_DB)
+
+
+def load_reference_tsv(tsv_path: Path = None) -> int:
+    """加载 bemaniutils 参考曲名/曲师表 (music_id\\ttitle\\tartist)"""
+    global _BUILTIN_SONG_DB, _BUILTIN_ARTIST_DB, _REFERENCE_TSV_LOADED
+
+    path = tsv_path or _METADATA_TSV
+    if tsv_path is None and _REFERENCE_TSV_LOADED:
+        return 0
+    if not path.exists():
+        return 0
+
+    loaded = 0
+    try:
+        with open(path, "r", encoding="utf-8", errors="replace") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                parts = line.split("\t")
+                if len(parts) < 2:
+                    continue
+                try:
+                    mid = int(parts[0])
+                except ValueError:
+                    continue
+                title = parts[1].strip()
+                artist = parts[2].strip() if len(parts) > 2 else ""
+                if title and mid not in _BUILTIN_SONG_DB:
+                    _BUILTIN_SONG_DB[mid] = title
+                    loaded += 1
+                if artist and artist.upper() not in ("KONAMI", "COPYRIGHT") and mid not in _BUILTIN_ARTIST_DB:
+                    _BUILTIN_ARTIST_DB[mid] = artist
+        if tsv_path is None:
+            _REFERENCE_TSV_LOADED = True
+    except Exception:
+        return 0
+
+    return loaded
 
 
 def save_builtin_db(db_path: Path) -> bool:
