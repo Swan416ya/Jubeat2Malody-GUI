@@ -1,7 +1,7 @@
 """
 Jubeat2Malody GUI 主入口
 
-启动 FluentWindow 主窗口，注册解包/预览/转换/管理四个子页面。
+启动 FluentWindow 主窗口，注册曲库/预览/转换三个子页面。
 """
 
 import sys
@@ -10,12 +10,11 @@ from pathlib import Path
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QApplication
-from qfluentwidgets import FluentWindow, FluentIcon as FIcon, NavigationItemPosition, setTheme, Theme
+from qfluentwidgets import FluentWindow, FluentIcon as FIcon, setTheme, Theme
 
 from .pages.unpack_page import UnpackPage
 from .pages.preview_page import PreviewPage
 from .pages.convert_page import ConvertPage
-from .pages.manage_page import ManagePage
 from .common.signal_bus import signalBus
 from .common.config import cfg
 
@@ -27,25 +26,27 @@ class MainWindow(FluentWindow):
         super().__init__()
         self._init_pages()
         self._init_navigation()
+        self._connect_signals()
         self._init_window()
 
     def _init_pages(self):
         self.unpack_page = UnpackPage(self)
         self.preview_page = PreviewPage(self)
         self.convert_page = ConvertPage(self)
-        self.manage_page = ManagePage(self)
-
     def _init_navigation(self):
-        self.addSubInterface(self.unpack_page, FIcon.FOLDER, "解包")
+        self.addSubInterface(self.unpack_page, FIcon.LIBRARY, "曲库")
         self.addSubInterface(self.preview_page, FIcon.PLAY, "预览")
         self.addSubInterface(self.convert_page, FIcon.SYNC, "转换")
 
-        self.navigationInterface.addSeparator()
+    def _connect_signals(self):
+        signalBus.chart_loaded.connect(self._open_preview)
+        signalBus.open_convert_page.connect(self._open_convert)
 
-        self.addSubInterface(
-            self.manage_page, FIcon.TAG, "管理",
-            position=NavigationItemPosition.BOTTOM,
-        )
+    def _open_preview(self, _data: dict):
+        self.switchTo(self.preview_page)
+
+    def _open_convert(self):
+        self.switchTo(self.convert_page)
 
     def _init_window(self):
         self.resize(1100, 750)

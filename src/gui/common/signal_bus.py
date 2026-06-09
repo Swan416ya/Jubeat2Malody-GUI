@@ -30,9 +30,11 @@ class SignalBus(QObject):
     preview_pause = Signal()
     preview_stop = Signal()
 
-    # --- 管理相关 ---
-    song_selected = Signal(str)         # 歌曲目录路径
+    # --- 曲库 / 管理相关 ---
+    song_selected = Signal(str)         # 歌曲目录路径（已解包）
+    song_extracted = Signal(str)        # 单曲解包完成后的目录路径
     song_list_refreshed = Signal()
+    open_convert_page = Signal()
 
 
 signalBus = SignalBus()

@@ -19,7 +19,7 @@ from qfluentwidgets import (
     CheckBox, InfoBar, InfoBarPosition, StrongBodyLabel,
 )
 
-from ...core.malody_writer import convert_single_song
+from ...core.malody_writer import convert_song
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
 
@@ -38,7 +38,7 @@ class ConvertWorker(QThread):
 
     def run(self):
         try:
-            result = convert_single_song(
+            result = convert_song(
                 Path(self.song_dir), Path(self.output_dir), self.skip_existing
             )
             if result:
@@ -72,7 +72,7 @@ class ConvertPage(ScrollArea):
         src_card = CardWidget(c)
         sl = QVBoxLayout(src_card)
         sl.setContentsMargins(20, 16, 20, 16)
-        sl.addWidget(BodyLabel("歌曲文件夹 (含音频 + .eve 谱面)"))
+        sl.addWidget(BodyLabel("歌曲文件夹 (从曲库提取后自动填入，或手动浏览)"))
         sr = QHBoxLayout()
         self.src_edit = LineEdit(src_card)
         self.src_edit.setPlaceholderText("选择包含 bgm.wav 和 bsc.eve/adv.eve/ext.eve 的文件夹...")
@@ -144,6 +144,7 @@ class ConvertPage(ScrollArea):
         self.src_edit.textChanged.connect(self._update_btn)
         self.out_edit.textChanged.connect(self._update_btn)
         signalBus.song_selected.connect(self._on_song_selected)
+        signalBus.song_extracted.connect(self._on_song_selected)
 
     def _browse_src(self):
         p = QFileDialog.getExistingDirectory(self, "选择歌曲文件夹")

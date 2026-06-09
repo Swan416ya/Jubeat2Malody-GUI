@@ -16,6 +16,8 @@ from jubeatools import song
 from jubeatools.formats.konami.eve.load import iter_events, load_eve, load_file
 from jubeatools.formats.konami.load_tools import make_chart_from_events
 
+from .song_resources import DIFFICULTIES, resolve_eve_path
+
 
 # 文件名 → 难度名称映射
 FILENAME_TO_DIFFICULTY = {
@@ -79,11 +81,26 @@ def load_eve_chart(eve_path: Path, beat_snap: int = 240) -> song.Chart:
     return make_chart_from_events(events, beat_snap=beat_snap)
 
 
-def load_eve_song(directory: Path, beat_snap: int = 240) -> song.Song:
-    """加载目录中所有 EVE 文件，返回 jubeatools Song 对象
+def _load_eve_chart_as_song(eve_path: Path, difficulty: str, beat_snap: int = 240) -> song.Song:
+    chart = load_eve_chart(eve_path, beat_snap=beat_snap)
+    diff = song.Difficulty(difficulty)
+    return song.Song(metadata=song.Metadata(), charts={diff.value: chart})
 
-    复用 jubeatools.load_eve，自动合并各难度共用的 timing (common_timing)。
+
+def load_eve_song(directory: Path, beat_snap: int = 240) -> song.Song:
+    """加载目录中各难度 EVE，返回 jubeatools Song 对象。
+
+    每个难度只取一个规范文件（兼容 bsc_2.eve 等 rename_dupes 命名）。
+    若无匹配则回退到 jubeatools 默认 glob 行为。
     """
+    charts = []
+    for difficulty in DIFFICULTIES:
+        eve_path = resolve_eve_path(directory, difficulty)
+        if eve_path:
+            charts.append(_load_eve_chart_as_song(eve_path, difficulty, beat_snap=beat_snap))
+
+    if charts:
+        return song.Song.from_monochart_instances(*charts)
     return load_eve(directory, beat_snap=beat_snap)
 
 

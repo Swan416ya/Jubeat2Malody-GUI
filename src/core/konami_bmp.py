@@ -10,7 +10,9 @@ from __future__ import annotations
 import struct
 import wave
 from pathlib import Path
-from typing import Optional, Tuple
+from typing import Callable, Optional, Tuple
+
+ProgressCallback = Callable[[float], None]
 
 STEP_SIZES = (
     16, 17, 19, 21, 23, 25, 28, 31,
@@ -57,7 +59,12 @@ def _expand_nibble(byte_val: int, nibble_shift: int, hist1: int, step_index: int
     return hist1, step_index
 
 
-def decode_oki4s(adpcm: bytes, channels: int, num_samples: int) -> bytes:
+def decode_oki4s(
+    adpcm: bytes,
+    channels: int,
+    num_samples: int,
+    on_progress: Optional[ProgressCallback] = None,
+) -> bytes:
     """Decode OKI4S ADPCM to interleaved int16 PCM."""
     if channels not in (1, 2):
         raise ValueError(f"unsupported channel count: {channels}")
@@ -66,6 +73,7 @@ def decode_oki4s(adpcm: bytes, channels: int, num_samples: int) -> bytes:
     out = bytearray(num_samples * channels * 2)
     hists = [0, 0]
     steps = [0, 0]
+    report_every = max(1, num_samples // 200)
 
     for i in range(num_samples):
         if channels == 2:
@@ -79,6 +87,12 @@ def decode_oki4s(adpcm: bytes, channels: int, num_samples: int) -> bytes:
             shift = 0 if (i & 1) else 4
             sample, steps[0] = _expand_nibble(byte_val, shift, hists[0], steps[0])
             struct.pack_into("<h", out, i * 2, sample)
+
+        if on_progress and i % report_every == 0:
+            on_progress(i / num_samples)
+
+    if on_progress:
+        on_progress(1.0)
 
     return bytes(out)
 
@@ -111,13 +125,18 @@ def parse_bmp_header(data: bytes) -> Optional[dict]:
     }
 
 
-def bmp_to_wav_bytes(data: bytes) -> Optional[Tuple[bytes, int, int]]:
+def bmp_to_wav_bytes(
+    data: bytes,
+    on_progress: Optional[ProgressCallback] = None,
+) -> Optional[Tuple[bytes, int, int]]:
     """Decode BMP file bytes to WAV file bytes. Returns (wav_bytes, rate, channels)."""
     header = parse_bmp_header(data)
     if not header:
         return None
 
-    pcm = decode_oki4s(header["adpcm"], header["channels"], header["num_samples"])
+    pcm = decode_oki4s(
+        header["adpcm"], header["channels"], header["num_samples"], on_progress,
+    )
     import io
 
     buf = io.BytesIO()
@@ -129,11 +148,15 @@ def bmp_to_wav_bytes(data: bytes) -> Optional[Tuple[bytes, int, int]]:
     return buf.getvalue(), header["sample_rate"], header["channels"]
 
 
-def convert_bmp_file(bmp_path: Path, wav_path: Path) -> bool:
+def convert_bmp_file(
+    bmp_path: Path,
+    wav_path: Path,
+    on_progress: Optional[ProgressCallback] = None,
+) -> bool:
     """Convert a Konami BMP .bin file to standard WAV."""
     try:
         data = bmp_path.read_bytes()
-        result = bmp_to_wav_bytes(data)
+        result = bmp_to_wav_bytes(data, on_progress)
         if not result:
             return False
         wav_bytes, _, _ = result

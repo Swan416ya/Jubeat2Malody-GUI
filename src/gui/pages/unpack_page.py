@@ -1,361 +1,557 @@
 """
-解包页面
-
-从 Jubeat 游戏目录中选择 IFS 文件并批量解包，
-提取谱面 (EVE)、音频 (BGM) 和元数据。
+曲库页面 — 浏览游戏内全部乐曲，按需单首解包并转入 Malody 转换。
 """
 
-from PySide6.QtCore import Qt, QThread, Signal, Slot
+from pathlib import Path
+
+from PySide6.QtCore import Qt, QThread, Signal, Slot, QTimer
+from PySide6.QtGui import QStandardItem, QStandardItemModel
 from PySide6.QtWidgets import (
     QVBoxLayout, QHBoxLayout, QWidget, QFileDialog,
 )
 from qfluentwidgets import (
     ScrollArea, PushButton, LineEdit, ProgressBar,
     TextEdit, FluentIcon as FIcon, CardWidget, BodyLabel,
-    InfoBar, InfoBarPosition,
+    InfoBar, InfoBarPosition, TableView, ComboBox, StrongBodyLabel,
 )
 
+from ...core.catalog_cache import load_catalog_cache, refresh_extracted_status, save_catalog_cache
+from ...core.song_catalog import CatalogEntry, scan_game_catalog
+from ...core.song_database import load_reference_tsv, update_db_from_music_info
 from ...core.unpacker import (
-    extract_song, load_music_info, is_ifs_encrypted, load_word_info,
-    load_word_dictionary, find_metadata_xml, build_jacket_index,
-)
-from ...core.song_database import update_db_from_music_info, load_reference_tsv
-from ...core.texbin_extractor import datapackage_status
-from ..common.signal_bus import signalBus
+    build_jacket_index,
+    extract_song,
+    find_metadata_xml,
+    is_ifs_encrypted,
+    load_music_info,
+    load_word_dictionary,
+    load_word_info,
+)  # build_jacket_index used in CatalogLoadWorker
 from ..common.config import cfg
+from ..common.signal_bus import signalBus
 
 
-class UnpackWorker(QThread):
-    """后台解包线程"""
-    progress = Signal(int, int)        # current, total
-    finished = Signal(str)             # output_dir
-    error = Signal(str)                # error_msg
-    log = Signal(str)                  # log message
+class CatalogLoadWorker(QThread):
+    """后台扫描游戏曲库（不执行解包）。"""
+    progress = Signal(str)
+    finished = Signal(object)
+    error = Signal(str)
 
-    def __init__(self, ifs_dir: str, output_dir: str):
+    def __init__(self, data_dir: str, output_dir: str):
         super().__init__()
-        self.ifs_dir = ifs_dir
+        self.data_dir = data_dir
         self.output_dir = output_dir
 
     def run(self):
-        import traceback
-        from pathlib import Path
-
         try:
-            self._run_unpack()
+            data_path = Path(self.data_dir)
+            output_path = Path(self.output_dir) if self.output_dir else None
+
+            self.progress.emit("加载 music_info 元数据...")
+            word_info_path = find_metadata_xml(data_path, "word_info.xml")
+            word_dict = load_word_dictionary(word_info_path) if word_info_path else {}
+            music_info_path = find_metadata_xml(data_path, "music_info.xml")
+            music_info = (
+                load_music_info(music_info_path, word_dict=word_dict)
+                if music_info_path else {}
+            )
+            if music_info:
+                update_db_from_music_info(music_info)
+            load_reference_tsv()
+
+            word_info = load_word_info(word_info_path) if word_info_path else {}
+
+            self.progress.emit("扫描封面索引（首次较慢）...")
+            jacket_index = build_jacket_index(data_path)
+
+            self.progress.emit("汇总曲库列表...")
+            entries = scan_game_catalog(
+                data_path,
+                output_path,
+                jacket_index=jacket_index,
+                music_info=music_info,
+                word_info=word_info,
+                word_dict=word_dict,
+            )
+            self.finished.emit({
+                "entries": entries,
+                "music_info": music_info,
+                "word_info": word_info,
+                "jacket_index": jacket_index,
+            })
         except Exception as e:
-            self.log.emit(f"致命错误: {e}")
-            self.log.emit(traceback.format_exc())
             self.error.emit(str(e))
 
-    def _run_unpack(self):
-        from pathlib import Path
 
-        ifs_path = Path(self.ifs_dir)
-        output_path = Path(self.output_dir)
+class SingleExtractWorker(QThread):
+    """后台解包单首乐曲，带分步进度。"""
+    step = Signal(str, int)
+    finished = Signal(str)
+    error = Signal(str)
+    log = Signal(str)
 
-        self.log.emit(f"开始解包: {ifs_path}")
-        self.log.emit(f"输出目录: {output_path}")
+    def __init__(
+        self,
+        ifs_path: str,
+        data_dir: str,
+        output_dir: str,
+        music_info: dict,
+        word_info: dict,
+        jacket_index: dict,
+    ):
+        super().__init__()
+        self.ifs_path = ifs_path
+        self.data_dir = data_dir
+        self.output_dir = output_dir
+        self.music_info = music_info
+        self.word_info = word_info
+        self.jacket_index = jacket_index
 
-        if not ifs_path.is_dir():
-            self.error.emit(f"游戏数据目录不存在: {ifs_path}")
-            return
-        if not output_path.exists():
-            output_path.mkdir(parents=True, exist_ok=True)
+    def run(self):
+        try:
+            ifs_path = Path(self.ifs_path)
+            if is_ifs_encrypted(ifs_path):
+                self.error.emit("该 IFS 已加密，无法解包")
+                return
 
-        # 查找 music_info.xml (支持 music_info/music_info.xml 等常见路径)
-        word_info_path = find_metadata_xml(ifs_path, "word_info.xml")
-        word_dict = load_word_dictionary(word_info_path) if word_info_path else {}
-        if word_info_path:
-            self.log.emit(
-                f"已加载词库 word_info: {len(word_dict)} 条 ({word_info_path})"
+            def on_progress(message: str, percent: int) -> None:
+                self.step.emit(message, percent)
+                self.log.emit(f"[{percent:3d}%] {message}")
+
+            song_dir = extract_song(
+                ifs_path,
+                self.music_info,
+                Path(self.output_dir),
+                ifs_dir=Path(self.data_dir),
+                word_info=self.word_info,
+                jacket_index=self.jacket_index,
+                progress=on_progress,
             )
-            if not word_dict:
-                self.log.emit(
-                    "警告: word_info.xml 解析为空，曲名/曲师可能无法从词库解析。"
-                )
-        else:
-            self.log.emit(
-                "提示: 未找到 word_info.xml，曲名/曲师将依赖 music_info 十六进制字段或参考库。"
-            )
-
-        music_info_path = find_metadata_xml(ifs_path, "music_info.xml")
-        music_info = {}
-        if music_info_path:
-            music_info = load_music_info(music_info_path, word_dict=word_dict)
-            added = update_db_from_music_info(music_info)
-            self.log.emit(
-                f"已加载歌曲元数据: {len(music_info)} 首 ({music_info_path})"
-            )
-            if added:
-                self.log.emit(f"已更新本地曲名库: +{added} 首")
-        else:
-            self.log.emit(
-                "警告: 未找到 music_info.xml，曲名将显示为 unknown_*。"
-                "请选择包含 music_info/ 目录的游戏数据根目录 (如 contents/data)。"
-            )
-
-        # 查找 word_info.xml (可能包含更完整的曲名/艺术家)
-        word_info = {}
-        if word_info_path:
-            word_info = load_word_info(word_info_path)
-            if word_info:
-                self.log.emit(f"已加载文本信息: {len(word_info)} 首 ({word_info_path})")
-        else:
-            self.log.emit("提示: 未找到 word_info.xml，将仅使用 music_info 中的曲名")
-
-        # 查找所有 IFS 文件
-        ifs_files = sorted(ifs_path.rglob("*_msc.ifs"))
-        if not ifs_files:
-            self.error.emit("未找到任何 IFS 文件 (*_msc.ifs)")
-            return
-
-        self.log.emit(f"找到 {len(ifs_files)} 个 IFS 文件")
-
-        self.log.emit("正在扫描封面文件索引（仅一次）...")
-        jacket_index = build_jacket_index(ifs_path)
-        self.log.emit(f"封面索引: {len(jacket_index)} 个 (texbin/ifs)")
-
-        dp = datapackage_status(ifs_path)
-        if dp.get("exists"):
-            self.log.emit(
-                f"DataPackage 缓存: {dp.get('jacket_bins', 0)} 个曲绘 "
-                f"({dp.get('path', '')})"
-            )
-            if dp.get("jacket_bins", 0) == 0:
-                self.log.emit(
-                    "提示: 旧曲曲绘需游戏联网下载到 datapackage/data；"
-                    "当前为空则旧曲无本地曲绘文件"
-                )
-
-        load_reference_tsv()
-
-        success_count = 0
-        skipped_encrypted = 0
-        total = len(ifs_files)
-        for i, ifs_file in enumerate(ifs_files):
-            if self.isInterruptionRequested():
-                self.log.emit("解包已中断")
-                break
-
-            current = i + 1
-            self.progress.emit(current, total)
-            self.log.emit(f"[{current}/{total}] 处理: {ifs_file.name}")
-
-            if is_ifs_encrypted(ifs_file):
-                skipped_encrypted += 1
-                self.log.emit(f"  -> 跳过(加密)")
-                continue
-
-            try:
-                song_dir = extract_song(
-                    ifs_file, music_info, output_path,
-                    ifs_dir=ifs_path, word_info=word_info,
-                    jacket_index=jacket_index,
-                )
-                if song_dir:
-                    has_jkt = any(
-                        f.name.lower().startswith("jkt_")
-                        and f.suffix.lower() in (".png", ".jpg", ".jpeg")
-                        for f in song_dir.iterdir()
-                        if f.is_file()
-                    )
-                    status = "含曲绘" if has_jkt else "无曲绘"
-                    self.log.emit(f"  -> 成功 ({status}): {song_dir.name}")
-                    success_count += 1
-                else:
-                    self.log.emit(f"  -> 失败(空)")
-            except Exception as e:
-                self.log.emit(f"  -> 出错: {e}")
-
-        self.log.emit(
-            f"完成! 成功 {success_count}/{total}"
-            + (f"，跳过加密 {skipped_encrypted}" if skipped_encrypted else "")
-        )
-        self.finished.emit(self.output_dir)
+            if song_dir:
+                self.finished.emit(str(song_dir))
+            else:
+                self.error.emit("解包失败：IFS 内容为空")
+        except Exception as e:
+            self.error.emit(str(e))
 
 
 class UnpackPage(ScrollArea):
-    """解包页面 — 选择目录、批量解包 IFS"""
+    """曲库 + 单首解包页面"""
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName("unpackPage")
-        self._worker = None
-
+        self._catalog_worker = None
+        self._extract_worker = None
+        self._entries: list[CatalogEntry] = []
+        self._music_info: dict = {}
+        self._word_info: dict = {}
+        self._jacket_index: dict = {}
+        self._last_extracted_dir = ""
         self._setup_ui()
         self._connect_signals()
+        QTimer.singleShot(100, self._try_restore_catalog)
 
     def _setup_ui(self):
         self.setWidgetResizable(True)
         self.setStyleSheet("QScrollArea { border: none; background: transparent; }")
 
         container = QWidget()
-        self.vBoxLayout = QVBoxLayout(container)
-        self.vBoxLayout.setContentsMargins(36, 20, 36, 20)
-        self.vBoxLayout.setSpacing(16)
+        layout = QVBoxLayout(container)
+        layout.setContentsMargins(36, 20, 36, 20)
+        layout.setSpacing(16)
 
-        # --- IFS 目录选择 ---
-        self.ifs_card = CardWidget(container)
-        ifs_layout = QVBoxLayout(self.ifs_card)
-        ifs_layout.setContentsMargins(20, 16, 20, 16)
+        path_card = CardWidget(container)
+        path_layout = QVBoxLayout(path_card)
+        path_layout.setContentsMargins(20, 16, 20, 16)
 
-        ifs_layout.addWidget(BodyLabel("游戏数据目录 (含 IFS 文件)"))
-        ifs_dir_row = QHBoxLayout()
-        self.ifs_dir_edit = LineEdit(self.ifs_card)
-        self.ifs_dir_edit.setPlaceholderText("选择包含 ifs_pack/ 的游戏数据目录...")
+        path_layout.addWidget(BodyLabel("游戏数据目录"))
+        game_row = QHBoxLayout()
+        self.ifs_dir_edit = LineEdit(path_card)
+        self.ifs_dir_edit.setPlaceholderText("选择 contents/data 等含 ifs_pack 的目录...")
         self.ifs_dir_edit.setClearButtonEnabled(True)
         if cfg.last_ifs_dir:
             self.ifs_dir_edit.setText(cfg.last_ifs_dir)
-        self.ifs_browse_btn = PushButton(FIcon.FOLDER, "浏览", self.ifs_card)
-        ifs_dir_row.addWidget(self.ifs_dir_edit, 1)
-        ifs_dir_row.addWidget(self.ifs_browse_btn)
-        ifs_layout.addLayout(ifs_dir_row)
-        self.vBoxLayout.addWidget(self.ifs_card)
+        self.ifs_browse_btn = PushButton(FIcon.FOLDER, "浏览", path_card)
+        game_row.addWidget(self.ifs_dir_edit, 1)
+        game_row.addWidget(self.ifs_browse_btn)
+        path_layout.addLayout(game_row)
 
-        # --- 输出目录选择 ---
-        self.output_card = CardWidget(container)
-        output_layout = QVBoxLayout(self.output_card)
-        output_layout.setContentsMargins(20, 16, 20, 16)
-
-        output_layout.addWidget(BodyLabel("解包输出目录"))
-        output_dir_row = QHBoxLayout()
-        self.output_dir_edit = LineEdit(self.output_card)
-        self.output_dir_edit.setPlaceholderText("选择解包后文件的保存位置...")
+        path_layout.addWidget(BodyLabel("解包输出目录"))
+        out_row = QHBoxLayout()
+        self.output_dir_edit = LineEdit(path_card)
+        self.output_dir_edit.setPlaceholderText("单曲解包文件保存位置...")
         self.output_dir_edit.setClearButtonEnabled(True)
         if cfg.last_output_dir:
             self.output_dir_edit.setText(cfg.last_output_dir)
-        self.output_browse_btn = PushButton(FIcon.FOLDER, "浏览", self.output_card)
-        output_dir_row.addWidget(self.output_dir_edit, 1)
-        output_dir_row.addWidget(self.output_browse_btn)
-        output_layout.addLayout(output_dir_row)
-        self.vBoxLayout.addWidget(self.output_card)
+        self.output_browse_btn = PushButton(FIcon.FOLDER, "浏览", path_card)
+        out_row.addWidget(self.output_dir_edit, 1)
+        out_row.addWidget(self.output_browse_btn)
+        path_layout.addLayout(out_row)
+        layout.addWidget(path_card)
 
-        # --- 操作按钮 ---
-        btn_row = QHBoxLayout()
-        self.unpack_btn = PushButton(FIcon.ZIP_FOLDER, "开始解包", container)
-        self.unpack_btn.setDisabled(True)
-        self.stop_btn = PushButton(FIcon.CANCEL, "停止", container)
-        self.stop_btn.setDisabled(True)
-        btn_row.addWidget(self.unpack_btn)
-        btn_row.addWidget(self.stop_btn)
-        btn_row.addStretch(1)
-        self.vBoxLayout.addLayout(btn_row)
+        tool_card = CardWidget(container)
+        tool_layout = QHBoxLayout(tool_card)
+        tool_layout.setContentsMargins(20, 12, 20, 12)
+        self.search_edit = LineEdit(tool_card)
+        self.search_edit.setPlaceholderText("搜索曲名、艺术家或 ID...")
+        self.search_edit.setClearButtonEnabled(True)
+        self.diff_filter = ComboBox(tool_card)
+        self.diff_filter.addItems(["全部", "BSC", "ADV", "EXT"])
+        self.load_catalog_btn = PushButton(FIcon.SYNC, "刷新曲库", tool_card)
+        self.extract_btn = PushButton(FIcon.DOWNLOAD, "提取选中曲", tool_card)
+        self.extract_btn.setEnabled(False)
+        self.convert_btn = PushButton(FIcon.SYNC, "转到 Malody 转换", tool_card)
+        self.convert_btn.setEnabled(False)
+        tool_layout.addWidget(BodyLabel("搜索:"))
+        tool_layout.addWidget(self.search_edit, 1)
+        tool_layout.addWidget(BodyLabel("难度:"))
+        tool_layout.addWidget(self.diff_filter)
+        tool_layout.addWidget(self.load_catalog_btn)
+        tool_layout.addWidget(self.extract_btn)
+        tool_layout.addWidget(self.convert_btn)
+        layout.addWidget(tool_card)
 
-        # --- 进度条 ---
+        self.status_label = StrongBodyLabel("正在恢复曲库缓存...")
+        self.status_label.setStyleSheet("color: gray;")
+        layout.addWidget(self.status_label)
+
+        self._model = QStandardItemModel(self)
+        self._model.setHorizontalHeaderLabels(
+            ["曲名", "Music ID", "艺术家", "BPM", "BSC", "ADV", "EXT", "曲绘", "状态"]
+        )
+        self.table = TableView(container)
+        self.table.setModel(self._model)
+        self.table.setSortingEnabled(True)
+        self.table.setSelectionBehavior(TableView.SelectionBehavior.SelectRows)
+        self.table.setSelectionMode(TableView.SelectionMode.SingleSelection)
+        self.table.setMinimumHeight(320)
+        layout.addWidget(self.table, 1)
+
         self.progress_bar = ProgressBar(container)
         self.progress_bar.setRange(0, 100)
         self.progress_bar.setValue(0)
-        self.vBoxLayout.addWidget(self.progress_bar)
+        layout.addWidget(self.progress_bar)
 
-        # --- 日志 ---
-        self.log_card = CardWidget(container)
-        log_layout = QVBoxLayout(self.log_card)
+        self.progress_label = BodyLabel("")
+        self.progress_label.setStyleSheet("color: gray;")
+        layout.addWidget(self.progress_label)
+
+        log_card = CardWidget(container)
+        log_layout = QVBoxLayout(log_card)
         log_layout.setContentsMargins(20, 16, 20, 16)
-        log_layout.addWidget(BodyLabel("解包日志"))
-        self.log_edit = TextEdit(self.log_card)
+        log_layout.addWidget(BodyLabel("提取日志"))
+        self.log_edit = TextEdit(log_card)
         self.log_edit.setReadOnly(True)
-        self.log_edit.setPlaceholderText("解包日志将在此显示...")
-        self.log_edit.setMinimumHeight(220)
+        self.log_edit.setMinimumHeight(140)
         log_layout.addWidget(self.log_edit)
-        self.vBoxLayout.addWidget(self.log_card)
+        layout.addWidget(log_card)
 
         self.setWidget(container)
 
     def _connect_signals(self):
         self.ifs_browse_btn.clicked.connect(self._browse_ifs_dir)
         self.output_browse_btn.clicked.connect(self._browse_output_dir)
-        self.unpack_btn.clicked.connect(self._start_unpack)
-        self.stop_btn.clicked.connect(self._stop_unpack)
-
-        # 输入变化时启用/禁用按钮
-        self.ifs_dir_edit.textChanged.connect(self._update_btn_state)
-        self.output_dir_edit.textChanged.connect(self._update_btn_state)
-
-        # 初始化按钮状态（config 预填充的文本在信号连接前已设置，需手动触发一次）
-        self._update_btn_state()
+        self.load_catalog_btn.clicked.connect(lambda: self._load_catalog(force_refresh=True))
+        self.output_dir_edit.textChanged.connect(self._on_output_dir_changed)
+        self.extract_btn.clicked.connect(self._extract_selected)
+        self.convert_btn.clicked.connect(self._go_convert)
+        self.search_edit.textChanged.connect(self._filter_table)
+        self.diff_filter.currentTextChanged.connect(lambda _: self._filter_table(self.search_edit.text()))
+        self.table.selectionModel().selectionChanged.connect(self._on_selection_changed)
+        self.table.doubleClicked.connect(self._on_double_click)
 
     def _browse_ifs_dir(self):
         path = QFileDialog.getExistingDirectory(self, "选择游戏数据目录")
         if path:
             self.ifs_dir_edit.setText(path)
             cfg.last_ifs_dir = path
+            self._entries = []
+            self._music_info = {}
+            self._try_restore_catalog()
 
     def _browse_output_dir(self):
         path = QFileDialog.getExistingDirectory(self, "选择输出目录")
         if path:
             self.output_dir_edit.setText(path)
             cfg.last_output_dir = path
+            self._on_output_dir_changed()
 
-    def _update_btn_state(self):
-        ready = bool(self.ifs_dir_edit.text().strip() and self.output_dir_edit.text().strip())
-        self.unpack_btn.setEnabled(ready and self._worker is None)
+    def _paths_ready(self) -> bool:
+        return bool(self.ifs_dir_edit.text().strip() and self.output_dir_edit.text().strip())
 
-    def _start_unpack(self):
-        ifs_dir = self.ifs_dir_edit.text().strip()
-        output_dir = self.output_dir_edit.text().strip()
+    def _on_output_dir_changed(self):
+        if not self._entries:
+            return
+        output_dir = Path(self.output_dir_edit.text().strip())
+        cfg.last_output_dir = str(output_dir)
+        refresh_extracted_status(self._entries, output_dir)
+        self._rebuild_table()
 
-        self._worker = UnpackWorker(ifs_dir, output_dir)
-        self._worker.progress.connect(self._on_progress, Qt.ConnectionType.QueuedConnection)
-        self._worker.finished.connect(self._on_finished, Qt.ConnectionType.QueuedConnection)
-        self._worker.error.connect(self._on_error, Qt.ConnectionType.QueuedConnection)
-        self._worker.log.connect(self._on_log, Qt.ConnectionType.QueuedConnection)
+    def _try_restore_catalog(self):
+        if not self._paths_ready():
+            self.status_label.setText("请选择游戏目录和输出目录")
+            return
+        if self._catalog_worker and self._catalog_worker.isRunning():
+            return
 
-        self.unpack_btn.setDisabled(True)
-        self.stop_btn.setEnabled(True)
-        self.progress_bar.setValue(0)
-        self.log_edit.clear()
-        self._on_log("正在启动解包任务...")
+        data_dir = Path(self.ifs_dir_edit.text().strip())
+        output_dir = Path(self.output_dir_edit.text().strip())
+        cached = load_catalog_cache(data_dir, output_dir)
+        if cached:
+            entries, jacket_index, meta = cached
+            self._apply_catalog(entries, jacket_index, meta, from_cache=True)
+            return
 
-        signalBus.unpack_started.emit(output_dir)
-        self._worker.start()
-
-    def _stop_unpack(self):
-        if self._worker and self._worker.isRunning():
-            self._worker.requestInterruption()
-            self._worker.terminate()
-            self._worker.wait(5000)
-            self._on_log("用户已停止解包")
-        self._cleanup_worker("")
-        self.unpack_btn.setEnabled(True)
-        self.stop_btn.setDisabled(True)
-
-    def _on_progress(self, current: int, total: int):
-        if total > 0:
-            self.progress_bar.setValue(int(current / total * 100))
-
-    def _cleanup_worker(self, output_dir: str):
-        if self._worker is not None:
-            if self._worker.isRunning():
-                self._worker.wait(5000)
-            self._worker.deleteLater()
-            self._worker = None
-        return output_dir
-
-    def _on_finished(self, output_dir: str):
-        self._cleanup_worker(output_dir)
-        self.unpack_btn.setEnabled(True)
-        self.stop_btn.setDisabled(True)
-        if output_dir:
-            signalBus.unpack_finished.emit(output_dir)
-            InfoBar.success(
-                "解包完成", f"文件已保存到: {output_dir}",
-                parent=self, position=InfoBarPosition.TOP, duration=3000,
-            )
-
-    def _on_error(self, msg: str):
-        self._on_log(f"错误: {msg}")
-        self._cleanup_worker("")
-        self.unpack_btn.setEnabled(True)
-        self.stop_btn.setDisabled(True)
-        signalBus.unpack_error.emit(msg)
-        InfoBar.error(
-            "解包失败", msg,
-            parent=self, position=InfoBarPosition.TOP, duration=5000,
+        self.status_label.setText(
+            "未找到曲库缓存，请点击「刷新曲库」进行首次扫描（完成后将自动记住）"
         )
 
+    def _load_catalog(self, force_refresh: bool = False):
+        if not self._paths_ready():
+            InfoBar.warning("提示", "请先选择游戏目录和输出目录", parent=self, position=InfoBarPosition.TOP)
+            return
+        if self._catalog_worker and self._catalog_worker.isRunning():
+            return
+
+        data_dir = self.ifs_dir_edit.text().strip()
+        output_dir = self.output_dir_edit.text().strip()
+        cfg.last_ifs_dir = data_dir
+        cfg.last_output_dir = output_dir
+
+        self._catalog_worker = CatalogLoadWorker(data_dir, output_dir)
+        self._catalog_worker.progress.connect(self._on_catalog_progress)
+        self._catalog_worker.finished.connect(self._on_catalog_loaded)
+        self._catalog_worker.error.connect(self._on_catalog_error)
+        self.load_catalog_btn.setDisabled(True)
+        self.extract_btn.setDisabled(True)
+        self.status_label.setText("正在加载曲库...")
+        self.progress_bar.setValue(0)
+        self._catalog_worker.start()
+
     @Slot(str)
-    def _on_log(self, msg: str):
+    def _on_catalog_progress(self, msg: str):
+        self.status_label.setText(msg)
+        self._append_log(msg)
+
+    def _on_catalog_loaded(self, payload: dict):
+        entries = payload["entries"]
+        jacket_index = payload.get("jacket_index", {})
+        save_catalog_cache(Path(self.ifs_dir_edit.text().strip()), entries, jacket_index)
+        self._music_info = payload.get("music_info", {})
+        self._word_info = payload.get("word_info", {})
+        self._apply_catalog(
+            entries,
+            jacket_index,
+            {"cached_at": "", "from_cache": False},
+            from_cache=False,
+        )
+
+    def _apply_catalog(
+        self,
+        entries: list,
+        jacket_index: dict,
+        meta: dict,
+        *,
+        from_cache: bool,
+    ):
+        self._entries = entries
+        self._jacket_index = jacket_index
+        self._rebuild_table()
+
+        self.load_catalog_btn.setEnabled(True)
+        self.extract_btn.setEnabled(bool(self.table.selectionModel().selectedRows()))
+        source = "缓存" if from_cache else "扫描"
+        cached_at = meta.get("cached_at", "")
+        if from_cache and cached_at:
+            self.status_label.setText(f"曲库已从缓存恢复：共 {len(entries)} 首（{cached_at[:19]}）")
+        else:
+            self.status_label.setText(f"曲库已{source}加载：共 {len(entries)} 首")
+        self.progress_bar.setValue(100)
+        self.progress_label.setText("")
+        signalBus.song_list_refreshed.emit()
+
+    def _rebuild_table(self):
+        self._model.removeRows(0, self._model.rowCount())
+        for entry in self._entries:
+            self._append_entry_row(entry)
+        self._filter_table()
+
+    def _ensure_extract_metadata(self):
+        if self._music_info:
+            return
+        data_path = Path(self.ifs_dir_edit.text().strip())
+        word_info_path = find_metadata_xml(data_path, "word_info.xml")
+        word_dict = load_word_dictionary(word_info_path) if word_info_path else {}
+        music_info_path = find_metadata_xml(data_path, "music_info.xml")
+        self._music_info = (
+            load_music_info(music_info_path, word_dict=word_dict)
+            if music_info_path else {}
+        )
+        self._word_info = load_word_info(word_info_path) if word_info_path else {}
+
+    def _on_catalog_error(self, msg: str):
+        self.load_catalog_btn.setEnabled(True)
+        self.status_label.setText(f"加载失败: {msg}")
+        InfoBar.error("曲库加载失败", msg, parent=self, position=InfoBarPosition.TOP)
+
+    def _append_entry_row(self, entry: CatalogEntry):
+        name_item = QStandardItem(entry.title)
+        name_item.setData(entry.music_id, Qt.ItemDataRole.UserRole)
+        name_item.setData(str(entry.ifs_path), Qt.ItemDataRole.UserRole + 1)
+        if entry.extracted_dir:
+            name_item.setData(str(entry.extracted_dir), Qt.ItemDataRole.UserRole + 2)
+
+        row = [
+            name_item,
+            QStandardItem(str(entry.music_id)),
+            QStandardItem(entry.artist),
+            QStandardItem(entry.bpm),
+            QStandardItem(entry.levels.get("BSC", "-")),
+            QStandardItem(entry.levels.get("ADV", "-")),
+            QStandardItem(entry.levels.get("EXT", "-")),
+            QStandardItem("有" if entry.has_jacket else "—"),
+            QStandardItem(entry.status),
+        ]
+        for item in row:
+            item.setEditable(False)
+        self._model.appendRow(row)
+
+    def _filter_table(self, text: str = ""):
+        text = (text or self.search_edit.text()).strip().lower()
+        diff = self.diff_filter.currentText()
+        diff_col = {"BSC": 4, "ADV": 5, "EXT": 6}.get(diff)
+
+        for row in range(self._model.rowCount()):
+            visible = True
+            if text:
+                cells = [
+                    self._model.item(row, col).text().lower()
+                    for col in range(self._model.columnCount())
+                    if self._model.item(row, col)
+                ]
+                visible = any(text in cell for cell in cells)
+            if visible and diff_col is not None:
+                level_item = self._model.item(row, diff_col)
+                if level_item and level_item.text().strip() in ("", "-"):
+                    visible = False
+            self.table.setRowHidden(row, not visible)
+
+    def _on_selection_changed(self):
+        has_sel = bool(self.table.selectionModel().selectedRows())
+        busy = self._extract_worker is not None and self._extract_worker.isRunning()
+        self.extract_btn.setEnabled(has_sel and not busy)
+
+    def _selected_entry(self) -> CatalogEntry | None:
+        rows = self.table.selectionModel().selectedRows()
+        if not rows:
+            return None
+        row = rows[0].row()
+        music_id = self._model.item(row, 0).data(Qt.ItemDataRole.UserRole)
+        for entry in self._entries:
+            if entry.music_id == music_id:
+                return entry
+        return None
+
+    def _extract_selected(self):
+        entry = self._selected_entry()
+        if not entry:
+            return
+        if self._extract_worker and self._extract_worker.isRunning():
+            return
+
+        output_dir = self.output_dir_edit.text().strip()
+        data_dir = self.ifs_dir_edit.text().strip()
+        self._ensure_extract_metadata()
+
+        self.log_edit.clear()
+        self.progress_bar.setValue(0)
+        self.progress_label.setText(f"正在提取: {entry.title}")
+        self.extract_btn.setDisabled(True)
+        self.load_catalog_btn.setDisabled(True)
+
+        self._extract_worker = SingleExtractWorker(
+            str(entry.ifs_path),
+            data_dir,
+            output_dir,
+            self._music_info,
+            self._word_info,
+            self._jacket_index,
+        )
+        self._extract_worker.step.connect(self._on_extract_step)
+        self._extract_worker.log.connect(self._append_log)
+        self._extract_worker.finished.connect(self._on_extract_finished)
+        self._extract_worker.error.connect(self._on_extract_error)
+        self._extract_worker.start()
+
+    @Slot(str, int)
+    def _on_extract_step(self, message: str, percent: int):
+        self.progress_bar.setValue(percent)
+        self.progress_label.setText(message)
+
+    def _on_extract_finished(self, song_dir: str):
+        self._last_extracted_dir = song_dir
+        self.load_catalog_btn.setEnabled(True)
+        self.extract_btn.setEnabled(True)
+        self.convert_btn.setEnabled(True)
+        self.progress_bar.setValue(100)
+        self.progress_label.setText("提取完成")
+        self.status_label.setText(f"已提取: {Path(song_dir).name}")
+
+        entry = self._selected_entry()
+        if entry:
+            entry.extracted_dir = Path(song_dir)
+            rows = self.table.selectionModel().selectedRows()
+            if rows:
+                row = rows[0].row()
+                self._model.item(row, 8).setText("已提取")
+                self._model.item(row, 0).setData(song_dir, Qt.ItemDataRole.UserRole + 2)
+            if self._entries:
+                save_catalog_cache(
+                    Path(self.ifs_dir_edit.text().strip()),
+                    self._entries,
+                    self._jacket_index,
+                )
+
+        signalBus.song_extracted.emit(song_dir)
+        signalBus.unpack_finished.emit(str(Path(song_dir).parent))
+        InfoBar.success(
+            "提取完成",
+            f"已保存到 {song_dir}",
+            parent=self,
+            position=InfoBarPosition.TOP,
+            duration=4000,
+        )
+
+    def _on_extract_error(self, msg: str):
+        self.load_catalog_btn.setEnabled(True)
+        self.extract_btn.setEnabled(True)
+        self.progress_label.setText(f"失败: {msg}")
+        self._append_log(f"错误: {msg}")
+        InfoBar.error("提取失败", msg, parent=self, position=InfoBarPosition.TOP)
+
+    def _on_double_click(self, index):
+        """已提取的曲目双击可跳转预览。"""
+        row = index.row()
+        stored = self._model.item(row, 0).data(Qt.ItemDataRole.UserRole + 2)
+        if stored:
+            signalBus.chart_loaded.emit({"song_dir": stored, "difficulty": "EXT"})
+
+    def _go_convert(self):
+        song_dir = self._last_extracted_dir
+        rows = self.table.selectionModel().selectedRows()
+        if rows:
+            stored = self._model.item(rows[0].row(), 0).data(Qt.ItemDataRole.UserRole + 2)
+            if stored:
+                song_dir = stored
+        if not song_dir:
+            InfoBar.warning("提示", "请先提取一首乐曲", parent=self, position=InfoBarPosition.TOP)
+            return
+        signalBus.song_selected.emit(song_dir)
+        signalBus.open_convert_page.emit()
+
+    @Slot(str)
+    def _append_log(self, msg: str):
         self.log_edit.append(msg)
         bar = self.log_edit.verticalScrollBar()
         bar.setValue(bar.maximum())

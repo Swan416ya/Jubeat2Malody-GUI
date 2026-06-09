@@ -11,7 +11,9 @@ import struct
 import shutil
 import xml.etree.ElementTree as ET
 from pathlib import Path
-from typing import Optional, List, Tuple
+from typing import Callable, Optional, List, Tuple
+
+ProgressReporter = Callable[[str, int], None]
 
 try:
     import ifstools
@@ -149,16 +151,21 @@ def resolve_bpm(info: dict) -> float:
 
 def _parse_bpm_from_eve(song_dir: Path) -> float:
     """从解包后的 EVE 谱面读取首个 TEMPO 作为 BPM 回退"""
-    for name in ("bsc.eve", "bsc_1.eve", "adv.eve", "adv_1.eve", "ext.eve", "ext_1.eve"):
-        eve_path = song_dir / name
-        if not eve_path.is_file():
+    from .song_resources import DIFFICULTIES, resolve_eve_path
+
+    for difficulty in DIFFICULTIES:
+        eve_path = resolve_eve_path(song_dir, difficulty)
+        if not eve_path:
             continue
         try:
             for line in eve_path.read_text(encoding="utf-8", errors="replace").splitlines():
                 parts = [p.strip() for p in line.split(",")]
                 if len(parts) >= 3 and parts[1].upper() == "TEMPO":
-                    return round(float(parts[2]) / 1000.0, 2)
-        except (OSError, ValueError):
+                    tempo = float(parts[2])
+                    if tempo > 1000:
+                        return round(60_000_000 / tempo, 2)
+                    return round(tempo, 2)
+        except (OSError, ValueError, ZeroDivisionError):
             continue
     return 0.0
 
@@ -562,7 +569,11 @@ def load_word_info(word_info_path: Path) -> dict:
     return info
 
 
-def _convert_song_audio(song_dir: Path, extracted: List[str]) -> None:
+def _convert_song_audio(
+    song_dir: Path,
+    extracted: List[str],
+    on_audio_progress: Optional[Callable[[float], None]] = None,
+) -> None:
     """将解包出的 bgm .bin 转为标准 WAV（Beyond Ave 多为 bgm_1.bin）。
 
     idx.bin 为较短的游戏内预览/同步片段，Malody 谱面只需完整 bgm，故不转换 idx。
@@ -588,14 +599,18 @@ def _convert_song_audio(song_dir: Path, extracted: List[str]) -> None:
         primary_bgm = bgm_bins[0]
 
     if primary_bgm:
-        convert_bmp_to_wav(primary_bgm, song_dir / "bgm.wav")
+        convert_bmp_to_wav(primary_bgm, song_dir / "bgm.wav", on_progress=on_audio_progress)
 
 
-def convert_bmp_to_wav(bmp_path: Path, wav_path: Path) -> bool:
+def convert_bmp_to_wav(
+    bmp_path: Path,
+    wav_path: Path,
+    on_progress: Optional[Callable[[float], None]] = None,
+) -> bool:
     """将 Konami BMP (OKI4S ADPCM) 转换为标准 WAV"""
     from .konami_bmp import convert_bmp_file
 
-    return convert_bmp_file(bmp_path, wav_path)
+    return convert_bmp_file(bmp_path, wav_path, on_progress)
 
 
 def is_ifs_encrypted(ifs_path: Path) -> bool:
@@ -910,7 +925,8 @@ def _pick_best_jacket(images: List[Path], music_id: int) -> Optional[Path]:
 
 def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
                  ifs_dir: Path = None, word_info: dict = None,
-                 jacket_index: Optional[dict[int, Path]] = None) -> Optional[Path]:
+                 jacket_index: Optional[dict[int, Path]] = None,
+                 progress: Optional[ProgressReporter] = None) -> Optional[Path]:
     """
     解包单个乐曲 IFS，返回输出目录路径。
     提取谱面 (.eve)、转换音频 (bgm.bin → .wav)、提取封面图片、写入 song_info.txt。
@@ -925,6 +941,10 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     if ifs_dir is None:
         ifs_dir = ifs_path.parent
 
+    def report(message: str, percent: int) -> None:
+        if progress:
+            progress(message, percent)
+
     music_id = _parse_music_id_from_ifs(ifs_path)
 
     song_info = _finalize_song_info(
@@ -935,18 +955,22 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     song_dir = output_base / f"{music_id}_{folder_title}"
     song_dir.mkdir(parents=True, exist_ok=True)
 
+    report("解包 IFS 容器...", 5)
     extracted = extract_ifs(ifs_path, song_dir)
     if not extracted:
         return None
 
-    # 转换音频 (Konami BMP → bgm.wav)
-    _convert_song_audio(song_dir, extracted)
+    report("转换 BGM 音频 (ADPCM → WAV)...", 20)
 
-    # 提取封面图片
+    def audio_progress(frac: float) -> None:
+        report("转换 BGM 音频...", 20 + int(frac * 60))
+
+    _convert_song_audio(song_dir, extracted, on_audio_progress=audio_progress)
+
+    report("提取曲绘...", 85)
     jacket_copied = False
     jacket_filename = ""
 
-    # 1. 优先 texbin / 封面索引（Beyond Ave 新曲曲绘在 d3/model，不在 _msc.ifs）
     jacket_path = _find_jacket_resource(
         music_id, ifs_dir, msc_ifs_path=ifs_path, jacket_index=jacket_index,
     )
@@ -976,7 +1000,7 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
             song_info["bpm_max"] = eve_bpm
             song_info["bpm_min"] = eve_bpm
 
-    # 写入歌曲信息
+    report("写入歌曲信息...", 95)
     info_path = song_dir / "song_info.txt"
     with open(info_path, "w", encoding="utf-8") as f:
         f.write(f"Music ID: {music_id}\n")
@@ -1012,4 +1036,5 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
         for filename in extracted:
             f.write(f"  {filename}\n")
 
+    report("完成", 100)
     return song_dir
