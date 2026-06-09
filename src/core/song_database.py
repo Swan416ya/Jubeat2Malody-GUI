@@ -36,6 +36,18 @@ def get_song_artist(music_id: int, local_db: dict = None) -> Optional[str]:
     return None
 
 
+def get_reference_song_name(music_id: int) -> Optional[str]:
+    """仅从参考曲名库查询（不读 music_info 解析结果）"""
+    load_reference_tsv()
+    return _BUILTIN_SONG_DB.get(music_id)
+
+
+def get_reference_song_artist(music_id: int) -> Optional[str]:
+    """仅从参考曲师库查询"""
+    load_reference_tsv()
+    return _BUILTIN_ARTIST_DB.get(music_id)
+
+
 def get_song_name(music_id: int, local_db: dict = None) -> Optional[str]:
     """查询歌曲名称
 

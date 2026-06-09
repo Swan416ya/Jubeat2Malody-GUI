@@ -179,12 +179,13 @@ def _is_katakana_dominant(text: str) -> bool:
 
 
 def resolve_display_title(info: dict) -> str:
-    """选择最适合显示的曲名（优先汉字/假名混合名，避免片假名读音）"""
+    """选择最适合显示的曲名（优先正式标题，避免纯片假名读音名）"""
     candidates = [
-        info.get("japanese_name"),
         info.get("title_name"),
         info.get("name"),
         info.get("ascii_name"),
+        info.get("japanese_name"),
+        info.get("reading_name"),
         info.get("copyright_name"),
     ]
     for name in candidates:
@@ -451,6 +452,10 @@ def load_music_info(music_info_path: Path, word_dict: Optional[dict] = None) -> 
         japanese_name = _extract_text_field(
             data_elem, ["name_string", "japanese_name", "sub_name_string"]
         )
+        reading_name = ""
+        if japanese_name and _is_katakana_dominant(japanese_name):
+            reading_name = japanese_name
+            japanese_name = ""
 
         artist_name = _extract_text_field(
             lookup_elem, ["artist_name", "artist_string", "sub_artist_name"]
@@ -473,6 +478,7 @@ def load_music_info(music_info_path: Path, word_dict: Optional[dict] = None) -> 
         entry = {
             "title_name": title_name,
             "japanese_name": japanese_name,
+            "reading_name": reading_name,
             "ascii_name": ascii_name,
             "copyright_name": copyright_name,
             "artist_name": artist_name,
@@ -499,6 +505,7 @@ def load_music_info(music_info_path: Path, word_dict: Optional[dict] = None) -> 
             "name": name,
             "title_name": title_name,
             "japanese_name": japanese_name,
+            "reading_name": reading_name,
             "ascii_name": ascii_name,
             "copyright_name": copyright_name,
             "artist_name": artist_name,
@@ -743,8 +750,8 @@ def _extract_jacket_image(
     """从封面资源 (_jkt.ifs / texbin .bin) 提取曲绘，返回 (是否成功, 文件名)"""
     from .texbin_extractor import extract_texbin_png
 
-    if jacket_path.suffix.lower() == ".bin" and jacket_path.name.lower().find("bnr_big") >= 0:
-        png_data = extract_texbin_png(jacket_path)
+    if jacket_path.suffix.lower() == ".bin" and "bnr" in jacket_path.name.lower():
+        png_data = extract_texbin_png(jacket_path, music_id=music_id)
         if png_data:
             jacket_filename = f"jkt_{music_id}.png"
             (song_dir / jacket_filename).write_bytes(png_data)
@@ -792,7 +799,12 @@ def _finalize_song_info(
     song_info: dict, music_id: int, word_info: Optional[dict] = None
 ) -> dict:
     """合并 word_info / 参考曲名库，并重新计算最终曲名与曲师"""
-    from .song_database import get_song_name, get_song_artist, load_reference_tsv
+    from .song_database import (
+        get_reference_song_artist,
+        get_reference_song_name,
+        get_song_artist,
+        load_reference_tsv,
+    )
 
     load_reference_tsv()
     info = dict(song_info)
@@ -810,16 +822,20 @@ def _finalize_song_info(
             info["artist_name"] = wi["artist"]
 
     name = resolve_display_title(info)
-    if not name or str(name).startswith("unknown_"):
-        db_name = get_song_name(music_id, local_db={music_id: info} if info else None)
-        if db_name:
-            name = db_name
+    ref_name = get_reference_song_name(music_id)
+    if ref_name and (
+        not name
+        or str(name).startswith("unknown_")
+        or _is_katakana_dominant(name)
+        or name == info.get("reading_name")
+    ):
+        name = ref_name
 
     info["name"] = name or f"unknown_{music_id}"
 
     artist = resolve_artist(info)
     if not artist:
-        artist = get_song_artist(music_id, local_db={music_id: info} if info else None) or ""
+        artist = get_reference_song_artist(music_id) or ""
     if artist:
         info["artist"] = artist
         info["artist_name"] = artist
@@ -827,13 +843,33 @@ def _finalize_song_info(
     return info
 
 
-def _find_images_in_dir(directory: Path) -> List[Path]:
+def _is_prior_unpack_jacket(path: Path, music_id: int) -> bool:
+    """是否为上次解包写入的 jkt_{id}*.png，避免重复解包时误当作 IFS 内纹理。"""
+    name = path.name.lower()
+    prefix = f"jkt_{music_id}".lower()
+    if not name.startswith(prefix):
+        return False
+    suffix = path.suffix.lower()
+    if suffix not in (".png", ".jpg", ".jpeg"):
+        return False
+    rest = name[len(prefix) : -len(suffix)]
+    return rest == "" or rest.startswith("_")
+
+
+def _find_images_in_dir(
+    directory: Path, *, exclude_music_id: Optional[int] = None
+) -> List[Path]:
     """在目录及子目录中查找所有图片文件"""
     images = []
     try:
         for f in directory.rglob("*"):
-            if f.is_file() and f.suffix.lower() in (".png", ".jpg", ".jpeg"):
-                images.append(f)
+            if not f.is_file() or f.suffix.lower() not in (".png", ".jpg", ".jpeg"):
+                continue
+            if exclude_music_id is not None and _is_prior_unpack_jacket(
+                f, exclude_music_id
+            ):
+                continue
+            images.append(f)
     except OSError:
         pass
     return images
@@ -917,29 +953,29 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     jacket_copied = False
     jacket_filename = ""
 
-    # 1. 查找 _msc.ifs 解包后已有的图片 (ifstools 自动转换纹理为 PNG)
-    images = _find_images_in_dir(song_dir)
-    best_jacket = _pick_best_jacket(images, music_id)
-    if best_jacket:
-        jacket_filename = f"jkt_{music_id}{best_jacket.suffix.lower()}"
-        dest = song_dir / jacket_filename
-        if best_jacket.resolve() != dest.resolve():
-            shutil.copy2(best_jacket, dest)
-        jacket_copied = True
+    # 1. 优先 texbin / 封面索引（Beyond Ave 新曲曲绘在 d3/model，不在 _msc.ifs）
+    jacket_path = _find_jacket_resource(
+        music_id, ifs_dir, msc_ifs_path=ifs_path, jacket_index=jacket_index,
+    )
+    if jacket_path:
+        jacket_copied, jacket_filename = _extract_jacket_image(
+            jacket_path, song_dir, music_id
+        )
 
-    # 2. 解包目录内嵌套的 _jkt*.ifs
+    # 2. _msc.ifs 解包后自带的纹理图（排除上次解包留下的 jkt_{id}*.png）
+    if not jacket_copied:
+        images = _find_images_in_dir(song_dir, exclude_music_id=music_id)
+        best_jacket = _pick_best_jacket(images, music_id)
+        if best_jacket:
+            jacket_filename = f"jkt_{music_id}{best_jacket.suffix.lower()}"
+            dest = song_dir / jacket_filename
+            if best_jacket.resolve() != dest.resolve():
+                shutil.copy2(best_jacket, dest)
+            jacket_copied = True
+
+    # 3. 解包目录内嵌套的 _jkt*.ifs
     if not jacket_copied:
         jacket_copied, jacket_filename = _extract_nested_jacket_ifs(song_dir, music_id)
-
-    # 3. 查找并解包封面专用资源 (_jkt.ifs / _jkt.bin)
-    if not jacket_copied:
-        jacket_path = _find_jacket_resource(
-            music_id, ifs_dir, msc_ifs_path=ifs_path, jacket_index=jacket_index,
-        )
-        if jacket_path:
-            jacket_copied, jacket_filename = _extract_jacket_image(
-                jacket_path, song_dir, music_id
-            )
 
     if resolve_bpm(song_info) <= 0:
         eve_bpm = _parse_bpm_from_eve(song_dir)
