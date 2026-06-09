@@ -26,6 +26,7 @@ from jubeatools.formats.malody.dump import dump_malody_chart
 from jubeatools.formats.malody import schema as malody
 import simplejson
 
+from .audio_gain import ensure_export_gain
 from .eve_parser import load_eve_song
 from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
@@ -386,6 +387,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     ) or song_dir.name
 
     song_output_dir = output_dir / safe_name
+    song_output_dir.mkdir(parents=True, exist_ok=True)
     bgm_wav = song_dir / "bgm.wav"
     bgm_ogg = song_dir / "bgm.ogg"
     audio_filename = "bgm.ogg"
@@ -400,7 +402,15 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not bgm_wav.exists() and not bgm_ogg.exists():
         return None
 
-    # 查找封面图（仅当文件真实存在时才打包）
+    if bgm_wav.exists():
+        ensure_export_gain(bgm_wav)
+
+    # 查找封面图（本地无则尝试 eagate 回退）
+    from .jacket_fallback import ensure_song_jacket
+
+    ok_jkt, jkt_name = ensure_song_jacket(song_dir, info)
+    if ok_jkt and jkt_name:
+        info["jacket"] = jkt_name
     img_filename, img_path = _find_image(song_dir, info)
     if not img_path or not img_path.exists():
         img_filename, img_path = "", None

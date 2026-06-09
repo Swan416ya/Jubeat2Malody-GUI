@@ -1008,6 +1008,14 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     if not jacket_copied:
         jacket_copied, jacket_filename = _extract_nested_jacket_ifs(song_dir, music_id)
 
+    # 4. eagate / zetaraku 曲绘回退
+    if not jacket_copied:
+        from .jacket_fallback import fetch_jacket_fallback
+
+        jacket_copied, jacket_filename = fetch_jacket_fallback(
+            song_dir, song_info, music_id=music_id,
+        )
+
     if resolve_bpm(song_info) <= 0:
         eve_bpm = _parse_bpm_from_eve(song_dir)
         if eve_bpm > 0:
@@ -1031,7 +1039,7 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
         artist = resolve_artist(song_info) or song_info.get("artist", "")
         if artist:
             f.write(f"Artist: {artist}\n")
-        reading_name = song_info.get("ascii_name", "")
+        reading_name = song_info.get("reading_name", "")
         if reading_name and reading_name != song_name:
             f.write(f"Reading Name: {reading_name}\n")
         bpm = resolve_bpm(song_info)

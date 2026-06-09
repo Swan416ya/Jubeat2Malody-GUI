@@ -137,6 +137,9 @@ def bmp_to_wav_bytes(
     pcm = decode_oki4s(
         header["adpcm"], header["channels"], header["num_samples"], on_progress,
     )
+    from .audio_gain import DEFAULT_EXPORT_GAIN, amplify_pcm
+
+    pcm = amplify_pcm(pcm, DEFAULT_EXPORT_GAIN)
     import io
 
     buf = io.BytesIO()
@@ -159,8 +162,11 @@ def convert_bmp_file(
         result = bmp_to_wav_bytes(data, on_progress)
         if not result:
             return False
+        from .audio_gain import mark_gain_applied
+
         wav_bytes, _, _ = result
         wav_path.write_bytes(wav_bytes)
+        mark_gain_applied(wav_path)
         return True
     except Exception:
         return False
