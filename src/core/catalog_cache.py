@@ -13,7 +13,7 @@ from .song_catalog import CatalogEntry, find_extracted_song_dir
 from .song_database import _METADATA_TSV
 from .unpacker import find_metadata_xml
 
-CACHE_VERSION = 1
+CACHE_VERSION = 2
 _CACHE_DIR = Path.home() / ".jubeat2malody"
 _CACHE_FILE = _CACHE_DIR / "catalog_cache.json"
 
@@ -65,7 +65,7 @@ def _entry_to_dict(entry: CatalogEntry) -> dict:
         "levels": entry.levels,
         "ifs_path": str(entry.ifs_path),
         "has_jacket": entry.has_jacket,
-        "encrypted": entry.encrypted,
+        "content_removed": entry.content_removed,
     }
 
 
@@ -78,7 +78,9 @@ def _entry_from_dict(data: dict) -> CatalogEntry:
         levels=dict(data.get("levels", {})),
         ifs_path=Path(data["ifs_path"]),
         has_jacket=bool(data.get("has_jacket")),
-        encrypted=bool(data.get("encrypted")),
+        content_removed=bool(
+            data.get("content_removed", data.get("encrypted", False))
+        ),
         extracted_dir=None,
     )
 

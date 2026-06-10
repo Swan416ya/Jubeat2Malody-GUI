@@ -13,6 +13,7 @@ from PySide6.QtWidgets import QApplication
 from qfluentwidgets import FluentWindow, FluentIcon as FIcon, setTheme, Theme
 
 from .pages.unpack_page import UnpackPage
+from .pages.cn_unpack_page import CnUnpackPage
 from .pages.preview_page import PreviewPage
 from .pages.convert_page import ConvertPage
 from .common.signal_bus import signalBus
@@ -31,10 +32,13 @@ class MainWindow(FluentWindow):
 
     def _init_pages(self):
         self.unpack_page = UnpackPage(self)
+        self.cn_unpack_page = CnUnpackPage(self)
         self.preview_page = PreviewPage(self)
         self.convert_page = ConvertPage(self)
+
     def _init_navigation(self):
-        self.addSubInterface(self.unpack_page, FIcon.LIBRARY, "曲库")
+        self.addSubInterface(self.unpack_page, FIcon.LIBRARY, "街机曲库")
+        self.addSubInterface(self.cn_unpack_page, FIcon.GLOBE, "国服曲库")
         self.addSubInterface(self.preview_page, FIcon.PLAY, "预览")
         self.addSubInterface(self.convert_page, FIcon.SYNC, "转换")
 

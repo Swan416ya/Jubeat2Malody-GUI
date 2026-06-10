@@ -31,6 +31,22 @@ class Config:
         self._settings.setValue("paths/last_output_dir", val)
 
     @property
+    def last_cn_dir(self) -> str:
+        return self._settings.value("paths/last_cn_dir", "")
+
+    @last_cn_dir.setter
+    def last_cn_dir(self, val: str):
+        self._settings.setValue("paths/last_cn_dir", val)
+
+    @property
+    def last_cn_output_dir(self) -> str:
+        return self._settings.value("paths/last_cn_output_dir", "")
+
+    @last_cn_output_dir.setter
+    def last_cn_output_dir(self, val: str):
+        self._settings.setValue("paths/last_cn_output_dir", val)
+
+    @property
     def last_convert_dir(self) -> str:
         return self._settings.value("paths/last_convert_dir", "")
 

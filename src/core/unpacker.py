@@ -282,7 +282,7 @@ def build_jacket_index(data_dir: Path) -> dict[int, Path]:
                 music_id = _parse_music_id_from_jacket(candidate)
                 if not music_id or music_id in index:
                     continue
-                if candidate.suffix.lower() == ".ifs" and is_ifs_encrypted(candidate):
+                if candidate.suffix.lower() == ".ifs" and is_ifs_content_removed(candidate):
                     continue
                 index[music_id] = candidate
 
@@ -613,8 +613,12 @@ def convert_bmp_to_wav(
     return convert_bmp_file(bmp_path, wav_path, on_progress)
 
 
-def is_ifs_encrypted(ifs_path: Path) -> bool:
-    """检查 IFS 文件是否加密 (dummy_Edat)"""
+REMOVED_SONG_STATUS = "版权到期"
+REMOVED_SONG_HINT = "该曲版权已到期，本地无可用资源文件，无法提取"
+
+
+def is_ifs_content_removed(ifs_path: Path) -> bool:
+    """检查 IFS 是否为版权到期后的占位包（manifest 含 dummy_Edat，无实际谱面/音频）。"""
     if not HAS_IFSTOOLS:
         return False
     try:
@@ -624,6 +628,10 @@ def is_ifs_encrypted(ifs_path: Path) -> bool:
         return "dummy_Edat" in xml_str
     except Exception:
         return False
+
+
+# 旧名保留，避免外部脚本引用断裂
+is_ifs_encrypted = is_ifs_content_removed
 
 
 def _safe_folder_name(name: str) -> str:
@@ -752,7 +760,7 @@ def _find_jacket_resource(
             candidate = parent / name
             if not candidate.is_file():
                 continue
-            if candidate.suffix.lower() == ".ifs" and is_ifs_encrypted(candidate):
+            if candidate.suffix.lower() == ".ifs" and is_ifs_content_removed(candidate):
                 return None
             return candidate
 
@@ -954,6 +962,9 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
     """
     if ifs_dir is None:
         ifs_dir = ifs_path.parent
+
+    if is_ifs_content_removed(ifs_path):
+        return None
 
     def report(message: str, percent: int) -> None:
         if progress:

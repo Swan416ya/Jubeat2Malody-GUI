@@ -25,7 +25,7 @@ from core.unpacker import (  # noqa: E402
     build_jacket_index,
     extract_song,
     find_metadata_xml,
-    is_ifs_encrypted,
+    is_ifs_content_removed,
     load_music_info,
     load_word_dictionary,
     load_word_info,
@@ -105,7 +105,7 @@ def main() -> int:
     print(f"\n[目标曲目]")
     print(f"  IFS 文件 : {target}")
     print(f"  music_id : {music_id}")
-    print(f"  加密     : {is_ifs_encrypted(target)}")
+    print(f"  版权到期 : {is_ifs_content_removed(target)}")
 
     raw_info = music_info.get(music_id, {})
     print(f"\n[music_info 原始字段]")
@@ -147,7 +147,7 @@ def main() -> int:
         print("      contents/datapackage/data/ (你当前为 0，见 log.txt)")
         print("  若游戏内仍能看到旧曲封面，可能是默认占位图或曾成功下载过缓存")
     if jacket_path and jacket_path.suffix.lower() == ".ifs":
-        print(f"  封面加密: {is_ifs_encrypted(jacket_path)}")
+        print(f"  封面已下架: {is_ifs_content_removed(jacket_path)}")
 
     print(f"\n[开始解包...]")
     output_dir.mkdir(parents=True, exist_ok=True)

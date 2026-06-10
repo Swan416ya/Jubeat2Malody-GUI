@@ -27,7 +27,7 @@ from jubeatools.formats.malody import schema as malody
 import simplejson
 
 from .audio_gain import ensure_export_gain
-from .eve_parser import load_eve_song
+from .song_pack import detect_song_source, load_chart_song
 from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
 # Malody Jubeat 谱面使用 1/4 拍精度 (与 extra.divide=4 一致)
@@ -273,7 +273,7 @@ def parse_song_info(info_path: Path) -> dict:
                 info["music_id"] = line.split(":", 1)[1].strip()
             elif line.startswith("Name:"):
                 info["name"] = line.split(":", 1)[1].strip()
-            elif line.startswith("Title Name:"):
+            elif line.startswith("Title Name:") or line.startswith("Title:"):
                 info["title_name"] = line.split(":", 1)[1].strip()
             elif line.startswith("Japanese Name:"):
                 info["japanese_name"] = line.split(":", 1)[1].strip()
@@ -309,7 +309,7 @@ def parse_song_info(info_path: Path) -> dict:
                     level_num = int(float(level_val))
                 except ValueError:
                     continue
-                info["levels"][diff] = {"level": level_num, "detail": detail}
+                info["levels"][diff.lower()] = {"level": level_num, "detail": detail}
             elif line == "Files:":
                 section = "files"
             elif section == "files" and line:
@@ -415,16 +415,18 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not img_path or not img_path.exists():
         img_filename, img_path = "", None
 
-    # 使用 jubeatools 加载所有 EVE 文件
+    pack_source = detect_song_source(song_dir)
+    if pack_source == "unknown":
+        return None
+
     try:
-        jt_song = load_eve_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
+        jt_song = load_chart_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
     except Exception:
         return None
 
     if not jt_song.charts:
         return None
 
-    # 音频处理（先生成音频，再生成 .mc，确保文件名一致）
     try:
         dest_audio = song_output_dir / audio_filename
         if bgm_ogg.exists():
@@ -571,16 +573,17 @@ def convert_single_song(
     except Exception:
         return None
 
-    # 使用 jubeatools 加载所有 EVE 文件
+    if detect_song_source(song_dir) == "unknown":
+        return None
+
     try:
-        jt_song = load_eve_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
+        jt_song = load_chart_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
     except Exception:
         return None
 
     if not jt_song.charts:
         return None
 
-    # 设置元数据
     audio_for_metadata = Path(final_audio_filename) if final_audio_filename else None
     cover_for_metadata = Path(img_filename) if img_filename else None
     jt_song.metadata = _metadata_from_info(

@@ -20,6 +20,7 @@ from qfluentwidgets import (
 )
 
 from ...core.malody_writer import convert_song
+from ...core.song_pack import detect_song_source, source_label
 from ..common.signal_bus import signalBus
 from ..common.config import cfg
 
@@ -72,10 +73,10 @@ class ConvertPage(ScrollArea):
         src_card = CardWidget(c)
         sl = QVBoxLayout(src_card)
         sl.setContentsMargins(20, 16, 20, 16)
-        sl.addWidget(BodyLabel("歌曲文件夹 (从曲库提取后自动填入，或手动浏览)"))
+        sl.addWidget(BodyLabel("歌曲文件夹 (街机/国服解包后自动填入，或手动浏览)"))
         sr = QHBoxLayout()
         self.src_edit = LineEdit(src_card)
-        self.src_edit.setPlaceholderText("选择包含 bgm.wav 和 bsc.eve/adv.eve/ext.eve 的文件夹...")
+        self.src_edit.setPlaceholderText("选择包含 bgm 与 bsc/adv/ext 谱面 (.eve 或 .mid) 的文件夹...")
         self.src_edit.setClearButtonEnabled(True)
         self.src_btn = PushButton(FIcon.FOLDER, "浏览", src_card)
         sr.addWidget(self.src_edit, 1)
@@ -167,22 +168,31 @@ class ConvertPage(ScrollArea):
 
         audio = [f.name for f in d.iterdir() if f.suffix.lower() in (".wav", ".ogg", ".bin") and "bgm" in f.name.lower()]
         eves = [f.name for f in d.iterdir() if f.suffix.lower() == ".eve"]
+        mids = [f.name for f in d.iterdir() if f.suffix.lower() == ".mid"]
         info = [f.name for f in d.iterdir() if f.name == "song_info.txt"]
         imgs = [f.name for f in d.iterdir() if f.suffix.lower() in (".png", ".jpg", ".jpeg")]
+        pack = detect_song_source(d)
 
         parts = []
+        if pack != "unknown":
+            parts.append(f"来源: {source_label(pack)}")
         if audio:
             parts.append(f"音频: {', '.join(audio)}")
         if eves:
-            parts.append(f"谱面: {', '.join(eves)}")
+            parts.append(f"谱面(EVE): {', '.join(eves)}")
+        if mids:
+            parts.append(f"谱面(MIDI): {', '.join(mids)}")
         if imgs:
             parts.append(f"封面: {', '.join(imgs)}")
         if info:
             parts.append("元数据: song_info.txt")
 
-        if parts:
+        if parts and pack != "unknown":
             self.preview_label.setStyleSheet("color: #10b981; font-size: 12px;")
             self.preview_label.setText("  |  ".join(parts))
+        elif parts:
+            self.preview_label.setStyleSheet("color: #f59e0b; font-size: 12px;")
+            self.preview_label.setText("  |  ".join(parts) + "  |  未能识别谱面格式")
         else:
             self.preview_label.setStyleSheet("color: #ef4444; font-size: 12px;")
             self.preview_label.setText("未找到有效的音频或谱面文件")

@@ -9,12 +9,14 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from .unpacker import (
+    REMOVED_SONG_STATUS,
     _finalize_song_info,
     _folder_display_name,
     _parse_music_id_from_ifs,
     _safe_folder_name,
     build_jacket_index,
     find_metadata_xml,
+    is_ifs_content_removed,
     load_music_info,
     load_word_dictionary,
     load_word_info,
@@ -33,13 +35,13 @@ class CatalogEntry:
     levels: Dict[str, str] = field(default_factory=dict)
     ifs_path: Path = field(default_factory=Path)
     has_jacket: bool = False
-    encrypted: bool = False
+    content_removed: bool = False
     extracted_dir: Optional[Path] = None
 
     @property
     def status(self) -> str:
-        if self.encrypted:
-            return "加密"
+        if self.content_removed:
+            return REMOVED_SONG_STATUS
         if self.extracted_dir:
             return "已提取"
         return "未提取"
@@ -122,7 +124,7 @@ def scan_game_catalog(
             levels=levels,
             ifs_path=ifs_path,
             has_jacket=music_id in jacket_index,
-            encrypted=False,
+            content_removed=is_ifs_content_removed(ifs_path),
             extracted_dir=extracted,
         ))
 
