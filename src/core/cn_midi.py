@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
 from jubeatools import song
+from jubeatools.formats.load_tools import round_beats
 
 _MIDI_DIFF = {"bsc": "BSC", "adv": "ADV", "ext": "EXT"}
 _PANEL_NOTE_BASE = 36
@@ -32,6 +33,10 @@ def _ticks_to_beat(ticks: int, ticks_per_beat: int) -> Fraction:
     return Fraction(ticks, ticks_per_beat)
 
 
+def _snap_ticks_to_beat(ticks: int, ticks_per_beat: int, beat_snap: int) -> song.BeatsTime:
+    return round_beats(_ticks_to_beat(ticks, ticks_per_beat), beat_snap)
+
+
 def _panel_index(note: int) -> Optional[int]:
     pos_idx = note - _PANEL_NOTE_BASE
     if 0 <= pos_idx < 16:
@@ -49,6 +54,7 @@ def _track_uses_note_off(track) -> bool:
 def _parse_note_on_only_track(
     track,
     ticks_per_beat: int,
+    beat_snap: int = 4,
 ) -> Tuple[List[song.TapNote], List[song.LongNote]]:
     abs_tick = 0
     taps: List[song.TapNote] = []
@@ -63,7 +69,7 @@ def _parse_note_on_only_track(
             continue
         taps.append(
             song.TapNote(
-                time=_ticks_to_beat(abs_tick, ticks_per_beat),
+                time=_snap_ticks_to_beat(abs_tick, ticks_per_beat, beat_snap),
                 position=song.NotePosition.from_index(pos_idx),
             )
         )
@@ -73,6 +79,7 @@ def _parse_note_on_only_track(
 def _parse_paired_note_track(
     track,
     ticks_per_beat: int,
+    beat_snap: int = 4,
 ) -> Tuple[List[song.TapNote], List[song.LongNote]]:
     abs_tick = 0
     active: Dict[int, Tuple[int, int]] = {}
@@ -89,7 +96,7 @@ def _parse_paired_note_track(
         if pos_idx is None:
             return
         position = song.NotePosition.from_index(pos_idx)
-        start_beat = _ticks_to_beat(start_tick, ticks_per_beat)
+        start_beat = _snap_ticks_to_beat(start_tick, ticks_per_beat, beat_snap)
 
         if velocity in _TAP_VELOCITIES:
             taps.append(song.TapNote(time=start_beat, position=position))
@@ -99,11 +106,17 @@ def _parse_paired_note_track(
         if tail_idx < 0 or tail_idx >= 16:
             taps.append(song.TapNote(time=start_beat, position=position))
             return
+        end_tick = start_tick + duration
+        end_beat = _snap_ticks_to_beat(end_tick, ticks_per_beat, beat_snap)
+        hold_duration = end_beat - start_beat
+        if hold_duration <= 0:
+            taps.append(song.TapNote(time=start_beat, position=position))
+            return
         longs.append(
             song.LongNote(
                 time=start_beat,
                 position=position,
-                duration=_ticks_to_beat(duration, ticks_per_beat),
+                duration=hold_duration,
                 tail_tip=song.NotePosition.from_index(tail_idx),
             )
         )
@@ -121,10 +134,11 @@ def _parse_paired_note_track(
 def _parse_difficulty_track(
     track,
     ticks_per_beat: int,
+    beat_snap: int = 4,
 ) -> Tuple[List[song.TapNote], List[song.LongNote]]:
     if _track_uses_note_off(track):
-        return _parse_paired_note_track(track, ticks_per_beat)
-    return _parse_note_on_only_track(track, ticks_per_beat)
+        return _parse_paired_note_track(track, ticks_per_beat, beat_snap)
+    return _parse_note_on_only_track(track, ticks_per_beat, beat_snap)
 
 
 def _make_timing(bpm: float, beat: Fraction = Fraction(0, 1)) -> song.Timing:
@@ -134,29 +148,78 @@ def _make_timing(bpm: float, beat: Fraction = Fraction(0, 1)) -> song.Timing:
     )
 
 
-def _build_timing(midi_file, info: Optional[dict] = None) -> song.Timing:
-    bpm = None
-    if info:
-        for key in ("bpm_max", "bpm_min", "bpm"):
-            val = info.get(key)
-            if val:
-                try:
-                    bpm = float(val)
-                    break
-                except (TypeError, ValueError):
-                    pass
+def _bpm_from_info(info: Optional[dict]) -> Optional[float]:
+    if not info:
+        return None
+    for key in ("bpm_max", "bpm_min", "bpm"):
+        val = info.get(key)
+        if not val:
+            continue
+        try:
+            return float(val)
+        except (TypeError, ValueError):
+            continue
+    return None
 
+
+def _collect_tempo_events(midi_file) -> List[Tuple[Fraction, float]]:
+    """收集 MIDI 全部 set_tempo 事件（国服 tempo 在 chart.mid，不在 bsc/adv/ext.mid）。"""
+    events: List[Tuple[Fraction, float]] = []
     for track in midi_file.tracks:
         abs_tick = 0
         for msg in track:
             abs_tick += msg.time
-            if msg.type == "set_tempo":
-                bpm = 60_000_000 / msg.tempo
-                beat = _ticks_to_beat(abs_tick, midi_file.ticks_per_beat)
-                return _make_timing(bpm, beat)
+            if msg.type != "set_tempo":
+                continue
+            beat = _ticks_to_beat(abs_tick, midi_file.ticks_per_beat)
+            bpm = 60_000_000 / msg.tempo
+            events.append((beat, bpm))
+    events.sort(key=lambda item: float(item[0]))
+    deduped: List[Tuple[Fraction, float]] = []
+    for beat, bpm in events:
+        if deduped and float(beat) == float(deduped[-1][0]):
+            deduped[-1] = (beat, bpm)
+        else:
+            deduped.append((beat, bpm))
+    return deduped
 
+
+def _build_timing(midi_file, info: Optional[dict] = None) -> song.Timing:
+    tempo_events = _collect_tempo_events(midi_file)
+    if tempo_events:
+        bpm_events = [
+            song.BPMEvent(time=beat, BPM=Decimal(str(bpm)))
+            for beat, bpm in tempo_events
+        ]
+        if bpm_events[0].time != 0:
+            bpm_events.insert(0, song.BPMEvent(time=0, BPM=bpm_events[0].BPM))
+        return song.Timing(events=bpm_events, beat_zero_offset=Decimal("0"))
+
+    bpm = _bpm_from_info(info)
     if bpm is None:
         bpm = 120.0
+    return _make_timing(bpm)
+
+
+def _resolve_cn_timing(directory: Path, info: Optional[dict] = None) -> song.Timing:
+    """优先从 chart.mid 读取 BPM；各难度 .mid 通常不含 set_tempo。"""
+    import mido
+
+    chart_mid = directory / "chart.mid"
+    if chart_mid.is_file():
+        return _build_timing(mido.MidiFile(str(chart_mid)), info)
+
+    for stem in _MIDI_DIFF:
+        midi_path = directory / f"{stem}.mid"
+        if not midi_path.is_file():
+            continue
+        timing = _build_timing(mido.MidiFile(str(midi_path)), info)
+        if timing.events and float(timing.events[0].BPM) != 120.0:
+            return timing
+        if _collect_tempo_events(mido.MidiFile(str(midi_path))):
+            return timing
+
+    bpm = _bpm_from_info(info) or 120.0
     return _make_timing(bpm)
 
 
@@ -174,11 +237,10 @@ def load_cn_chart(midi_path: Path, beat_snap: int = 4) -> song.Chart:
     if target is None:
         target = midi.tracks[-1]
 
-    taps, longs = _parse_difficulty_track(target, midi.ticks_per_beat)
+    taps, longs = _parse_difficulty_track(target, midi.ticks_per_beat, beat_snap)
     notes: List[song.TapNote | song.LongNote] = list(taps) + list(longs)
     notes.sort(key=lambda n: (float(n.time), 0 if isinstance(n, song.TapNote) else 1))
-    timing = _build_timing(midi)
-    return song.Chart(notes=notes, timing=timing)
+    return song.Chart(notes=notes, timing=None)
 
 
 def load_cn_song(directory: Path, beat_snap: int = 4) -> song.Song:
@@ -191,16 +253,13 @@ def load_cn_song(directory: Path, beat_snap: int = 4) -> song.Song:
         info = parse_song_info(info_path)
 
     charts: Dict[str, song.Chart] = {}
-    timing: Optional[song.Timing] = None
+    common_timing = _resolve_cn_timing(directory, info)
 
     for stem, diff in _MIDI_DIFF.items():
         midi_path = directory / f"{stem}.mid"
         if not midi_path.is_file():
             continue
-        chart = load_cn_chart(midi_path, beat_snap=beat_snap)
-        charts[diff] = chart
-        if timing is None and chart.timing:
-            timing = chart.timing
+        charts[diff] = load_cn_chart(midi_path, beat_snap=beat_snap)
 
     if not charts:
         chart_path = directory / "chart.mid"
@@ -213,18 +272,17 @@ def load_cn_song(directory: Path, beat_snap: int = 4) -> song.Song:
                 diff = _MIDI_DIFF.get(name)
                 if not diff:
                     continue
-                taps, longs = _parse_difficulty_track(track, midi.ticks_per_beat)
+                taps, longs = _parse_difficulty_track(
+                    track, midi.ticks_per_beat, beat_snap
+                )
                 notes = list(taps) + list(longs)
-                notes.sort(key=lambda n: (float(n.time), 0 if isinstance(n, song.TapNote) else 1))
-                t = _build_timing(midi, info)
-                charts[diff] = song.Chart(notes=notes, timing=t)
-                if timing is None:
-                    timing = t
+                notes.sort(
+                    key=lambda n: (float(n.time), 0 if isinstance(n, song.TapNote) else 1)
+                )
+                charts[diff] = song.Chart(notes=notes, timing=None)
 
     if not charts:
         raise FileNotFoundError("未找到国服 MIDI 谱面")
-
-    common_timing = timing or _make_timing(120.0)
     instances = []
     for diff, chart in charts.items():
         instances.append(
