@@ -9,13 +9,16 @@ from __future__ import annotations
 from decimal import Decimal
 from fractions import Fraction
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from jubeatools import song
 
 _MIDI_DIFF = {"bsc": "BSC", "adv": "ADV", "ext": "EXT"}
 _PANEL_NOTE_BASE = 36
-_HOLD_TICK_THRESHOLD = 360  # >0.75 拍视为 long（国服常见 tap 门长 240 tick）
+_TAP_VELOCITIES = frozenset({127, 100})
+# 国服 MIDI 两种编码（对照街机 EVE + 国服独占曲验证）：
+# A) 经典：note_on + note_off，单击 velocity=127，长按 velocity!=127 且 tail=velocity-1
+# B) 独占/新曲：仅 note_on，单击 velocity=100（无 note_off）
 
 
 def _track_name(track) -> str:
@@ -29,12 +32,50 @@ def _ticks_to_beat(ticks: int, ticks_per_beat: int) -> Fraction:
     return Fraction(ticks, ticks_per_beat)
 
 
-def _parse_difficulty_track(
+def _panel_index(note: int) -> Optional[int]:
+    pos_idx = note - _PANEL_NOTE_BASE
+    if 0 <= pos_idx < 16:
+        return pos_idx
+    return None
+
+
+def _track_uses_note_off(track) -> bool:
+    for msg in track:
+        if msg.type == "note_off" or (msg.type == "note_on" and msg.velocity == 0):
+            return True
+    return False
+
+
+def _parse_note_on_only_track(
     track,
     ticks_per_beat: int,
 ) -> Tuple[List[song.TapNote], List[song.LongNote]]:
     abs_tick = 0
-    active: Dict[int, int] = {}
+    taps: List[song.TapNote] = []
+    for msg in track:
+        abs_tick += msg.time
+        if msg.type != "note_on" or msg.velocity <= 0:
+            continue
+        pos_idx = _panel_index(msg.note)
+        if pos_idx is None:
+            continue
+        if msg.velocity not in _TAP_VELOCITIES:
+            continue
+        taps.append(
+            song.TapNote(
+                time=_ticks_to_beat(abs_tick, ticks_per_beat),
+                position=song.NotePosition.from_index(pos_idx),
+            )
+        )
+    return taps, []
+
+
+def _parse_paired_note_track(
+    track,
+    ticks_per_beat: int,
+) -> Tuple[List[song.TapNote], List[song.LongNote]]:
+    abs_tick = 0
+    active: Dict[int, Tuple[int, int]] = {}
     taps: List[song.TapNote] = []
     longs: List[song.LongNote] = []
 
@@ -42,33 +83,48 @@ def _parse_difficulty_track(
         start = active.pop(note, None)
         if start is None:
             return
-        duration = end_tick - start
-        pos_idx = note - _PANEL_NOTE_BASE
-        if not (0 <= pos_idx < 16):
+        start_tick, velocity = start
+        duration = end_tick - start_tick
+        pos_idx = _panel_index(note)
+        if pos_idx is None:
             return
         position = song.NotePosition.from_index(pos_idx)
-        start_beat = _ticks_to_beat(start, ticks_per_beat)
-        if duration >= _HOLD_TICK_THRESHOLD:
-            end_beat = _ticks_to_beat(end_tick, ticks_per_beat)
-            longs.append(
-                song.LongNote(
-                    time=start_beat,
-                    position=position,
-                    duration=end_beat - start_beat,
-                    tail_tip=position,
-                )
-            )
-        else:
+        start_beat = _ticks_to_beat(start_tick, ticks_per_beat)
+
+        if velocity in _TAP_VELOCITIES:
             taps.append(song.TapNote(time=start_beat, position=position))
+            return
+
+        tail_idx = velocity - 1
+        if tail_idx < 0 or tail_idx >= 16:
+            taps.append(song.TapNote(time=start_beat, position=position))
+            return
+        longs.append(
+            song.LongNote(
+                time=start_beat,
+                position=position,
+                duration=_ticks_to_beat(duration, ticks_per_beat),
+                tail_tip=song.NotePosition.from_index(tail_idx),
+            )
+        )
 
     for msg in track:
         abs_tick += msg.time
         if msg.type == "note_on" and msg.velocity > 0:
-            active[msg.note] = abs_tick
+            active[msg.note] = (abs_tick, msg.velocity)
         elif msg.type == "note_off" or (msg.type == "note_on" and msg.velocity == 0):
             close_note(msg.note, abs_tick)
 
     return taps, longs
+
+
+def _parse_difficulty_track(
+    track,
+    ticks_per_beat: int,
+) -> Tuple[List[song.TapNote], List[song.LongNote]]:
+    if _track_uses_note_off(track):
+        return _parse_paired_note_track(track, ticks_per_beat)
+    return _parse_note_on_only_track(track, ticks_per_beat)
 
 
 def _make_timing(bpm: float, beat: Fraction = Fraction(0, 1)) -> song.Timing:

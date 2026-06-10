@@ -27,7 +27,7 @@ from jubeatools.formats.malody import schema as malody
 import simplejson
 
 from .audio_gain import ensure_export_gain
-from .song_pack import detect_song_source, load_chart_song
+from .song_pack import detect_song_source, load_chart_song, needs_export_gain, resolve_mapper
 from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
 # Malody Jubeat 谱面使用 1/4 拍精度 (与 extra.divide=4 一致)
@@ -167,6 +167,7 @@ def _generate_mc_bytes(
     audio_filename: Optional[str] = None,
     level: Optional[str] = None,
     cover_filename: Optional[str] = None,
+    creator: Optional[str] = None,
 ) -> bytes:
     """使用 jubeatools 生成 .mc 文件内容 (bytes)
 
@@ -196,6 +197,10 @@ def _generate_mc_bytes(
     # 3. 难度等级
     if level:
         meta["level"] = level
+
+    # 3b. 谱师（Malody meta.creator）
+    if creator:
+        meta["creator"] = creator
 
     # 4. extra — Malody 编辑器附加信息，真实谱面均包含此字段
     if "extra" not in json_chart:
@@ -244,16 +249,34 @@ def _metadata_from_info(
     return _build_metadata(song_name, artist or "Unknown Artist", audio_path, cover_path)
 
 
+def _format_level_display(value) -> Optional[str]:
+    """Malody 等级：整数不写小数，10+ 可保留一位小数。"""
+    if value is None or value == "":
+        return None
+    try:
+        num = float(value)
+    except (TypeError, ValueError):
+        text = str(value).strip()
+        return text or None
+    if num == int(num):
+        return str(int(num))
+    return f"{num:.1f}".rstrip("0").rstrip(".")
+
+
 def _level_for_diff(info: dict, diff_name: str) -> Optional[str]:
     """从 song_info 获取对应难度的等级"""
     levels = info.get("levels", {})
     diff_key = diff_name.lower()
-    if diff_key in levels:
-        lev = levels[diff_key]
+    for key in (diff_key, diff_name.upper(), diff_name):
+        if key not in levels:
+            continue
+        lev = levels[key]
         if isinstance(lev, dict):
-            detail = lev.get("detail")
-            return str(detail) if detail is not None else str(lev.get("level", ""))
-        return str(lev)
+            raw = lev.get("detail")
+            if raw is None:
+                raw = lev.get("level")
+            return _format_level_display(raw)
+        return _format_level_display(lev)
     return None
 
 
@@ -402,7 +425,8 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not bgm_wav.exists() and not bgm_ogg.exists():
         return None
 
-    if bgm_wav.exists():
+    pack_source = detect_song_source(song_dir)
+    if needs_export_gain(pack_source) and bgm_wav.exists():
         ensure_export_gain(bgm_wav)
 
     # 查找封面图（本地无则尝试 eagate 回退）
@@ -415,9 +439,10 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if not img_path or not img_path.exists():
         img_filename, img_path = "", None
 
-    pack_source = detect_song_source(song_dir)
     if pack_source == "unknown":
         return None
+
+    mapper = resolve_mapper(pack_source)
 
     try:
         jt_song = load_chart_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
@@ -455,6 +480,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
                 jt_song.metadata, diff_name, chart, resolved_timing,
                 audio_filename=audio_filename, level=level,
                 cover_filename=img_filename or None,
+                creator=mapper,
             )
             mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
             mc_path = song_output_dir / mc_filename
@@ -573,8 +599,11 @@ def convert_single_song(
     except Exception:
         return None
 
-    if detect_song_source(song_dir) == "unknown":
+    pack_source = detect_song_source(song_dir)
+    if pack_source == "unknown":
         return None
+
+    mapper = resolve_mapper(pack_source)
 
     try:
         jt_song = load_chart_song(song_dir, beat_snap=MALODY_BEAT_SNAP)
@@ -600,6 +629,7 @@ def convert_single_song(
                 jt_song.metadata, diff_name, chart, resolved_timing,
                 audio_filename=final_audio_filename, level=level,
                 cover_filename=img_filename or None,
+                creator=mapper,
             )
             mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
             mc_path = song_dir / mc_filename  # 临时写到源目录

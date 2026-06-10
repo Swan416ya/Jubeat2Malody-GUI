@@ -65,6 +65,15 @@ def _read_varint(data: bytes, pos: int) -> Tuple[int, int]:
     return result, pos
 
 
+def _format_jbt_level(raw: int) -> str:
+    """JBTSongList field 11：等级 ×10 存储，如 50→5、91→9.1。"""
+    if raw <= 0:
+        return ""
+    if raw % 10 == 0:
+        return str(raw // 10)
+    return f"{raw / 10:.1f}".rstrip("0").rstrip(".")
+
+
 def parse_jbt_song_list(blob: bytes) -> Dict[int, dict]:
     """解析 JBTSongListConfigCategory Protobuf，返回 music_id -> 元数据。"""
     songs: Dict[int, dict] = {}
@@ -96,6 +105,9 @@ def parse_jbt_song_list(blob: bytes) -> Dict[int, dict]:
                 elif field_id == 9:
                     bpm_val = value
                 elif field_id == 10:
+                    if bpm_val is None and 40 <= value <= 300:
+                        bpm_val = value
+                elif field_id == 11:
                     level_raw.append(value)
             elif wire == 2:
                 ln, cp = _read_varint(chunk, cp)
@@ -111,7 +123,7 @@ def parse_jbt_song_list(blob: bytes) -> Dict[int, dict]:
         levels: Dict[str, str] = {}
         lv = [x for x in level_raw if x > 0]
         for diff, val in zip(("BSC", "ADV", "EXT"), lv[:3]):
-            levels[diff] = f"{val / 10:.1f}".rstrip("0").rstrip(".")
+            levels[diff.lower()] = _format_jbt_level(val)
 
         if song_id is not None:
             entry = {
@@ -330,7 +342,7 @@ def extract_cn_song(
         if bpm_val:
             f.write(f"BPM: {bpm_val}\n")
         for diff in ("BSC", "ADV", "EXT"):
-            lv = song_info.get("levels", {}).get(diff)
+            lv = song_info.get("levels", {}).get(diff.lower()) or song_info.get("levels", {}).get(diff)
             if lv:
                 f.write(f"Level {diff}: {lv}\n")
         f.write("Source: Jubeat CN (Unity Bundle)\n")

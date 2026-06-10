@@ -41,6 +41,16 @@ def source_label(source: SongSource) -> str:
     return {"arcade": "街机/日服", "cn": "国服", "unknown": "未知"}[source]
 
 
+def needs_export_gain(source: SongSource) -> bool:
+    """街机 ADPCM 解包音频需 4x 增益；国服 OGG 原音量已足够。"""
+    return source == "arcade"
+
+
+def resolve_mapper(source: SongSource) -> str:
+    """Malody 谱师栏：街机 jubeat，国服 音乐魔方。"""
+    return {"arcade": "jubeat", "cn": "音乐魔方"}.get(source, "unknown")
+
+
 def load_chart_song(song_dir: Path, beat_snap: int = 4) -> song.Song:
     source = detect_song_source(song_dir)
     if source == "cn":

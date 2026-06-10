@@ -321,9 +321,9 @@ class CnUnpackPage(ScrollArea):
             QStandardItem(str(entry.music_id)),
             QStandardItem(entry.artist),
             QStandardItem(entry.bpm),
-            QStandardItem(entry.levels.get("BSC", "-")),
-            QStandardItem(entry.levels.get("ADV", "-")),
-            QStandardItem(entry.levels.get("EXT", "-")),
+            QStandardItem(entry.levels.get("bsc") or entry.levels.get("BSC", "-")),
+            QStandardItem(entry.levels.get("adv") or entry.levels.get("ADV", "-")),
+            QStandardItem(entry.levels.get("ext") or entry.levels.get("EXT", "-")),
             QStandardItem("/".join(res_parts) or "—"),
             QStandardItem(entry.status),
         ]
