@@ -181,10 +181,12 @@ def _generate_mc_bytes(
         level: 难度等级 (来自 music_info.xml)
         cover_filename: 曲绘文件名，写入 meta.background
     """
-    malody_chart = dump_malody_chart(metadata, diff_name, chart, timing)
+    version_label = _difficulty_version_label(diff_name, level)
+    malody_chart = dump_malody_chart(metadata, version_label, chart, timing)
     json_chart = malody.CHART_SCHEMA.dump(malody_chart)
 
     meta = json_chart.setdefault("meta", {})
+    meta["version"] = version_label
 
     # 1. meta.mode_ext — 真实 PAD 谱面测试数据中包含此字段
     if "mode_ext" not in meta:
@@ -205,7 +207,7 @@ def _generate_mc_bytes(
     # 4. extra — Malody 编辑器附加信息，真实谱面均包含此字段
     if "extra" not in json_chart:
         json_chart["extra"] = {
-            diff_name: {
+            version_label: {
                 "divide": 4,
                 "speed": 100,
                 "save": 0,
@@ -247,6 +249,18 @@ def _metadata_from_info(
     song_name = resolve_display_title(info) or info.get("name", "")
     artist = resolve_artist(info)
     return _build_metadata(song_name, artist or "Unknown Artist", audio_path, cover_path)
+
+
+def _difficulty_version_label(diff_name: str, level: Optional[str] = None) -> str:
+    """Malody 难度显示名，如 BSC Lv5（写入 meta.version 与 .mc 文件名）。"""
+    base = diff_name.upper()
+    if level:
+        return f"{base} Lv{level}"
+    return base
+
+
+def _mc_filename(safe_name: str, diff_name: str, level: Optional[str] = None) -> str:
+    return f"{safe_name}_{_difficulty_version_label(diff_name, level)}.mc"
 
 
 def _format_level_display(value) -> Optional[str]:
@@ -482,7 +496,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
                 cover_filename=img_filename or None,
                 creator=mapper,
             )
-            mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
+            mc_filename = _mc_filename(safe_name, diff_name, level)
             mc_path = song_output_dir / mc_filename
             song_output_dir.mkdir(parents=True, exist_ok=True)
             mc_path.write_bytes(mc_bytes)
@@ -631,7 +645,7 @@ def convert_single_song(
                 cover_filename=img_filename or None,
                 creator=mapper,
             )
-            mc_filename = f"{safe_name}_{diff_name.lower()}.mc"
+            mc_filename = _mc_filename(safe_name, diff_name, level)
             mc_path = song_dir / mc_filename  # 临时写到源目录
             mc_path.write_bytes(mc_bytes)
             mc_files.append((mc_filename, mc_path))
