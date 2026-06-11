@@ -432,6 +432,13 @@ def _build_metadata(
     )
 
 
+def mcz_safe_filename(song_name: str) -> str:
+    """与 convert_song 输出 .mcz 文件名一致的 safe 曲名。"""
+    return "".join(
+        c if c.isalnum() or c in " _-()（）'" else "_" for c in (song_name or "")
+    ) or "unknown"
+
+
 def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) -> Optional[Path]:
     """从解包后的歌曲目录转换为 Malody .mcz
 
@@ -446,9 +453,7 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
 
     info = enrich_song_info(parse_song_info(info_path))
     song_name = resolve_display_title(info) or info.get("name") or info.get("music_id") or song_dir.name
-    safe_name = "".join(
-        c if c.isalnum() or c in " _-()（）" else "_" for c in song_name
-    ) or song_dir.name
+    safe_name = mcz_safe_filename(song_name) or song_dir.name
 
     song_output_dir = output_dir / safe_name
     song_output_dir.mkdir(parents=True, exist_ok=True)
