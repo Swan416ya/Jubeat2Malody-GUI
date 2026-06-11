@@ -776,8 +776,12 @@ def _extract_jacket_image(
     if jacket_path.suffix.lower() == ".bin" and "bnr" in jacket_path.name.lower():
         png_data = extract_texbin_png(jacket_path, music_id=music_id)
         if png_data:
+            from .jacket_fixup import fix_arcade_jacket_invert
+
             jacket_filename = f"jkt_{music_id}.png"
-            (song_dir / jacket_filename).write_bytes(png_data)
+            dest = song_dir / jacket_filename
+            dest.write_bytes(png_data)
+            fix_arcade_jacket_invert(dest)
             return True, jacket_filename
         return False, ""
 
@@ -799,8 +803,12 @@ def _extract_jacket_image(
         if not best_jkt:
             return False, ""
 
+        from .jacket_fixup import fix_arcade_jacket_invert
+
         jacket_filename = f"jkt_{music_id}{best_jkt.suffix.lower()}"
-        shutil.copy2(best_jkt, song_dir / jacket_filename)
+        dest = song_dir / jacket_filename
+        shutil.copy2(best_jkt, dest)
+        fix_arcade_jacket_invert(dest)
         return True, jacket_filename
     except Exception:
         return False, ""
@@ -1009,10 +1017,13 @@ def extract_song(ifs_path: Path, music_info: dict, output_base: Path,
         images = _find_images_in_dir(song_dir, exclude_music_id=music_id)
         best_jacket = _pick_best_jacket(images, music_id)
         if best_jacket:
+            from .jacket_fixup import fix_arcade_jacket_invert
+
             jacket_filename = f"jkt_{music_id}{best_jacket.suffix.lower()}"
             dest = song_dir / jacket_filename
             if best_jacket.resolve() != dest.resolve():
                 shutil.copy2(best_jacket, dest)
+            fix_arcade_jacket_invert(dest)
             jacket_copied = True
 
     # 3. 解包目录内嵌套的 _jkt*.ifs
