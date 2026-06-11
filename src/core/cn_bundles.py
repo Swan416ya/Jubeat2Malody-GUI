@@ -324,8 +324,9 @@ def extract_cn_song(
     report("提取封面...", 70)
     jacket_bundle = index.jackets.get(music_id)
     jacket_name = f"jkt_{music_id}.png"
+    jacket_ok = False
     if jacket_bundle:
-        _extract_jacket_png(jacket_bundle, song_dir / jacket_name)
+        jacket_ok = _extract_jacket_png(jacket_bundle, song_dir / jacket_name)
 
     report("写入歌曲信息...", 90)
     info_path = song_dir / "song_info.txt"
@@ -345,6 +346,9 @@ def extract_cn_song(
             lv = song_info.get("levels", {}).get(diff.lower()) or song_info.get("levels", {}).get(diff)
             if lv:
                 f.write(f"Level {diff}: {lv}\n")
+        if jacket_ok:
+            f.write(f"Jacket: {jacket_name}\n")
+        f.write(f"CN HotUpdate: {index.root}\n")
         f.write("Source: Jubeat CN (Unity Bundle)\n")
         f.write("Chart Format: MIDI\n")
 
@@ -379,6 +383,93 @@ def _split_midi_difficulties(midi_bytes: bytes, song_dir: Path) -> None:
                 out_track.append(msg.copy())
         out.tracks.append(out_track)
         out.save(str(song_dir / f"{track_name}.mid"))
+
+
+def find_jacket_bundle(root: Path, music_id: int) -> Optional[Path]:
+    """在 HotUpdate 目录中定位单曲曲绘 bundle。"""
+    root = Path(root)
+    if not root.is_dir():
+        return None
+    matches = sorted(root.glob(f"assets_bundles_textures_songjackets_id{music_id}_*"))
+    return matches[0] if matches else None
+
+
+def _local_jacket_path(song_dir: Path, info: Optional[dict] = None) -> Optional[Path]:
+    if info and info.get("jacket"):
+        candidate = song_dir / info["jacket"]
+        if candidate.is_file():
+            return candidate
+    for pattern in (f"jkt_{info.get('music_id')}.png" if info and info.get("music_id") else "", "jkt*.png"):
+        if not pattern:
+            continue
+        matches = sorted(song_dir.glob(pattern))
+        if matches:
+            return matches[0]
+    return None
+
+
+def _resolve_cn_hotupdate(info: dict) -> Optional[Path]:
+    for key in ("cn_hotupdate", "cn_data_dir"):
+        raw = (info.get(key) or "").strip()
+        if not raw:
+            continue
+        path = Path(raw)
+        if is_cn_hotupdate_dir(path):
+            return path
+        found = find_cn_hotupdate_dir(path)
+        if found:
+            return found
+    if DEFAULT_CN_HOTUPDATE.is_dir() and is_cn_hotupdate_dir(DEFAULT_CN_HOTUPDATE):
+        return DEFAULT_CN_HOTUPDATE
+    return None
+
+
+def _upsert_song_info_line(song_dir: Path, key: str, value: str) -> None:
+    info_path = song_dir / "song_info.txt"
+    if not info_path.is_file():
+        return
+    prefix = f"{key}:"
+    lines = info_path.read_text(encoding="utf-8").splitlines()
+    replaced = False
+    for idx, line in enumerate(lines):
+        if line.startswith(prefix):
+            lines[idx] = f"{key}: {value}"
+            replaced = True
+            break
+    if not replaced:
+        lines.append(f"{key}: {value}")
+    info_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+def ensure_cn_jacket(song_dir: Path, info: dict) -> Tuple[bool, str]:
+    """国服曲目：本地无曲绘时从 HotUpdate bundle 补提取。"""
+    existing = _local_jacket_path(song_dir, info)
+    if existing and existing.is_file():
+        return True, existing.name
+
+    try:
+        music_id = int(info.get("music_id") or 0)
+    except (TypeError, ValueError):
+        return False, ""
+
+    if music_id <= 0:
+        return False, ""
+
+    hotupdate = _resolve_cn_hotupdate(info)
+    if not hotupdate:
+        return False, ""
+
+    bundle = find_jacket_bundle(hotupdate, music_id)
+    if not bundle:
+        return False, ""
+
+    dest = song_dir / f"jkt_{music_id}.png"
+    if not _extract_jacket_png(bundle, dest):
+        return False, ""
+
+    _upsert_song_info_line(song_dir, "Jacket", dest.name)
+    _upsert_song_info_line(song_dir, "CN HotUpdate", str(hotupdate))
+    return True, dest.name
 
 
 def is_cn_hotupdate_dir(path: Path) -> bool:

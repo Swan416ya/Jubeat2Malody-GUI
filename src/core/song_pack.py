@@ -42,7 +42,7 @@ def source_label(source: SongSource) -> str:
 
 
 def needs_export_gain(source: SongSource) -> bool:
-    """街机 ADPCM 解包音频需 4x 增益；国服 OGG 原音量已足够。"""
+    """街机 ADPCM 解包音频需按参考 RMS 归一化；国服 OGG 原音量已足够。"""
     return source == "arcade"
 
 

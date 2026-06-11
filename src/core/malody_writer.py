@@ -26,7 +26,7 @@ from jubeatools.formats.malody.dump import dump_malody_chart
 from jubeatools.formats.malody import schema as malody
 import simplejson
 
-from .audio_gain import ensure_export_gain
+from .audio_gain import convert_wav_to_ogg_for_export, prepare_export_audio
 from .song_pack import detect_song_source, load_chart_song, needs_export_gain, resolve_mapper
 from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
@@ -192,9 +192,10 @@ def _generate_mc_bytes(
     if "mode_ext" not in meta:
         meta["mode_ext"] = {}
 
-    # 2. 封面 — Malody 通过 meta.background 关联曲绘文件
+    # 2. 封面 — Malody 曲绘列表读 meta.cover，游玩背景读 meta.background
     if cover_filename:
         meta["background"] = cover_filename
+        meta["cover"] = cover_filename
 
     # 3. 难度等级
     if level:
@@ -321,6 +322,8 @@ def parse_song_info(info_path: Path) -> dict:
                 info["artist_name"] = info["artist"]
             elif line.startswith("Jacket:"):
                 info["jacket"] = line.split(":", 1)[1].strip()
+            elif line.startswith("CN HotUpdate:"):
+                info["cn_hotupdate"] = line.split(":", 1)[1].strip()
             elif line.startswith("BPM (ref):") or line.startswith("BPM:"):
                 bpm_str = line.split(":", 1)[1].strip()
                 if "-" in bpm_str:
@@ -365,6 +368,30 @@ def convert_wav_to_ogg(wav_path: Path, ogg_path: Path) -> bool:
         return r.returncode == 0
     except (FileNotFoundError, subprocess.TimeoutExpired):
         return False
+
+
+def _prepare_mcz_jacket(src: Path, dest: Path, max_size: int = 512) -> Path:
+    """生成 Malody 兼容的曲绘副本（缩略 + RGB）。"""
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        from PIL import Image
+
+        with Image.open(src) as im:
+            if max(im.size) > max_size:
+                im = im.copy()
+                im.thumbnail((max_size, max_size), Image.Resampling.LANCZOS)
+            if im.mode in ("RGBA", "LA", "P"):
+                rgba = im.convert("RGBA")
+                background = Image.new("RGB", rgba.size, (0, 0, 0))
+                background.paste(rgba, mask=rgba.split()[-1])
+                im = background
+            elif im.mode != "RGB":
+                im = im.convert("RGB")
+            im.save(dest, "PNG", optimize=True)
+        return dest
+    except Exception:
+        shutil.copy2(src, dest)
+        return dest
 
 
 def _find_image(song_dir: Path, info: dict = None) -> Tuple[str, Optional[Path]]:
@@ -440,13 +467,17 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
         return None
 
     pack_source = detect_song_source(song_dir)
-    if needs_export_gain(pack_source) and bgm_wav.exists():
-        ensure_export_gain(bgm_wav)
+    if needs_export_gain(pack_source):
+        prepare_export_audio(song_dir)
 
-    # 查找封面图（本地无则尝试 eagate 回退）
-    from .jacket_fallback import ensure_song_jacket
+    if pack_source == "cn":
+        from .cn_bundles import ensure_cn_jacket
 
-    ok_jkt, jkt_name = ensure_song_jacket(song_dir, info)
+        ok_jkt, jkt_name = ensure_cn_jacket(song_dir, info)
+    else:
+        from .jacket_fallback import ensure_song_jacket
+
+        ok_jkt, jkt_name = ensure_song_jacket(song_dir, info)
     if ok_jkt and jkt_name:
         info["jacket"] = jkt_name
     img_filename, img_path = _find_image(song_dir, info)
@@ -468,7 +499,15 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
 
     try:
         dest_audio = song_output_dir / audio_filename
-        if bgm_ogg.exists():
+        arcade_gain = needs_export_gain(pack_source)
+        if arcade_gain and bgm_wav.exists():
+            if not convert_wav_to_ogg_for_export(bgm_wav, dest_audio):
+                if bgm_ogg.exists():
+                    shutil.copy2(bgm_ogg, dest_audio)
+                else:
+                    shutil.copy2(bgm_wav, song_output_dir / "bgm.wav")
+                    audio_filename = "bgm.wav"
+        elif bgm_ogg.exists():
             shutil.copy2(bgm_ogg, dest_audio)
         elif bgm_wav.exists():
             if not convert_wav_to_ogg(bgm_wav, dest_audio):
@@ -517,7 +556,9 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
             if audio_path.exists():
                 zf.write(audio_path, f"0/{audio_filename}")
             if img_filename and img_path and img_path.exists():
-                zf.write(img_path, f"0/{img_filename}")
+                export_jacket = song_output_dir / img_filename
+                packed_jacket = _prepare_mcz_jacket(img_path, export_jacket)
+                zf.write(packed_jacket, f"0/{img_filename}")
     except Exception:
         return None
 
@@ -553,6 +594,18 @@ def convert_single_song(
         info = parse_song_info(info_path)
 
     song_name = resolve_display_title(info) or info.get("name", "") or song_dir.name
+    pack_source = detect_song_source(song_dir)
+
+    if pack_source == "cn":
+        from .cn_bundles import ensure_cn_jacket
+
+        ok_jkt, jkt_name = ensure_cn_jacket(song_dir, info)
+    else:
+        from .jacket_fallback import ensure_song_jacket
+
+        ok_jkt, jkt_name = ensure_song_jacket(song_dir, info)
+    if ok_jkt and jkt_name:
+        info["jacket"] = jkt_name
 
     # 查找封面图（仅当文件真实存在时才打包）
     img_filename, img_path = _find_image(song_dir, info)
@@ -613,7 +666,6 @@ def convert_single_song(
     except Exception:
         return None
 
-    pack_source = detect_song_source(song_dir)
     if pack_source == "unknown":
         return None
 
@@ -664,7 +716,9 @@ def convert_single_song(
             if audio_path.exists():
                 zf.write(audio_path, f"0/{final_audio_filename}")
             if img_filename and img_path and img_path.exists():
-                zf.write(img_path, f"0/{img_filename}")
+                export_jacket = temp_dir / img_filename
+                packed_jacket = _prepare_mcz_jacket(img_path, export_jacket)
+                zf.write(packed_jacket, f"0/{img_filename}")
     except Exception:
         return None
     finally:
