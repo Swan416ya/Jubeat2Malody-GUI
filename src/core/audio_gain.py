@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import array
 import math
+import shutil
 import subprocess
 import wave
 from pathlib import Path
@@ -185,6 +186,43 @@ def convert_wav_to_ogg_for_export(wav_path: Path, ogg_path: Path) -> bool:
         return _encode_wav_to_ogg(wav_path, ogg_path, gain_db + correction_db)
     except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
         return False
+
+
+def pack_audio_for_mcz(
+    song_dir: Path,
+    dest_dir: Path,
+    *,
+    arcade: bool,
+    audio_filename: str = "bgm.ogg",
+) -> tuple[Optional[Path], str]:
+    """写入 MCZ 用音频：街机走 RMS 归一化 + OGG 二次补偿，国服直接复制 OGG。"""
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    bgm_wav = song_dir / "bgm.wav"
+    bgm_ogg = song_dir / "bgm.ogg"
+    dest_audio = dest_dir / audio_filename
+
+    if arcade:
+        prepare_export_audio(song_dir)
+        if bgm_wav.is_file():
+            if convert_wav_to_ogg_for_export(bgm_wav, dest_audio):
+                return dest_audio, audio_filename
+            if bgm_ogg.is_file():
+                shutil.copy2(bgm_ogg, dest_audio)
+                return dest_audio, audio_filename
+            fallback = dest_dir / "bgm.wav"
+            shutil.copy2(bgm_wav, fallback)
+            return fallback, "bgm.wav"
+
+    if bgm_ogg.is_file():
+        shutil.copy2(bgm_ogg, dest_audio)
+        return dest_audio, audio_filename
+    if bgm_wav.is_file():
+        if convert_wav_to_ogg(bgm_wav, dest_audio):
+            return dest_audio, audio_filename
+        fallback = dest_dir / "bgm.wav"
+        shutil.copy2(bgm_wav, fallback)
+        return fallback, "bgm.wav"
+    return None, ""
 
 
 def prepare_export_audio(song_dir: Path) -> Optional[Path]:

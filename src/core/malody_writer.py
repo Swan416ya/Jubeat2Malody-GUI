@@ -26,7 +26,7 @@ from jubeatools.formats.malody.dump import dump_malody_chart
 from jubeatools.formats.malody import schema as malody
 import simplejson
 
-from .audio_gain import convert_wav_to_ogg_for_export, prepare_export_audio
+from .audio_gain import pack_audio_for_mcz
 from .song_pack import detect_song_source, load_chart_song, needs_export_gain, resolve_mapper
 from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
@@ -301,7 +301,7 @@ def parse_song_info(info_path: Path) -> dict:
         "music_id": "", "name": "", "title_name": "", "japanese_name": "",
         "ascii_name": "", "artist": "", "artist_name": "", "copyright_name": "",
         "bpm_min": 120.0, "bpm_max": 120.0,
-        "levels": {}, "files": [], "jacket": "",
+        "levels": {}, "files": [], "jacket": "", "jacket_color_fix": "",
     }
     with open(info_path, "r", encoding="utf-8") as f:
         section = None
@@ -322,6 +322,8 @@ def parse_song_info(info_path: Path) -> dict:
                 info["artist_name"] = info["artist"]
             elif line.startswith("Jacket:"):
                 info["jacket"] = line.split(":", 1)[1].strip()
+            elif line.startswith("JacketColorFix:"):
+                info["jacket_color_fix"] = line.split(":", 1)[1].strip()
             elif line.startswith("CN HotUpdate:"):
                 info["cn_hotupdate"] = line.split(":", 1)[1].strip()
             elif line.startswith("BPM (ref):") or line.startswith("BPM:"):
@@ -472,8 +474,6 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
         return None
 
     pack_source = detect_song_source(song_dir)
-    if needs_export_gain(pack_source):
-        prepare_export_audio(song_dir)
 
     if pack_source == "cn":
         from .cn_bundles import ensure_cn_jacket
@@ -492,6 +492,11 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
     if pack_source == "unknown":
         return None
 
+    if pack_source == "arcade" and img_path:
+        from .jacket_fixup import apply_arcade_jacket_fix_if_needed
+
+        apply_arcade_jacket_fix_if_needed(img_path, info)
+
     mapper = resolve_mapper(pack_source)
 
     try:
@@ -503,21 +508,14 @@ def convert_song(song_dir: Path, output_dir: Path, skip_existing: bool = False) 
         return None
 
     try:
-        dest_audio = song_output_dir / audio_filename
-        arcade_gain = needs_export_gain(pack_source)
-        if arcade_gain and bgm_wav.exists():
-            if not convert_wav_to_ogg_for_export(bgm_wav, dest_audio):
-                if bgm_ogg.exists():
-                    shutil.copy2(bgm_ogg, dest_audio)
-                else:
-                    shutil.copy2(bgm_wav, song_output_dir / "bgm.wav")
-                    audio_filename = "bgm.wav"
-        elif bgm_ogg.exists():
-            shutil.copy2(bgm_ogg, dest_audio)
-        elif bgm_wav.exists():
-            if not convert_wav_to_ogg(bgm_wav, dest_audio):
-                shutil.copy2(bgm_wav, song_output_dir / "bgm.wav")
-                audio_filename = "bgm.wav"
+        packed_audio, packed_name = pack_audio_for_mcz(
+            song_dir,
+            song_output_dir,
+            arcade=needs_export_gain(pack_source),
+            audio_filename=audio_filename,
+        )
+        if packed_audio:
+            audio_filename = packed_name
     except Exception:
         pass
 
@@ -617,6 +615,11 @@ def convert_single_song(
     if not img_path or not img_path.exists():
         img_filename, img_path = "", None
 
+    if pack_source == "arcade" and img_path:
+        from .jacket_fixup import apply_arcade_jacket_fix_if_needed
+
+        apply_arcade_jacket_fix_if_needed(img_path, info)
+
     # 查找音频文件
     audio_src = None
     audio_filename = "bgm.ogg"
@@ -648,26 +651,29 @@ def convert_single_song(
     temp_dir = output_dir / safe_name
     temp_dir.mkdir(parents=True, exist_ok=True)
 
-    dest_audio = temp_dir / audio_filename
     final_audio_filename = audio_filename
 
     try:
-        if audio_src.suffix.lower() == ".ogg":
-            shutil.copy2(audio_src, dest_audio)
-        elif audio_src.suffix.lower() == ".wav":
-            if not convert_wav_to_ogg(audio_src, dest_audio):
-                final_audio_filename = audio_src.name
-                shutil.copy2(audio_src, temp_dir / audio_src.name)
-        elif audio_src.suffix.lower() == ".bin":
+        if audio_src.suffix.lower() == ".bin":
             from .unpacker import convert_bmp_to_wav
-            wav_path = temp_dir / "bgm.wav"
-            if convert_bmp_to_wav(audio_src, wav_path):
-                if not convert_wav_to_ogg(wav_path, dest_audio):
-                    final_audio_filename = "bgm.wav"
-            else:
-                return None
-        else:
-            shutil.copy2(audio_src, dest_audio)
+
+            wav_path = song_dir / "bgm.wav"
+            if not wav_path.is_file():
+                convert_bmp_to_wav(audio_src, wav_path)
+        elif audio_src.suffix.lower() == ".wav" and not (song_dir / "bgm.wav").is_file():
+            shutil.copy2(audio_src, song_dir / "bgm.wav")
+        elif audio_src.suffix.lower() == ".ogg" and not (song_dir / "bgm.ogg").is_file():
+            shutil.copy2(audio_src, song_dir / "bgm.ogg")
+
+        packed_audio, packed_name = pack_audio_for_mcz(
+            song_dir,
+            temp_dir,
+            arcade=needs_export_gain(pack_source),
+            audio_filename=audio_filename,
+        )
+        if not packed_audio:
+            return None
+        final_audio_filename = packed_name
     except Exception:
         return None
 

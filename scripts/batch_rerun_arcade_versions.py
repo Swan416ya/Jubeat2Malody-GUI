@@ -230,7 +230,7 @@ def main() -> int:
         "fail": [],
     }
 
-    _safe_print("日版初版曲全量重跑（含曲绘反色修复）")
+    _safe_print("日版初版曲全量重跑（含曲绘 BGR→RGB 修复）")
     _safe_print(f"数据目录: {data_dir}")
     _safe_print(f"输出目录: {BRANCH_ROOT}")
     _safe_print(f"目标版本: {', '.join(folders)}")
