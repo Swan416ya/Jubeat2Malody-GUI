@@ -436,8 +436,18 @@ def _build_metadata(
 
 def mcz_safe_filename(song_name: str) -> str:
     """与 convert_song 输出 .mcz 文件名一致的 safe 曲名。"""
+    name = song_name or ""
+    # 保留二谱标记 [ 2 ]，避免与初版谱面 MCZ 撞名
+    if " [ 2 ]" in name or name.rstrip().endswith("[ 2 ]"):
+        import re
+
+        base = re.sub(r"\s*\[\s*2\s*\]\s*$", "", name).strip()
+        safe_base = "".join(
+            c if c.isalnum() or c in " _-()（）'" else "_" for c in base
+        )
+        return f"{safe_base or 'unknown'} [ 2 ]"
     return "".join(
-        c if c.isalnum() or c in " _-()（）'" else "_" for c in (song_name or "")
+        c if c.isalnum() or c in " _-()（）'" else "_" for c in name
     ) or "unknown"
 
 

@@ -1,0 +1,1697 @@
+Ordered by Version - sonicy_memo @ jubeat【5/26更新】 | arcade jubeat text memo - atwiki（アットウィキ）
+
+# sonicy_memo @ jubeat
+
+## Ordered by Version
+
+악곡은 게임 내의 표기 순서에 따라 정렬되어 있습니다. The songs are arranged according to the order in which they appear in the game.
+
+Ctrl+F(PC) 또는 페이지 내 검색(모바일)을 이용해서 시리즈나 악곡 이름을 찾는 것이 좋습니다. Using Ctrl+F(PC) or Search within the page(mobile) for finding title of songs is recommended.
+
+회색으로 표시된 악곡은 현재 최신 버전의 유비트에 존재하지 않습니다. Songs that marked with grey do not exist in the latest version of jubeat.
+
+current existing songs : 1139/1646 TBS included songs : 1131 (26/05/26) deleted songs: 507 hololive: 7 千本桜: 1
+
+22/04/09 vs 25/11/10
+
+BSC: 1039/1418 > 1316/1628 ADV: 1058/1418 > 1333/1628 EXT: 1345/1418 > 1612/1628
+
+| jubeat beyond the Ave. |
+| --- |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| Icicle Cube | BEMANI Sound Team "KE!JU" | 175 | Lv 4 | Lv 9.2 | Lv 10.4 |
+| Ice Candy Coaster | irucaice / いるかアイス | 226 | Lv 5 | Lv 8 | Lv 10.3 |
+| アイスクリームマジック | 雪乃イト | 110 | Lv 2 | Lv 5 | Lv 8 |
+| H | [ ]DENTITY | BEMANI Sound Team "HuΣeR" | 200 | Lv 5 | Lv 9.3 | Lv 10.7 |
+| O | I LOVE COSMOS | CHERRY BLOSSOMS (ASAKI & wac) | 197 | Lv 3 | Lv 6 | Lv 10.4 |
+| IRIS OUT | 米津玄師 | 135 | Lv 2 | Lv 5 | Lv 8 |
+| あおばの足音 | 駄菓子O型 | 98 | Lv 2 | Lv 4 | Lv 8 |
+| Amazing Bomberman | TESSEI TOJO | 137 | Lv 2 | Lv 6 | Lv 9.4 |
+| アヤノトリ | BEMANI Sound Team "PHQUASE" feat.ななひら | 137 | Lv 3 | Lv 7 | Lv 10 |
+| O | Angritte | Lafale | 155 | Lv 3 | Lv 8 | Lv 10.1 |
+| EX-MASSIVE FIGHTER | BEMANI Sound Team "L.E.D.-G" | 165 | Lv 4 | Lv 8 | Lv 10.4 |
+| H | Yelling | Blacklolita | 150 | Lv 3 | Lv 7 | Lv 10.3 |
+| イガク | 原口沙輔 | 170 | Lv 4 | Lv 7 | Lv 9.6 |
+| IGNITE THE IRON HEART | BEMANI Sound Team "L.E.D." | 100-155 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | It's my Miracle | Another Infinity feat. Mayumi Morinaga | 175 | Lv 3 | Lv 6 | Lv 9.1 |
+| H | イマココ！この瞬間 | 日向美ビタースイーツ♪ | 152 | Lv 2 | Lv 6 | Lv 8 |
+| Indigo Nocturne | BEMANI Sound Team "Power Of Nature" | 150 | Lv 4 | Lv 9.4 | Lv 10.5 |
+| O | H | ∞space | m@sumi | 160 | Lv 3 | Lv 6 | Lv 9.7 |
+| O | ウ”ィ”エ” | バーバパパ | 155 | Lv 4 | Lv 8 | Lv 9.8 |
+| VOLAQUAS -GITADO ROCK ver.- | BEMANI Sound Team "DJ TOTTO VS 兎々" | 212 | Lv 6 | Lv 9.6 | Lv 10.6 |
+| ウラシブヤのテーマ | ヨっちゃん | 145 | Lv 5 | Lv 8 | Lv 9.3 |
+| H | AIR RAID FROM THA UNDAGROUND [ 2 ] | GUHROOVY | 180 | Lv 6 | Lv 9.2 | Lv 10.7 |
+| H | エイリアンエイリアン [ 2 ] | ナユタン星人 | 152 | Lv 3 | Lv 7 | Lv 9.6 |
+| H | エクスプロウル | 晴いちばん | 164 | Lv 2 | Lv 6 | Lv 9.2 |
+| Eternal Dream | BEMANI Sound Team "Coyaan" | 144 | Lv 2 | Lv 5 | Lv 8 |
+| H | 朧月覆う雲をも裂きぬ | かめりあ feat. 藍月なくる | 192 | Lv 5 | Lv 9.2 | Lv 10.4 |
+| 鏡に恋して | 礼賛 | 133 | Lv 1 | Lv 5 | Lv 8 |
+| 覚悟せよ！エンタンメ～ン ～より身の切り売り自暴自棄版～ | マキシウキョウ | 141-176 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | H | カラフルミニッツ [ 2 ] | Qrispy Joybox feat.mao | 152 | Lv 3 | Lv 6 | Lv 8 |
+| Caribbean Coast | BEMANI Sound Team "劇団レコード" | 132 | Lv 4 | Lv 7 | Lv 9.6 |
+| H | Caldwell 99 | BlackY | 142 | Lv 5 | Lv 9.1 | Lv 10.4 |
+| 華麗なる！音戯探偵ひなビタ♫ | 音戯探偵ひなビタ♫ | 72-127 | Lv 2 | Lv 6 | Lv 9.6 |
+| ギザバ怪文書 | cosMo@暴走P | 280 | Lv 3 | Lv 8 | Lv 9.8 |
+| ギャ・ギャ・ギャ・ギャラクシー！ | つきみぐー、 | 140 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | H | Capitalism Cannon | O2i3 | 190 | Lv 6 | Lv 9.4 | Lv 10.6 |
+| QQ | BEMANI Sound Team "PHQUASE & ZAQUVA" | 199 | Lv 5 | Lv 9.9 | Lv 10.7 |
+| CUTIE | KO3 | 126 | Lv 3 | Lv 7 | Lv 9.7 |
+| Kilonova | BEMANI Sound Team "Yvya" | 150 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | クラゲファンタジーソーダ | 日向美ビタースイーツ♪ | 94 | Lv 1 | Lv 4 | Lv 6 |
+| Krack Your Soul | Daisuke Ohnuma | 130 | Lv 3 | Lv 7 | Lv 9.7 |
+| CRAZY ARTS | FAKE TYPE. | 132 | Lv 3 | Lv 6 | Lv 9.6 |
+| Crescive Volt | Ark-Z | 155 | Lv 3 | Lv 7 | Lv 10.4 |
+| Croissant | BEMANI Sound Team "Expander" | 156 | Lv 4 | Lv 8 | Lv 10.4 |
+| H | ケッペキショウ [ 2 ] | すこっぷ feat.GUMI | 190 | Lv 4 | Lv 7 | Lv 10.4 |
+| H | 幻想系世界修復少女 [ 2 ] | Last Note. | 193 | Lv 4 | Lv 7 | Lv 9.4 |
+| 幻想リフレクト | イルカブ | 138 | Lv 3 | Lv 5 | Lv 8 |
+| O | 恋とメロンとキューピット | まろん feat. キャサリン | 162 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | 恋はどう？モロ◎波動OK☆方程式!! ～めう edition～ | 日向美ビタースイーツ♪ | 256 | Lv 4 | Lv 8 | Lv 9.4 |
+| O | H | cosmic agenda ～一舞 edition～ | 日向美ビタースイーツ♪ | 113 | Lv 2 | Lv 5 | Lv 8 |
+| Signs and Wonders | ネオン(CV:藤川茜)、芽兎めう(CV:五十嵐裕美) | 196 | Lv 1 | Lv 3 | Lv 6 |
+| さらさ | BEMANI Sound Team "PON" | 168 | Lv 3 | Lv 6 | Lv 9.6 |
+| THE LAST OF FIREFACE | 大和 | 224 | Lv 6 | Lv 9.2 | Lv 10.7 |
+| 残像ニ繋ガレタ追憶ノHIDEAWAY | SOUND HOLIC Vs. BEMANI Sound Team "KE!JU" feat. Nana Takahashi | 160 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | jet coaster☆girl ～まり花 edition～ | 日向美ビタースイーツ♪ | 180 | Lv 3 | Lv 5 | Lv 8 |
+| H | シュボレアちゃん星の交信 | 工藤吉三（ベイシスケイプ） | 180 | Lv 5 | Lv 7 | Lv 10.4 |
+| 少女レイ | みきとP | 150 | Lv 1 | Lv 4 | Lv 7 |
+| H | 新蛇姫 | BEMANI Sound Team "U1-ASAMi" | 115 | Lv 3 | Lv 8 | Lv 9.8 |
+| H | SUPER HEROINE!! | Amateras Records vs BEMANI Sound Team "TATSUYA" feat. Miko | 186 | Lv 3 | Lv 8 | Lv 10.1 |
+| H | スカーレット警察のゲットーパトロール24時 | 七条レタスグループ | 160 | Lv 3 | Lv 7 | Lv 9.7 |
+| H | Stylus | BEMANI Sound Team "HuΣeR" | 165 | Lv 5 | Lv 9 | Lv 10 |
+| ステラレギア | ここなつ2.0 | 130 | Lv 2 | Lv 5 | Lv 9.1 |
+| Snow Falcon | Mutsuhiko Izumi | 200 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | H | Sparkle Justice | VALLEYSTONE&udouddo | 160 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | 寂寞たる世界の終末は | 日向美ビタースイーツ♪ | 144 | Lv 3 | Lv 6 | Lv 8 |
+| H | 千年ノ理 [ 2 ] | 猫叉Master | 153 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | 双星ルミネセンス | 一舞 ＆ 夏陽 | 210 | Lv 3 | Lv 5 | Lv 9 |
+| H | 蒼空に舞え、墨染の桜 [ 2 ] | Silver Forest feat. さゆり | 150 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | 空の飛び方 | 日向美ビタースイーツ♪ | 110 | Lv 2 | Lv 5 | Lv 8 |
+| darinGGamers | バンドじゃないもん!MAXX NAKAYOSHI | 160 | Lv 2 | Lv 6 | Lv 8 |
+| Touch Me | BEMANI Sound Team "GekiReco & Sota F." | 136 | Lv 3 | Lv 7 | Lv 9.5 |
+| H | Thanatøs | RoughSketch | 200 | Lv 8 | Lv 10.4 | Lv 10.9 |
+| 弾幕信仰 | 豚乙女×BEMANI Sound Team "PON" | 170 | Lv 4 | Lv 8 | Lv 9.5 |
+| ちくわパフェだよ☆ＣＫＰ (Yvya Remix) | Remixed by BEMANI Sound Team "Yvya" | 205 | Lv 5 | Lv 8 | Lv 10.4 |
+| チックタック＠ラビリンス | Tanchiky | 185 | Lv 5 | Lv 9.3 | Lv 10.2 |
+| ちゅ、多様性。 | ano | 153 | Lv 2 | Lv 6 | Lv 9 |
+| H | てぇてぇアイデンティティ | そりっどびーつ | 165 | Lv 3 | Lv 6 | Lv 9.2 |
+| デビルGIRL | Somari | 180 | Lv 4 | Lv 7 | Lv 9.7 |
+| Devil’s Rule | BEMANI Sound Team "Yvya" | 220 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | H | 天鈴少女 | 駄々子 | 160 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | 24/7 Popperz | Power Of Nature | 202 | Lv 5 | Lv 9.2 | Lv 10.6 |
+| トウキョウ・シャンディ・ランデヴ | (MAISONdes feat. 花譜, ツミキ) | 137 | Lv 3 | Lv 5 | Lv 9.3 |
+| O | H | 遠く遠く離れていても… | 日向美ビタースイーツ♪ | 80 | Lv 2 | Lv 5 | Lv 7 |
+| O | nalca | onoken | 136 | Lv 4 | Lv 8 | Lv 10.3 |
+| Nyan Cat | daniwellP feat. 桃音モモ | 142 | Lv 3 | Lv 6 | Lv 9.4 |
+| H | New Decade [ 2 ] | Sota F. | 200 | Lv 4 | Lv 8 | Lv 10.4 |
+| H | New Hero | Sakuzyo | 150 | Lv 3 | Lv 6 | Lv 9.2 |
+| H | Never Look Back in Sorrow [ 2 ] | AIKO OI | 270 | Lv 4 | Lv 8 | Lv 10.6 |
+| H | ネハン | Somari | 130-160 | Lv 4 | Lv 6 | Lv 9.4 |
+| ハートシェイプ・スピカ | ここなつ2.0 | 170 | Lv 3 | Lv 5 | Lv 8 |
+| ハウトゥワープ | ナユタン星人 | 155 | Lv 3 | Lv 5 | Lv 9.1 |
+| O | HAPPY limelight | Qrispy Joybox feat.Megumi Tatsumi | 137 | Lv 2 | Lv 5 | Lv 8 |
+| はらぺこヒーロー | 回せ！グルーヴ開発部 | 170 | Lv 3 | Lv 7 | Lv 9.2 |
+| H | Big Daddy | USAO | 190 | Lv 4 | Lv 8 | Lv 9.8 |
+| H | 悲報！ワイ！ニート！ | Shu | 165 | Lv 4 | Lv 8 | Lv 9.7 |
+| Beyond The Earth | 猫叉Master | 140 | Lv 2 | Lv 5 | Lv 8 |
+| H | beyond the Ave. | BEMANI Sound Team "SYUNN" | 135 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | BILLION MONEY BAZOOKA | BlackY | 176 | Lv 4 | Lv 8 | Lv 10.4 |
+| H | Finally Dive | ここなつ Produced by lapix | 146 | Lv 3 | Lv 5 | Lv 8 |
+| Fate | BEMANI Sound Team "TATSUYA" | 200 | Lv 4 | Lv 8 | Lv 10.4 |
+| H | 4x4 Parallel Universe | kamome sano | 140 | Lv 6 | Lv 9.5 | Lv 10.6 |
+| O | H | fallen leaves | 猫叉Master | 165 | Lv 5 | Lv 9.3 | Lv 10.5 |
+| H | Prowler | BEMANI Sound Team "Yvya" | 160 | Lv 6 | Lv 9.6 | Lv 10.5 |
+| break through the clouds | Tomoyuki Uchida | 150 | Lv 3 | Lv 7 | Lv 9.5 |
+| H | pray nightly | BEMANI Sound Team "猫叉Master" | 170 | Lv 5 | Lv 9.7 | Lv 10.7 |
+| 閉塞的フレーション | Pizuya's Cell VS BEMANI Sound Team "dj TAKA" | 176 | Lv 5 | Lv 9.6 | Lv 10.5 |
+| Bassline Crack | Getty | 175 | Lv 4 | Lv 8 | Lv 9.7 |
+| H | Hexer | BEMANI Sound Team "Yvya" | 165 | Lv 6 | Lv 9.6 | Lv 10.7 |
+| Help me, ERINNNNNN!! | ビートまりお | 185 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | Homesick Pt.2&3 | ORANGENOISE SHORTCUT | 178 | Lv 3 | Lv 6 | Lv 8 |
+| voxel star arise | ああああ | 200 | Lv 5 | Lv 8 | Lv 10.4 |
+| H | ポラリスノウタ | ここなつ2.0 | 170 | Lv 4 | Lv 6 | Lv 8 |
+| H | ◎holic◎ | 山本真央樹 feat.くりむ | 170 | Lv 3 | Lv 6 | Lv 9.4 |
+| White Stream | BEMANI Sound Team "ZAQUVA" | 222 | Lv 4 | Lv 8 | Lv 10.4 |
+| PON☆PON☆PARADE | キノシタ | 194 | Lv 2 | Lv 5 | Lv 9.3 |
+| O | Magical electrica | キノシタ | 194 | Lv 2 | Lv 5 | Lv 9.3 |
+| mathematical good-bye | 三代目 ADULTIC TEACHERS feat. BEMANI Sound Team "スコーピオン志村" | 182 | Lv 4 | Lv 8 | Lv 10.4 |
+| H | 魔法少女とチョコレゐト | ピノキオピー | 150 | Lv 3 | Lv 6 | Lv 9.2 |
+| O | Music-U | Qrispy Joybox feat.mao | 152 | Lv 3 | Lv 5 | Lv 8 |
+| O | H | 空言の海 ～咲子 edition～ | 日向美ビタースイーツ♪ | 92 | Lv 2 | Lv 5 | Lv 7 |
+| ムラサキグルマ | ここなつ Produced by はるなば | 125-180 | Lv 5 | Lv 8 | Lv 10.3 |
+| めうめうぺったんたん！！ (ZAQUVA Remix) | Remixed by BEMANI Sound Team "ZAQUVA" | 200 | Lv 5 | Lv 8 | Lv 10.5 |
+| H | MEGALOVANIA | Toby Fox | 240 | Lv 4 | Lv 8 | Lv 10 |
+| メズマライザー | サツキ | 185 | Lv 4 | Lv 8 | Lv 9.5 |
+| メモリーズ | ここなつ2.0 | 136 | Lv 2 | Lv 5 | Lv 8 |
+| O | やっぱり雨は降るんだね | ツユ | 130 | Lv 2 | Lv 5 | Lv 9 |
+| Link up | chocochips | 170 | Lv 3 | Lv 6 | Lv 9 |
+| 輪廻の鴉 | BEMANI Sound Team "dj TAKA" | 198 | Lv 3 | Lv 6 | Lv 9.7 |
+| H | RUINA | Dustup VS MAX MAXIMIZER | 160 | Lv 5 | Lv 9.1 | Lv 10.7 |
+| 累乗のカルマ | めと（Metomate） | 178 | Lv 3 | Lv 7 | Lv 9.3 |
+| 6次の隔たり | BEMANI Sound Team "Sota F. Remixed by Coyaan" | 134 | Lv 1 | Lv 6 | Lv 9.1 |
+| ROCK THE PARTY | BEMANI Sound Team "KE!JU" | 128 | Lv 3 | Lv 6 | Lv 9.6 |
+| H | ロマンシングエスケープ | ここなつ2.0 | 132 | Lv 2 | Lv 5 | Lv 7 |
+| H | WARNING×WARNING×WARNING [ 2 ] | 暁Records | 172 | Lv 3 | Lv 7 | Lv 9.6 |
+| jubeat Ave. |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | H | archive::zip | kamome sano | 185 | Lv 5 | Lv 7 | Lv 10.2 |
+| O | H | I | 黒魔 | 225 | Lv 7 | Lv 9.5 | Lv 10.8 |
+| I-W-U (I Want You) | nagomu tamaki | 150 | Lv 3 | Lv 6 | Lv 9.6 |
+| Awakening Wings | 伊達朱里紗 | 190 | Lv 4 | Lv 6 | Lv 8 |
+| O | H | out of focus | Qrispy Joybox | 167 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | H | Anubis | ARForest | 165 | Lv 5 | Lv 8 | Lv 10.5 |
+| H | After Rain | PIKASONIC | 175 | Lv 7 | Lv 9 | Lv 10.4 |
+| O | H | AMBERGRIS | かめりあ | 160 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | 一途(映画『劇場版 呪術廻戦 0』主題歌) | (King Gnu) | 160 | Lv 3 | Lv 7 | Lv 9 |
+| H | Insanity | BEMANI Sound Team "SYUNN & Yvya" | 210 | Lv 6 | Lv 8 | Lv 10.7 |
+| Insanity: Sol | BEMANI Sound Team "Yvya" | 196 | Lv 5 | Lv 8 | Lv 10.4 |
+| H | Insanity: Luna | BEMANI Sound Team "SYUNN" | 196 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | H | Virus Funk | Nhato | 132 | Lv 3 | Lv 6 | Lv 9.2 |
+| H | VOLAQUAS | BEMANI Sound Team "DJ TOTTO VS 兎?" | 212 | Lv 7 | Lv 9.7 | Lv 10.6 |
+| O | H | Explore Every Ave. | BEMANI Sound Team "SYUNN" | 135 | Lv 3 | Lv 6 | Lv 9.4 |
+| エジソン | 水曜日のカンパネラ | 130 | Lv 1 | Lv 5 | Lv 9 |
+| O | H | Elysion ex machina | OSTER project | 150 | Lv 5 | Lv 7 | Lv 10.3 |
+| エンヴィーベイビー | Kanaria | 171 | Lv 3 | Lv 6 | Lv 8 |
+| O | H | エンドルフィン | U1 overground | 160 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | おにけもだんす | いろはにほへっと あやふぶみ（白上フブキ、百鬼あやめ、大神ミオ） | 197 | Lv 3 | Lv 5 | Lv 8 |
+| 怪獣大戦争 | BEMANI Sound Team "桃山珍太郎" | 140 | Lv 3 | Lv 7 | Lv 9.6 |
+| O | 神っぽいな | ピノキオピー | 142 | Lv 3 | Lv 6 | Lv 8 |
+| O | KINGWORLD | 白上フブキ | 240 | Lv 6 | Lv 8 | Lv 9.8 |
+| 銀の旋律-Silver melodia- | ちょこふぁん | 175 | Lv 3 | Lv 6 | Lv 9.5 |
+| Crackpot Evangelist | BEMANI Sound Team "ZAQUVA" | 200 | Lv 7 | Lv 10.5 | Lv 10.9 |
+| O | Cranberry | BEMANI Sound Team "肥塚良彦" | 180 | Lv 5 | Lv 7 | Lv 9.7 |
+| O | Gray Heaven | かめりあ | 220 | Lv 5 | Lv 9.4 | Lv 10.5 |
+| O | H | Go Beyond!! | Ryu☆ Vs. Sota | 200 | Lv 5 | Lv 9 | Lv 10.4 |
+| O | €omet popcorn | pan | 244 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | satfinal | RAM | 180 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | シープドリーミン | テヅカ feat. 大西あみみ | 220 | Lv 4 | Lv 7 | Lv 9 |
+| O | ZIGZAG COWBOY | BEMANI Sound Team "劇団レコード" | 128-140 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | 進め↑BAKATARATION | バカタレ共 | 148 | Lv 2 | Lv 4 | Lv 8 |
+| O | Slipstream | lapix | 175 | Lv 5 | Lv 9.6 | Lv 10.3 |
+| O | Say!ファンファーレ! | 白上フブキ | 170 | Lv 2 | Lv 5 | Lv 9.3 |
+| O | H | Time Lapse | Hommarju | 160 | Lv 5 | Lv 7 | Lv 10.4 |
+| O | H | DIAMOND CROSSING | S-C-U vs L.E.D. | 180 | Lv 6 | Lv 10.4 | Lv 10.6 |
+| H | Dance With The Dead | BEMANI Sound Team "SYUNN" | 150 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | Chewingood!!! | TORIENA | 190 | Lv 4 | Lv 7 | Lv 9 |
+| H | Daily Lunch Special [ 2 ] | Lucky Vacuum | 205 | Lv 5 | Lv 7 | Lv 10.4 |
+| テレキャスタービーボーイ | すりぃ | 182 | Lv 2 | Lv 5 | Lv 9.1 |
+| O | DENPA NEVER DIE | かめりあ feat. ななひら | 162 | Lv 3 | Lv 6 | Lv 9.8 |
+| O | 東京テディベア | Neru | 204 | Lv 2 | Lv 6 | Lv 8 |
+| O | H | Drenched in Air | Camellia ft. Ninomae Ina'nis | 189 | Lv 1 | Lv 6 | Lv 10.3 |
+| O | H | Don't believe the hype | DJ Mass Mad Izm* feat.H14(LEONAIR) | 210 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | H | nightbird lost wing | 猫叉Master+ | 190 | Lv 3 | Lv 7 | Lv 10.4 |
+| O | †渚のリベンジΣ脈あり!?バケェ～ション† | とろピカるサマー☆Prim | 190 | Lv 4 | Lv 7 | Lv 10.3 |
+| New World | FELT | 195 | Lv 3 | Lv 6 | Lv 8 |
+| O | ネトゲ廃人シュプレヒコール | さつき が てんこもり | 175 | Lv 2 | Lv 6 | Lv 8 |
+| パーフェクトイーター | BEMANI Sound Team "PON" feat.かなたん | 175 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | 灰の羽搏 | かめりあ feat. かめりあ | 240 | Lv 7 | Lv 9.5 | Lv 10.7 |
+| ハウリング | Liz Triangle | 184 | Lv 3 | Lv 6 | Lv 8 |
+| O | HAPPY☆LUCKY☆YEAPPY | DJ ミラクル☆ストーン | 190 | Lv 5 | Lv 8 | Lv 10.3 |
+| O | H | Happiness World | BABACORN(宝鐘マリン/白上フブキ) | 150 | Lv 3 | Lv 5 | Lv 7 |
+| O | Pierce The Sky | JAKAZiD feat. K.N. | 170 | Lv 4 | Lv 6 | Lv 9.7 |
+| O | H | Victory of the Century | BEMANI Sound Team "TAG" | 180 | Lv 5 | Lv 8 | Lv 10.4 |
+| ヒトガタ | HIMEHINA | 150 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | Pure Rude | kors k | 175 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | Fly Above | Sota Fujimori | 150 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | H | Flying Soda | 猫叉Master feat.林ももこ | 106 | Lv 2 | Lv 6 | Lv 8 |
+| O | H | brown hawk owl | BEMANI Sound Team "S-C-U" | 190 | Lv 4 | Lv 7 | Lv 10.5 |
+| O | Freeway Shuffle | dj TAKA | 145 | Lv 3 | Lv 6 | Lv 9.2 |
+| O | Blew My Mind | Sota F. | 190 | Lv 5 | Lv 8 | Lv 10.4 |
+| H | manticore | BEMANI Sound Team "Amber" | 200 | Lv 4 | Lv 7 | Lv 10.5 |
+| O | 見えない星の渡り方 | Capchii feat. ことの | 178 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | Mr.REAPER | ekaΩ feat.ロクナナハチ | 196 | Lv 4 | Lv 8 | Lv 9.1 |
+| O | ミックスナッツ(TVアニメ『SPY×FAMILY』オープニング主題歌) | (Official髭男dism) | 150 | Lv 1 | Lv 4 | Lv 9 |
+| H | Metamorphic | BEMANI Sound Team "Sota Fujimori" | 200 | Lv 5 | Lv 8 | Lv 10.3 |
+| H | MONOLITH | TOMOSUKE | 170-205 | Lv 2 | Lv 6 | Lv 10.3 |
+| O | Liar×Girl | BEMANI Sound Team "HuΣeR" feat.ゆきまめ | 164 | Lv 3 | Lv 7 | Lv 10.3 |
+| ラグトレイン | 稲葉曇 | 147 | Lv 3 | Lv 5 | Lv 8 |
+| Love 2 Shuffle | BEMANI Sound Team "Sota F." feat. Starbitz | 133 | Lv 3 | Lv 7 | Lv 9.5 |
+| O | La libertad | Cheryl Horrocks | 170 | Lv 3 | Lv 6 | Lv 9.6 |
+| Reach The Sky | YUKIYANAGI | 170 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | Reincarnation Of Dead Petal | BEMANI Sound Team "Akhuta Works" | 198 | Lv 3 | Lv 7 | Lv 10.4 |
+| 凛として咲く花の如く(V) | 大神ミオ | 163 | Lv 3 | Lv 6 | Lv 9.2 |
+| O | H | Lost Dream | Tatsunoshin | 180 | Lv 7 | Lv 9.6 | Lv 10.7 |
+| O | わくわくエブリデイ | 白上フブキ・大神ミオ | 145 | Lv 2 | Lv 4 | Lv 6 |
+| O | H | 和beat | Flash back Dominant | 150 | Lv 4 | Lv 8 | Lv 10.4 |
+| jubeat festo |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | △ | H | Icicles [ 2 ] | Jimmy Weckl | 158 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | H | I'm so Happy [ 2 ] | Ryu☆ | 181 | Lv 4 | Lv 7 | Lv 10.1 |
+| アカリがやってきたぞっ | GYARI(ココアシガレットP) | 136 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | O | H | Agnus Dei | あさき | 168 | Lv 4 | Lv 6 | Lv 9.6 |
+| [A]ddiction | EVO+ | 164 | Lv 4 | Lv 6 | Lv 9.2 |
+| O | O | ATRAX | BEMANI Sound Team "HuΣeR" | 128 | Lv 2 | Lv 7 | Lv 9.6 |
+| O | O | Analyse Katharsis | red glasses | 142-178 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | O | H | Afterimage d'automne | BEMANI Sound Team "猫叉劇団" | 232 | Lv 4 | Lv 6 | Lv 9.6 |
+| O | H | Aftermath | BEMANI Sound Team "猫叉Master & あさき & Yvya" | 200 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | Apex of the World | uma&hurirai feat.ましろ | 169 | Lv 3 | Lv 6 | Lv 9.2 |
+| O | O | H | 雨上がりの空に | 猫大樹 | 160 | Lv 5 | Lv 9.7 | Lv 10.5 |
+| O | O | アモ | 八月二雪 | 190 | Lv 3 | Lv 5 | Lv 9.1 |
+| Alba | 須田景凪 | 117 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Arena Deiporta | BEMANI Sound Team "Akhuta Works" | 189 | Lv 4 | Lv 7 | Lv 10.4 |
+| O | O | H | Our Faith [ 2 ] | kors k | 175 | Lv 4 | Lv 9.2 | Lv 10.6 |
+| O | O | Our Love | lapix | 190 | Lv 3 | Lv 6 | Lv 10.2 |
+| O | O | Underground Astronomy | D.watt (IOSYS) | 155 | Lv 3 | Lv 6 | Lv 9.8 |
+| アンビバレント | Eve | 188 | Lv 2 | Lv 6 | Lv 8 |
+| H | いーあるふぁんくらぶ [ 2 ] | みきとP | 145 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | H | 1116 | BEMANI Sound Team "Dustup" | 190 | Lv 7 | Lv 10.2 | Lv 10.9 |
+| 鋳鉄の檻 | 小寺可南子,ランコ,SARAH by BEMANI Sound Team "Yvya" | 200 | Lv 4 | Lv 7 | Lv 9.2 |
+| ICHIDAIJI | ポルカドットスティングレイ | 142 | Lv 3 | Lv 6 | Lv 8 |
+| O | H | Idola (BEMANI SYMPHONY Arr.) | iconoclasm × 原口 大 + gaQdan | 140-176 | Lv 3 | Lv 8 | Lv 9.7 |
+| O | O | H | インドがパッカーン！！煩悩マハラジャドリーム | ARM × かたほとり ft. 柊木りお | 173 | Lv 3 | Lv 7 | Lv 10.3 |
+| O | O | In Your EyEs | kors k | 180 | Lv 5 | Lv 7 | Lv 10.5 |
+| O | O | Virtual Bit | KAN TAKAHIKO | 152 | Lv 3 | Lv 7 | Lv 10.3 |
+| O | O | VIKING SHIP | BEMANI Sound Team "劇団レコード" | 130 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | O | H | VALLIS-NERIA [ 2 ] | DJ YOSHITAKA | 185 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | O | H | Winter Gift ～クリスピーからの贈りもの～ | Qrispy Joybox | 178 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | ↑↑↓↓←→←→BA | meiyo | 124 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | O | H | Welcome to the Mosh Pit | lapix | 172 | Lv 5 | Lv 9.6 | Lv 10.6 |
+| O | O | H | WELCOME TO MOTOWN PARK | OSTER project | 165 | Lv 5 | Lv 7 | Lv 9.8 |
+| △ | H | 泡沫、哀のまほろば | 幽閉サテライト | 155 | Lv 2 | Lv 5 | Lv 9.3 |
+| 打上花火 | DAOKO×米津玄師 | 96 | Lv 1 | Lv 4 | Lv 6 |
+| △ | △ | H | ETERNAL BLAZE [ 2 ] | (水樹奈々) | 105-155 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | X-Plan | Tom-H@ck feat.Nadia | 250 | Lv 2 | Lv 7 | Lv 9.0 |
+| O | O | H | X-ray binary | BEMANI Sound Team "Trance Liquid" | 150 | Lv 3 | Lv 9.5 | Lv 10.4 |
+| O | H | Everlasting Message (BEMANI SYMPHONY Arr.) | ぺのれり × Osamu Kubota + gaQdan | 92-214 | Lv 5 | Lv 8 | Lv 10.1 |
+| O | O | EMOTiON TRiPPER | sky_delta | 170 | Lv 3 | Lv 6 | Lv 8 |
+| O | Element of SPADA (BEMANI SYMPHONY Arr.) | 猫叉Master feat.霜月はるか × 大嶋 啓之 + gaQdan | 170 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | O | H | Endless Beats ⇔ Endless Parties | かめりあ | 152 | Lv 2 | Lv 7 | Lv 10.3 |
+| Over “Quartzer” | Shuta Sueyoshi feat. ISSA | 133 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | O | おーまい！らぶりー！すうぃーてぃ！だーりん！ | BEMANI Sound Team "PON" feat.NU-KO | 170 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | O | H | All Clear!! | sky_delta | 164 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | △ | H | ALL MY HEART -この恋に、わたしの全てを賭ける- [ 2 ] | SUPER HEROINE 彩香-AYAKA- | 160 | Lv 3 | Lv 7 | Lv 9.2 |
+| オトモダチフィルム | オーイシマサヨシ | 158 | Lv 3 | Lv 6 | Lv 8 |
+| おにぎりディスコ | Blanc Bunny Bandit | 118 | Lv 1 | Lv 4 | Lv 7 |
+| O | 朧 (BEMANI SYMPHONY Arr.) | HHH×MM×ST × 浦木 裕太 + gaQdan | 149 | Lv 2 | Lv 6 | Lv 9.8 |
+| 革命パッショネイト | 日向美ビタースイーツ♪ | 194 | Lv 4 | Lv 7 | Lv 10.2 |
+| 陽炎 -movie version- | サカナクション | 132 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Catapulted Arch | BEMANI Sound Team "person09" | 184 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | 片目で異常に恋してる | ジェニーハイ | 132 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | H | [E] [ 2 ] | dj MAX STEROID | 152 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | Come to Life | ARM (IOSYS) feat. Nicole Curry | 180 | Lv 3 | Lv 8 | Lv 9.8 |
+| △ | H | Colorful Cookie (BEMANI SYMPHONY Arr.) | Lucky Vacuum × デビン木下 + gaQdan | 168 | Lv 4 | Lv 8 | Lv 9.6 |
+| H | 眼光 [ 2 ] | 猫大樹 | 165 | Lv 2 | Lv 7 | Lv 9.1 |
+| △ | H | 関門突破撃 | 新井大樹 | 160 | Lv 4 | Lv 6 | Lv 10.2 |
+| O | O | H | Catch Our Fire! | 中島由貴 | 190 | Lv 4 | Lv 7 | Lv 10.4 |
+| Catch Me | DJ Yoshitaka feat. Eri | 115 | Lv 2 | Lv 6 | Lv 9.0 |
+| O | O | H | キヤロラ衛星の軌跡 | 工藤吉三（ベイシスケイプ） | 150 | Lv 4 | Lv 7 | Lv 10.4 |
+| O | O | 狂水一華 | BEMANI Sound Team "HuΣeR Vs. SYUNN" feat.いちか | 160 | Lv 3 | Lv 8 | Lv 10.2 |
+| ギラメタスでんぱスターズ | でんぱ組.inc | 200 | Lv 3 | Lv 6 | Lv 8 |
+| O | △ | H | Queen's Paradise [ 2 ] | Nanako | 157 | Lv 4 | Lv 6 | Lv 9.2 |
+| O | O | H | Glitter Cube | BEMANI Sound Team "dj TAKA" | 150 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | O | H | Crazy Shuffle | Yooh | 128 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | 紅蓮華 | (LiSA) | 135 | Lv 2 | Lv 5 | Lv 8 |
+| Globe Glitter | Sana,ATSUMI UEDA by BEMANI Sound Team "PON" | 190 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | △ | H | cloche [ 2 ] | Qrispy Joybox | 182 | Lv 3 | Lv 6 | Lv 8 |
+| O | △ | H | Chronos [ 2 ] | TAG | 128 | Lv 5 | Lv 8 | Lv 9.7 |
+| O | O | H | 激闘保安官！DEMPA撲滅大作戦 | ARM × かたほとり ft. ななひら | 142 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | O | Get On The Floor | RoughSketch | 150 | Lv 3 | Lv 7 | Lv 10.0 |
+| H | ケムマキunderground | t+pazolite feat. リズナ | 200 | Lv 3 | Lv 8 | Lv 9.5 |
+| O | O | 恋歌疾風！かるたクイーンいろは | ねこまんまチーム！ | 120-168 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | O | H | 恋 No リセットゲーム!!!!! | DJ Genki feat. ななひら,yukacco,藍月なくる | 190 | Lv 4 | Lv 9.1 | Lv 10.4 |
+| O | O | H | Ghost Clock | BEMANI Sound Team "Yvya" | 190 | Lv 5 | Lv 8 | Lv 10.5 |
+| ゴーストルール | DECO*27 | 210 | Lv 2 | Lv 7 | Lv 9.2 |
+| △ | H | 虚空と光明のディスクール [ 2 ] | 日向美ビタースイーツ♪ | 140 | Lv 2 | Lv 6 | Lv 8 |
+| ここからよろしく大作戦143 | BEMANI Sound Team "あさき隊" | 184 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | COSMIC SYMPHONY | OSTER project | 280 | Lv 3 | Lv 7 | Lv 10.3 |
+| O | O | Surf on the Light | Tomoyuki Uchida | 160 | Lv 3 | Lv 5 | Lv 10.0 |
+| 最凶アンビバレント | 森羅万象 | 179 | Lv 3 | Lv 6 | Lv 9.6 |
+| O | O | 最小三倍完全数 | DJ TECHNORCH | 220 | Lv 5 | Lv 7 | Lv 10.3 |
+| O | O | The Kingsroad | RINZO | 150 | Lv 3 | Lv 7 | Lv 9.5 |
+| O | O | H | Sakura Sunrise [ 2 ] | Ryu☆ | 181 | Lv 5 | Lv 8 | Lv 9.5 |
+| 雑草 | HIKAKIN & SEIKIN | 128 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Sahara | Hommarju | 95-155 | Lv 4 | Lv 7 | Lv 10.2 |
+| O | さよなら世界 (BEMANI SYMPHONY Arr.) | 猫叉Master Arranged by ござ | 104-120 | Lv 2 | Lv 6 | Lv 9.2 |
+| O | △ | H | サヨナラ・ヘヴン [ 2 ] | 猫叉Master | 111 | Lv 3 | Lv 8 | Lv 10.4 |
+| O | H | サヨナラ・ヘヴン (BEMANI SYMPHONY Arr.) | 猫叉Master × Morrigan feat.Lily + gaQdan | 111 | Lv 3 | Lv 7 | Lv 9.3 |
+| されど奇術師は賽を振る | 嘘とカメレオン | 210 | Lv 2 | Lv 7 | Lv 9.6 |
+| 39 | sasakure.UK＆DECO*27 | 175 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Samba Ramba | Y&Co. feat. Kanae Asaba | 160 | Lv 3 | Lv 6 | Lv 9.3 |
+| 幸せが鳴る夜に | PAN | 191 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | O | Jetcoaster Windy | BEMANI Sound Team "dj TAKA" feat.のの | 268 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | △ | H | SigSig [ 2 ] | kors k | 179 | Lv 3 | Lv 7 | Lv 9.6 |
+| 思想犯 | ヨルシカ | 200 | Lv 2 | Lv 8 | Lv 9.1 |
+| O | O | Six String Proof | BEMANI Sound Team "Yvya × Mutsuhiko Izumi" | 130 | Lv 4 | Lv 6 | Lv 9.5 |
+| O | O | H | 灼熱Beach Side Bunny | DJ Mass MAD Izm* | 153 | Lv 6 | Lv 9.6 | Lv 10.7 |
+| O | Juicy | kors k Lovers DJ Yoshitaka | 125 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | H | 少女、摩天楼へ | BEMANI Sound Team "U1 overground" | 150 | Lv 3 | Lv 8 | Lv 10.3 |
+| H | 情熱大陸 [ 2 ] | (葉加瀬太郎) | 128 | Lv 4 | Lv 8 | Lv 9.5 |
+| シル・ヴ・プレジデント | P丸様。 | 176 | Lv 3 | Lv 7 | Lv 9.3 |
+| シンクロフィッシュ | Blanc Bunny Bandit | 182 | Lv 2 | Lv 5 | Lv 8 |
+| JINGO JUNGLE （Big Room Mix） | Remixed by BEMANI Sound Team "Sota Fujimori" feat.Nana Takahashi | 130 | Lv 2 | Lv 5 | Lv 9.0 |
+| スイーツはとまらない♪ | 日向美ビタースイーツ♪ | 204 | Lv 2 | Lv 5 | Lv 8 |
+| O | 「Sweet Love」 | ときめきメモリアル Girl's Side 4th Heart | 135 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | H | Super GERO GE-RO | S-C-U | 188 | Lv 5 | Lv 7 | Lv 10.6 |
+| O | スーパー戦湯ババンバーン | すわひでお,秋成,かぼちゃ,藍月なくる,NU-KO by BEMANI Sound Team "八戸亀生羅" | 187 | Lv 4 | Lv 8 | Lv 10.3 |
+| H | Scarlet Moon [ 2 ] | REDALiCE feat. Ayumi Nomiya | 180 | Lv 3 | Lv 7 | Lv 9.5 |
+| すきなことだけでいいです | ピノキオピー | 140 | Lv 4 | Lv 8 | Lv 9.5 |
+| O | O | H | StaRgAZER | BEMANI Sound Team "TAG" | 144 | Lv 3 | Lv 8 | Lv 10.0 |
+| O | H | starmine (BEMANI SYMPHONY Arr.) | Ryu☆ × デビン木下 + gaQdan | 100-164 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | H | Still Lonesome | PSYQUI | 168 | Lv 4 | Lv 7 | Lv 9.9 |
+| O | O | H | Snow Goose [ 2 ] | Mutsuhiko Izumi | 200 | Lv 4 | Lv 7 | Lv 10.4 |
+| O | O | スノーホワイト | RoughSketch | 214 | Lv 5 | Lv 7 | Lv 10.4 |
+| O | O | Sparkle Smilin' | BEMANI Sound Team "Qrispy Joybox" feat.いちか | 180 | Lv 3 | Lv 7 | Lv 10.3 |
+| O | O | Spica | BEMANI Sound Team "TATSUYA" | 176 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | O | H | splash! | BEMANI Sound Team "Trance Liquid" | 156 | Lv 4 | Lv 7 | Lv 10.5 |
+| O | O | H | SPACE INASAKU | BEMANI Sound Team "サイバー劇レコ" | 178 | Lv 3 | Lv 7 | Lv 10.4 |
+| O | △ | H | スペースカーニバル [ 2 ] | shooting star | 160 | Lv 4 | Lv 6 | Lv 9.1 |
+| O | O | H | スミスえかきうた | jubeat staff | 114 | Lv 1 | Lv 5 | Lv 8 |
+| O | O | zeeros | onoken | 146-187 | Lv 3 | Lv 6 | Lv 9.8 |
+| H | 世界の果てに約束の凱歌を -jubeat edition- | かめりあ | 201 | Lv 7 | Lv 9.2 | Lv 10.6 |
+| O | O | H | 拙者拙者拙者拙者 | ヒゲドライバー & ゆよゆっぺ | 195 | Lv 3 | Lv 7 | Lv 10.2 |
+| H | XENOViA | BlackY | 208 | Lv 7 | Lv 10.2 | Lv 10.9 |
+| H | 全力ハッピーライフ | 森羅万象 | 190 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | △ | H | 創世ノート [ 2 ] | PON+wac | 200 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | H | sola [ 2 ] | 小野秀幸 | 135 | Lv 3 | Lv 6 | Lv 10.4 |
+| O | O | Sorrows | Asako Yoshihiro | 185 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | turn into white | BEMANI Sound Team "S-C-U & TATSUYA" | 186 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | H | Timepiece phase II (BEMANI SYMPHONY Arr.) | 佐々木博史 × bermei.inazawa + gaQdan | 140 | Lv 3 | Lv 8 | Lv 9.6 |
+| O | O | 太陽の滴 | CANVAS feat. Quimär | 160 | Lv 3 | Lv 7 | Lv 9.7 |
+| 高嶺の花子さん | back number | 87-138 | Lv 2 | Lv 5 | Lv 8 |
+| H | たたえよ！絶対覇権アリーシャ帝国 | Blanc Bunny Bandit | 100-145 | Lv 4 | Lv 7 | Lv 9.4 |
+| ただ君に晴れ | ヨルシカ | 140 | Lv 1 | Lv 6 | Lv 8 |
+| タンクトップは似合わない | ONIGAWARA | 128 | Lv 2 | Lv 6 | Lv 9.0 |
+| ダンシング | 佐伯ユウスケ | 159 | Lv 2 | Lv 5 | Lv 9.3 |
+| O | O | タンポポ | 豚乙女 | 206 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | H | Chippin Break | あるふぁ | 190 | Lv 4 | Lv 8 | Lv 9.6 |
+| O | 茶渋シンドローム | みゅい | 185 | Lv 2 | Lv 6 | Lv 9.0 |
+| H | チュッチュ♪マチュピチュ | ななひら,Nana Takahashi,猫体質 by BEMANI Sound Team "劇ダンサーレコード" | 130 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | O | 追憶のアラウカリア | Cororo | 106 | Lv 4 | Lv 7 | Lv 9.7 |
+| △ | H | ツーマンライブ [ 2 ] | 東雲夏陽 meets 日向美ビタースイーツ♪ | 174 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | H | 月影小町 | 駄々子 | 182 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | H | つぼみ [ 2 ] | 達見 恵 featured by 佐野宏晃 | 184 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | December in Strasbourg | nana(Sevencolors) feat. Mana | 115 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | O | Din Don Dan | Ryu☆ feat.Mayumi Morinaga | 140 | Lv 3 | Lv 7 | Lv 9.1 |
+| DEATH WORMHOLE | SOUND HOLIC feat.Nana Takahashi | 137 | Lv 4 | Lv 7 | Lv 9.2 |
+| O | O | H | Duality | BEMANI Sound Team "Yvya" | 190 | Lv 6 | Lv 9.3 | Lv 10.8 |
+| DUAL STRIKER | Mayumi Morinaga,Fernweh by BEMANI Sound Team "L.E.D. & HuΣeR" | 185 | Lv 4 | Lv 7 | Lv 10.4 |
+| O | H | 天空の夜明け (BEMANI SYMPHONY Arr.) | Cuvelia × Nagiha + gaQdan | 150 | Lv 3 | Lv 6 | Lv 9.1 |
+| デンノウス・キルズ | cosMo＠暴走P feat.初音ミク | 217 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | toy boxer | BEMANI Sound Team "S-C-U & SYUNN" | 190 | Lv 8 | Lv 9.5 | Lv 10.5 |
+| O | O | Toy Robot Factory | MARON (IOSYS) | 184 | Lv 4 | Lv 7 | Lv 9.8 |
+| Do well | SIRUP | 116 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | TOON MANIAC | Theme from"TOON MANIA" | 160 | Lv 2 | Lv 7 | Lv 9.0 |
+| O | O | H | True Blue [ 2 ] | dj TAKA feat.AiMEE | 164 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | O | TRIUMPH | AJURIKA | 183 | Lv 3 | Lv 8 | Lv 9.8 |
+| ドラマツルギー | Eve | 149 | Lv 2 | Lv 6 | Lv 9.2 |
+| O | O | H | Dream drip macchiato | BEMANI Sound Team "TAG" | 160 | Lv 5 | Lv 7 | Lv 9.4 |
+| H | 取り残された美術(Arranged:HiZuMi) [ 2 ] | 幽閉サテライト feat. senya | 160 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | H | Triple Cross | BEMANI Sound Team"dj TAKA & DJ YOSHITAKA & SYUNN" | 196 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | H | Trill auf G | BEMANI Sound Team "dj TAKA" | 188 | Lv 4 | Lv 7 | Lv 10.5 |
+| O | H | 嘆きの樹 (BEMANI SYMPHONY Arr.) | 金獅子 × Nagiha & Osamu Kubota + gaQdan | 61-156 | Lv 5 | Lv 8 | Lv 9.7 |
+| O | O | Neuron | BEMANI Sound Team "Expander" | 174 | Lv 4 | Lv 8 | Lv 10.1 |
+| O | Noob実況24時! | ARM × かたほとり ft. ちょこ | 178 | Lv 3 | Lv 6 | Lv 9.7 |
+| 熱情のサパデアード | 日向美ビタースイーツ♪ | 136 | Lv 3 | Lv 6 | Lv 8 |
+| NEVER SURRENDER | 水樹奈々 | 166 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | ネリと琥珀糖 | sasakure.UK | 170 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | H | No Rule Adventure | nora2r | 190 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | O | Hades Doll | BEMANI Sound Team "Power Of Nature" | 185 | Lv 4 | Lv 8 | Lv 10.6 |
+| 箱庭のエチュード | Blanc Bunny Bandit | 138 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | Pacify | BEMANI Sound Team "SYUNN" | 175 | Lv 4 | Lv 8 | Lv 10.1 |
+| O | H | バッドエンド・シンドローム (BEMANI SYMPHONY Arr.) | アリスシャッハと魔法の楽団 × onoken + gaQdan | 125 | Lv 2 | Lv 7 | Lv 9.3 |
+| 花ハ踊レヤいろはにほ（ハピネス mix） | Remixed by BEMANI Sound Team "D.J.KOBINATA" feat.Kuroa* | 174 | Lv 3 | Lv 7 | Lv 9.0 |
+| ハム太郎とっとこうた（すーぱーとっとこみっくす） | Remixed by BEMANI Sound Team "DJ TOTTO" feat.ななひら | 140 | Lv 3 | Lv 5 | Lv 8 |
+| Paradise Has No Border | 東京スカパラダイスオーケストラ | 181 | Lv 3 | Lv 6 | Lv 8 |
+| ピアノ独奏無言歌 "灰燼" | BEMANI Sound Team "Virkato Wakhmaninov" | 100-200 | Lv 5 | Lv 8 | Lv 10.7 |
+| Be The One | PANDORA feat. Beverly | 136 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | BEEF | BEMANI Sound Team "牛" | 175 | Lv 1 | Lv 7 | Lv 10.5 |
+| Hero Revealed | Yooh | 170 | Lv 6 | Lv 8 | Lv 10.6 |
+| H | ヒカリユリイカ | ここなつ | 140 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | ピザが食べたくてしょうがない皆さんの気持ちを代弁しました | コバヤシユウヤ(IOSYS) feat. Miko | 160 | Lv 3 | Lv 7 | Lv 10.4 |
+| ビター・エスケープ | やぎぬまかな | 152 | Lv 3 | Lv 6 | Lv 8 |
+| △ | △ | H | ビューティフル レシート | Lucky Vacuum | 196 | Lv 4 | Lv 7 | Lv 10.1 |
+| ヒューマノイド | ずっと真夜中でいいのに。 | 159 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | H | Beyond the BLUE | Asato × sak × 田島千種 | 132 | Lv 2 | Lv 6 | Lv 10.4 |
+| O | O | Fireball | BEMANI Sound Team "Bumble Bee" | 180 | Lv 4 | Lv 6 | Lv 10.2 |
+| O | O | H | Phantasmagoria | Maozon | 150 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | O | H | 50th Memorial Songs -The BEMANI History- | BEMANI Sound Team | 136 | Lv 6 | Lv 9.0 | Lv 10.1 |
+| O | O | 50th Memorial Songs -Beginning Story- | BEMANI Sound Team | 135 | Lv 5 | Lv 7 | Lv 8 |
+| O | O | 50th Memorial Songs -二人の時 ～under the cherry blossoms～- | BEMANI Sound Team | 160 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | 50th Memorial Songs -Flagship medley- | BEMANI Sound Team | 135-175 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | O | H | 封隠文様 | 駄々子 | 175 | Lv 4 | Lv 7 | Lv 9.3 |
+| H | Boomy and The Boost | Eagle | 174 | Lv 4 | Lv 8 | Lv 10.7 |
+| ふめつのこころ | tofubeats | 180 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | BLACK JACKAL | Akira Complex | 150 | Lv 4 | Lv 6 | Lv 9.6 |
+| O | H | FLOWER (BEMANI SYMPHONY Arr.) | DJ YOSHITAKA × onoken + gaQdan | 158 | Lv 5 | Lv 9.1 | Lv 10.5 |
+| △ | Pretender | Official髭男dism | 92 | Lv 1 | Lv 3 | Lv 8 |
+| O | O | H | Proof of the existence [ 2 ] | 猫叉Master+ | 170 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | O | Brawl | 東京アクティブNEETs | 145 | Lv 4 | Lv 6 | Lv 9.6 |
+| O | O | Floating Eternity | BEMANI Sound Team "Philosophy" | 180 | Lv 3 | Lv 6 | Lv 10.2 |
+| Boom! Boom! ヘブン | BRADIO | 182 | Lv 2 | Lv 4 | Lv 8 |
+| O | O | Pegasus | BEMANI Sound Team "Expander" | 165 | Lv 4 | Lv 7 | Lv 10.1 |
+| O | O | H | pedigree | BEMANI Sound Team "S-C-U" | 190 | Lv 6 | Lv 9.6 | Lv 10.7 |
+| ベビーステップ | ここなつ | 200 | Lv 4 | Lv 6 | Lv 9.0 |
+| O | O | Hopeful Frontier!!! | cosMo＠暴走P | 298 | Lv 7 | Lv 9.5 | Lv 10.7 |
+| O | H | 僕らの時間 | テヅカ feat. 大西あみみ | 214 | Lv 3 | Lv 8 | Lv 10.0 |
+| O | O | H | 星の小舟 | BEMANI Sound Team "猫叉劇団" | 173 | Lv 3 | Lv 6 | Lv 9.7 |
+| O | O | POSSESSION | TAG underground | 185 | Lv 5 | Lv 9.7 | Lv 10.6 |
+| O | POSSESSION (BEMANI SYMPHONY Arr.) | TAG underground × 中村 康隆 + gaQdan | 180 | Lv 6 | Lv 8 | Lv 10.2 |
+| ボッカデラベリタ | 柊キライ | 170 | Lv 2 | Lv 7 | Lv 9.0 |
+| H | HOT LIMIT [ 2 ] | (HIGH and MIGHTY COLOR) | 139 | Lv 3 | Lv 6 | Lv 8 |
+| POP TEAM EPIC | 上坂すみれ | 142 | Lv 2 | Lv 6 | Lv 10.0 |
+| O | △ | H | Polaris [ 2 ] | Mutsuhiko Izumi | 180 | Lv 4 | Lv 6 | Lv 9.0 |
+| O | O | voltississimo | BEMANI Sound Team "PHQUASE" | 225 | Lv 4 | Lv 7 | Lv 10.3 |
+| My HERO | 04 Limited Sazabys | 217 | Lv 3 | Lv 6 | Lv 8 |
+| マツヨイナイトバグ | ビートまりおとまろん | 190 | Lv 5 | Lv 9.1 | Lv 10.4 |
+| O | MA・TSU・RI | かなたん,アマギセーラ,ぁゅ by BEMANI Sound Team "藤森崇多" | 160 | Lv 3 | Lv 6 | Lv 9.0 |
+| マリーゴールド | あいみょん | 106 | Lv 1 | Lv 5 | Lv 7 |
+| O | みくみくにしてあげる♪【してやんよ】 | ika | 160 | Lv 1 | Lv 5 | Lv 9.2 |
+| O | O | Midsummer Madness | Hommarju | 200 | Lv 3 | Lv 6 | Lv 10.1 |
+| O | O | ミッドナイト☆WAR | いちか | 156 | Lv 4 | Lv 7 | Lv 10.0 |
+| O | MOVE! (We Keep It Movin') | Jonny Dynamite!,Lisa - paint with stars -,Rio Hiiragi by BEMANI Sound Team "U1-ASAMi" | 142 | Lv 2 | Lv 6 | Lv 9.6 |
+| O | 斑咲花 | mami,駄々子 by BEMANI Sound Team "Akhuta Works" | 134-201 | Lv 4 | Lv 6 | Lv 9.3 |
+| O | O | 廻る季節のゆく先に | 中島由貴 | 102 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | めた・メタ？ひまわり＊パンチ | ひまわり＊パンチ | 177 | Lv 2 | Lv 5 | Lv 9.2 |
+| O | H | Metsysralos | 庭師 | 190 | Lv 5 | Lv 8 | Lv 10.3 |
+| O | メランコリック | Junky | 140 | Lv 3 | Lv 6 | Lv 8 |
+| 妄想感傷代償連盟 | DECO*27 | 110 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | O | MODEL FT2 Miracle Version | Mutsuhiko Izumi | 155 | Lv 6 | Lv 9.5 | Lv 9.5 |
+| MONSTER DANCE | KEYTALK | 152-157 | Lv 3 | Lv 6 | Lv 9.2 |
+| UNION | OxT | 178 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | H | unisonote [ 2 ] | onoken | 168 | Lv 2 | Lv 6 | Lv 9.7 |
+| O | O | ゆめのかなたで | かめりあ | 217 | Lv 4 | Lv 7 | Lv 10.6 |
+| O | H | ユメブキ | 紫崎 雪,Risa Yuzuki,709sec. by BEMANI Sound Team "PHQUASE & SYUNN" | 200 | Lv 3 | Lv 7 | Lv 10.2 |
+| YONA YONA DANCE | 和田アキ子 | 145 | Lv 4 | Lv 8 | Lv 9.5 |
+| O | LIKE A VAMPIRE | koyomi,星野奏子 by BEMANI Sound Team "TAKA" | 276 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | O | H | Light Shine | Ryu☆ | 140 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | O | Right Time Right Way | KAN TAKAHIKO | 174 | Lv 5 | Lv 7 | Lv 9.8 |
+| O | O | Life Without You | BEMANI Sound Team "Sota Fujimori" | 150 | Lv 4 | Lv 7 | Lv 10.1 |
+| O | △ | H | Life Connection [ 2 ] | world sequence | 200 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | H | Lachryma《Re:Queen’M》 (BEMANI SYMPHONY Arr.) | かねこちはる × Morrigan + gaQdan | 200 | Lv 6 | Lv 8 | Lv 10.3 |
+| O | O | H | LAST OATH | BEMANI Sound Team "劇団レコード" | 160 | Lv 3 | Lv 6 | Lv 10.6 |
+| H | LANA - キロクノカケラ - [ 2 ] | TOMOSUKE×Jazzin'park | 84-168 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | Lava Flow | BEMANI Sound Team "S-C-U & SYUNN" | 190 | Lv 3 | Lv 7 | Lv 10.1 |
+| O | H | Lava Flow [ 2 ] | BEMANI Sound Team "S-C-U & SYUNN" | 190 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | Laughin' Muffin | Gowrock | 182 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | O | ラブキラ☆スプラッシュ | BEMANI Sound Team "Sota F." feat.いちか | 152 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | H | ラプンツェル | RoughSketch | 160 | Lv 3 | Lv 6 | Lv 10.2 |
+| O | O | ランカーキラーガール | 中島由貴 × いちか | 200 | Lv 4 | Lv 7 | Lv 10.4 |
+| O | リカーシブ・ファンクション | OSTER Project | 145 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | H | Lisa-RICCIA (BEMANI SYMPHONY Arr.) | DJ YOSHITAKA × onoken + gaQdan | 178 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | 流砂の嵐 (BEMANI SYMPHONY Arr.) | 劇団レコード Arranged by ござ | 142 | Lv 3 | Lv 7 | Lv 9.2 |
+| 流星ダンスフロア | ORESAMA | 133 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | H | リリーゼと炎龍レーヴァテイン | 黒猫ダンジョン | 200 | Lv 5 | Lv 9.5 | Lv 10.6 |
+| H | ルナティックモンスター | フーリンキャットマーク | 136 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | O | H | RAISE YOUR HEADS UP | GUHROOVY | 230 | Lv 7 | Lv 9.7 | Lv 10.9 |
+| O | O | Radius | BEMANI Sound Team "Sota F." | 150 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | 令和 | ゴールデンボンバー | 142 | Lv 3 | Lv 7 | Lv 9.1 |
+| H | ロストワンの号哭 [ 2 ] | Neru | 162 | Lv 4 | Lv 8 | Lv 9.5 |
+| O | O | ROCK ju | C-Show | 175 | Lv 4 | Lv 7 | Lv 10.6 |
+| O | O | H | ロミとロボの宇宙飛行 | onoken | 172 | Lv 4 | Lv 7 | Lv 9.7 |
+| WARNING×WARNING×WARNING | 暁Records | 172 | Lv 4 | Lv 6 | Lv 8 |
+| O | ワールズエンド・ダンスホール | wowaka | 171 | Lv 3 | Lv 7 | Lv 10.2 |
+| O | H | 海神 | 兎々 | 159 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | 海神 (BEMANI SYMPHONY Arr.) | 兎々 Arranged by ござ | 160 | Lv 2 | Lv 7 | Lv 10.0 |
+| O | O | Wuv U | kors k | 173 | Lv 4 | Lv 7 | Lv 10.0 |
+| jubeat CLan |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | △ | H | Ausretious 1-まどろみ、或いは嘆色の夢- [ 2 ] | EOOZ | 168 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | △ | アガット [ 2 ] | Bazole | 200 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | O | アドレナリン | U1 overground | 140 | Lv 4 | Lv 8 | Lv 9.8 |
+| O | O | Another Phase | TAG | 160 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | O | Alive in my Soul | aran | 135 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | EXUSIA | L.E.D.-G | 188 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | H | イ号零型 [ 2 ] | あさき | 170 | Lv 3 | Lv 7 | Lv 9.8 |
+| Initial song | 40mP | 90 | Lv 1 | Lv 3 | Lv 6 |
+| O | O | If | Pa's Lam System | 170 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | O | In The Ruins | good-cool feat. CHiCO | 156 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | O | H | Welcome!! | kors k | 180 | Lv 3 | Lv 7 | Lv 9.6 |
+| うまるん体操 | 妹S | 170 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Aerial Skydive | Dirty Androids | 175 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | O | H | Everybody's Rich | REMO-CON | 160 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | O | AI | BEMANI Sound Team "Sota F." | 190 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | O | Evans ～NOSTALGIA Ver. ～ | DJ YOSHITAKA Arranged by まらしぃ | 112-182 | Lv 4 | Lv 7 | Lv 9.7 |
+| △ | エレシュキガル | Noah | 162 | Lv 3 | Lv 6 | Lv 9.6 |
+| H | 快晴 | orangestar | 172 | Lv 3 | Lv 6 | Lv 9.2 |
+| ガヴリールドロップキック | ガヴリール、ヴィーネ、サターニャ、ラフィエル | 168 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | △ | H | カラルの月 [ 2 ] | 猫叉劇団 | 135 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | 変わりゆく時間とノスタルジアと | あずときだしゅんすけ | 105-141 | Lv 2 | Lv 5 | Lv 8 |
+| △ | H | 君の知らない物語 [ 2 ] | (supercell) | 165 | Lv 3 | Lv 5 | Lv 9.3 |
+| CandyPop★Showcase | OSTER project | 170 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | 狂髪天を撫でて綴れ雲の綻び 五体北風に散りて痕も無し | BEMANI Sound Team "Akhuta Works" | 200 | Lv 4 | Lv 8 | Lv 9.8 |
+| H | キリステゴメン | 東雲夏陽 | 156 | Lv 5 | Lv 7 | Lv 9.3 |
+| O | O | H | Couleur=Blanche | #FFFFFF | 90-185 | Lv 6 | Lv 10.3 | Lv 10.6 |
+| Claidheamh Soluis-光の剣- feat.はるの | 猫大樹 | 160 | Lv 3 | Lv 6 | Lv 9.1 |
+| Glorious days | GRANRODEO | 135 | Lv 2 | Lv 5 | Lv 9.0 |
+| 君氏危うくも近うよれ | A応P | 162 | Lv 3 | Lv 6 | Lv 8 |
+| けもののおうじゃ★めうめう | 日向美ビタースイーツ♪ | 162 | Lv 3 | Lv 6 | Lv 8 |
+| O | 現世の彼方 | 猫大樹 | 176 | Lv 3 | Lv 5 | Lv 10.4 |
+| H | 恋時雨 | ときめきアイドル project | 185 | Lv 3 | Lv 6 | Lv 9.3 |
+| 恋のパズルマジック | ときめきアイドル project Rhythmixxx | 140 | Lv 2 | Lv 5 | Lv 8 |
+| O | H | Xibercannon | 隣の庭は青い(庭師＋Aoi) | 190 | Lv 5 | Lv 8 | Lv 10.0 |
+| O | O | H | 飽和世界 | 猫叉Master | 70-118 | Lv 3 | Lv 5 | Lv 9.1 |
+| O | O | H | Sulk | SYUNN | 150 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | O | H | SEED [ 2 ] | DJ YOSHITAKA | 152 | Lv 4 | Lv 8 | Lv 9.7 |
+| H | シノビシノノメ | 東雲心菜 | 174 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | Shout!! | Qrispy Joybox feat.mao | 175 | Lv 2 | Lv 5 | Lv 8 |
+| しゃかりきリレーション | ときめきアイドル project 結城秋葉 | 167 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | Jazz is Rad | ARM(IOSYS)+Brasscapsule | 160 | Lv 6 | Lv 9.3 | Lv 10.5 |
+| Shadow and Truth | ONE III NOTES | 121 | Lv 3 | Lv 7 | Lv 9.1 |
+| シャルル | バルーン | 145 | Lv 2 | Lv 5 | Lv 8 |
+| JUMPin' JUMP UP!!!! | fourfolium | 168 | Lv 3 | Lv 6 | Lv 8 |
+| 銃弾は解を撃ち抜いて | 日向美ビタースイーツ♪ | 171 | Lv 4 | Lv 6 | Lv 9.0 |
+| H | 白い雪のプリンセスは [ 2 ] | のぼる↑ | 200 | Lv 4 | Lv 6 | Lv 9.5 |
+| O | O | H | Singularity | xi | 197 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | H | 水槽のクジラ | テヅカ feat. 大西あみみ | 206 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | SUPER SUMMER SALE | BEMANI Sound Team "U1 overground" | 155 | Lv 5 | Lv 7 | Lv 9.4 |
+| O | △ | H | Scars of FAUNA [ 2 ] | 猫叉Master | 165 | Lv 3 | Lv 6 | Lv 10.1 |
+| ススメRunner!! | fourfolium | 176 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | STAR SHIP☆HERO | Lucky Vacuum | 190 | Lv 3 | Lv 6 | Lv 9.0 |
+| STEP by STEP UP↑↑↑↑ | fourfolium | 175 | Lv 3 | Lv 6 | Lv 8 |
+| Strawberry Chu♡Chu♡ | ときめきアイドル project クッキーパラダイス | 137 | Lv 4 | Lv 6 | Lv 8 |
+| △ | 砂の惑星 feat.初音ミク | ハチ | 95 | Lv 2 | Lv 4 | Lv 8 |
+| O | H | Spirit of the Beast | ikaruga_nex fw.tcheb | 195 | Lv 5 | Lv 8 | Lv 10.6 |
+| Spring Rouge | izna | 125 | Lv 2 | Lv 6 | Lv 8 |
+| O | △ | H | smooooch・∀・ [ 2 ] | kors k | 177 | Lv 3 | Lv 8 | Lv 10.1 |
+| O | O | 星座が恋した瞬間を。 | BEMANI Sound Team "DJ TOTTO feat.MarL" | 186 | Lv 3 | Lv 7 | Lv 9.3 |
+| セカイがカフェになっちゃった！ | Petit Rabbit's with beans | 158 | Lv 2 | Lv 6 | Lv 8 |
+| △ | O | 千本桜 | 黒うさP | 154 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | O | Diastrophism | かめりあ | 228 | Lv 9.4 | Lv 9.6 | Lv 10.3 |
+| O | O | たからもの | セリカ＆エリカ | 182 | Lv 3 | Lv 7 | Lv 9.0 |
+| 闘え! ダダンダーン V | ときめきアイドル project | 176 | Lv 2 | Lv 6 | Lv 8 |
+| 脱法ロック | Neru | 155 | Lv 3 | Lv 6 | Lv 8 |
+| O | △ | H | chaplet [ 2 ] | DJ TOTTO | 200 | Lv 4 | Lv 8 | Lv 10.3 |
+| H | 超人ひじりのエアマッソー | IOSYS feat. ビートまりお | 210 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | H | Chocolate Planet | Freezer feat.妃苺 | 185 | Lv 4 | Lv 7 | Lv 9.8 |
+| △ | H | 月に叢雲華に風 [ 2 ] | 幽閉サテライト feat. senya | 160 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | トキメキメカニクス | ARM×狐夢想 feat. nomico | 175 | Lv 3 | Lv 7 | Lv 10.0 |
+| DREAMING-ING!! | ときめきアイドル project | 180 | Lv 3 | Lv 5 | Lv 8 |
+| H | Drizzly Venom | 日向美ビタースイーツ♪ | 147-168 | Lv 3 | Lv 6 | Lv 9.6 |
+| Don't Break Me Down | A-One | 163 | Lv 3 | Lv 7 | Lv 9.0 |
+| H | ナイト・オブ・ロンド | 日向美ビタースイーツ♪ | 169 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | H | 虹の先に何があるか | あさき | 216 | Lv 4 | Lv 7 | Lv 9.6 |
+| にめんせい☆ウラオモテライフ！ | 土間うまる (CV.田中あいみ) | 170-225 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | H | Necroxis Girl | BEMANI Sound Team "HuΣeR" | 150 | Lv 4 | Lv 8 | Lv 10.6 |
+| O | O | H | Never See You Again | BEMANI Sound Team "U1 overground" | 160 | Lv 5 | Lv 8 | Lv 10.6 |
+| 脳みそ夫体操メインテーマ | 脳みそ夫 | 130-228 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | O | H | Northern Wind | Nhato | 150 | Lv 5 | Lv 7 | Lv 10.5 |
+| O | O | H | No One Can Reach The Truth | BEMANI Sound Team "TAG" | 155 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | birth | Yu_Asahina | 200-220 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | O | Passion | KAN TAKAHIKO | 105-120 | Lv 5 | Lv 8 | Lv 9.7 |
+| ハッピーウェディング前ソング | ヤバイTシャツ屋さん | 183 | Lv 4 | Lv 7 | Lv 9.0 |
+| H | 花のやくそく | 日向美ビタースイーツ♪ | 85 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | 羽根亡キ少女唄 | 純情ディスコード | 174 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | H | パピポペピプペパ | P*Light | 187 | Lv 5 | Lv 9.0 | Lv 10.5 |
+| Paranoia | DiGiTAL WiNG feat. 花たん | 150 | Lv 3 | Lv 6 | Lv 9.0 |
+| H | ハルイチバン | ときめきアイドル project | 180 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | Be a Hero! | 中島由貴 | 190 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | Pee-wee Boogie | ARM | 45-180 | Lv 5 | Lv 7 | Lv 9.8 |
+| O | O | H | PF flowing | dj TAKA | 150 | Lv 4 | Lv 8 | Lv 10.2 |
+| ピースサイン | 米津玄師 | 200 | Lv 4 | Lv 6 | Lv 8 |
+| 向日葵サンセット | ARM・まろん (IOSYS) × ランコ・パプリカ (豚乙女) | 135 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | Puberty Dysthymia | BEMANI Sound Team "person09" | 70-210 | Lv 4 | Lv 7 | Lv 10.5 |
+| O | △ | H | Pink Rose [ 2 ] | Kiyommy＋Seiya | 116-146 | Lv 3 | Lv 6 | Lv 9.0 |
+| フィクサー | ぬゆり | 135 | Lv 3 | Lv 7 | Lv 9.6 |
+| O | O | 風鈴花火 | BEMANI Sound Team "劇団レコード"feat.結良まり | 150 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Fairy Fair | ぺのれり | 157 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | Fox4-Raize- | Getty vs. DJ DiA | 50-200 | Lv 3 | Lv 8 | Lv 9.9 |
+| O | O | Fly far bounce | 猫叉Master | 163 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | O | Blue Sky | Sota F. | 142 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | Prey | BEMANI Sound Team "Dustup" | 210 | Lv 6 | Lv 9.2 | Lv 10.6 |
+| O | H | Prayer | ぺのれり | 144 | Lv 5 | Lv 8 | Lv 10.8 |
+| フレーフレーわたし | 足立佳奈 | 87 | Lv 1 | Lv 3 | Lv 5 |
+| From⑨Girl | uno (IOSYS) × 越田Rute隆人&あき (A-One) | 113 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | H | Pale Garden | Dirty Androids | 160 | Lv 4 | Lv 7 | Lv 9.8 |
+| O | O | H | HEAVENLY MOON [ 2 ] | Tatsh | 185 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | O | H | ヘンゼルとグレーテル | RoughSketch ft.Aikapin & Chiyoko | 190 | Lv 4 | Lv 8 | Lv 10.3 |
+| H | 星を飛び越えて | Liz Triangle | 167 | Lv 2 | Lv 6 | Lv 8 |
+| まぼろしウインク | A応P | 141 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | H | ミカヅキ:コネクト | かゆき | 160 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | O | みたらしプラトニック (feat. nicamoq) | Yunomi | 160 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | O | H | Midnight City Warfare | sky_delta | 180 | Lv 6 | Lv 9.2 | Lv 10.6 |
+| ミラクル・スイート・スイーツ・マジック！！ | 日向美ビタースイーツ♪ | 88-206 | Lv 3 | Lv 7 | Lv 9.0 |
+| Morning Glory | (K)NoW_NAME | 220 | Lv 3 | Lv 6 | Lv 8 |
+| 問答無用でGo！！ | A応P | 147 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | ヤマトなでなで♡かぐや姫 | ロマンチック♡Prim姫 | 160 | Lv 4 | Lv 7 | Lv 9.5 |
+| やんややんやNight ～踊ろよ愛知～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ青森～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ秋田～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ石川～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ茨城～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ岩手～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ愛媛～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ大分～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ大阪～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ岡山～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ沖縄～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ香川～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ鹿児島～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ神奈川～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ岐阜～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ京都～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ熊本～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ群馬～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ高知～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ埼玉～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ佐賀～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ滋賀～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ静岡～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ島根～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ千葉～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ東京～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ徳島～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ栃木～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ鳥取～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ富山～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ長崎～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ長野～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ奈良～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ新潟～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ日本～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ兵庫～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ広島～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ福井～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ福岡～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ福島～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ北海道～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ三重～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ宮城～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ宮崎～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ山形～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ山口～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ山梨～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| やんややんやNight ～踊ろよ和歌山～ | ゴールデンボンバー | 145 | Lv 3 | Lv 6 | Lv 9.0 |
+| ユメイロコンパス | fourfolium | 130 | Lv 2 | Lv 4 | Lv 7 |
+| ようこそジャパリパークへ | どうぶつビスケッツ×PPP | 170 | Lv 1 | Lv 5 | Lv 8 |
+| O | O | H | Life is beautiful | BEMANI Sound Team "猫叉Master" | 155 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | H | Last Dress | はるなば | 160 | Lv 4 | Lv 9.1 | Lv 10.7 |
+| O | O | Rampage☆Rag | かめりあ | 334 | Lv 6 | Lv 8 | Lv 10.5 |
+| O | O | H | Rejoin | BEMANI Sound Team "HuΣeR feat.PON" | 135 | Lv 6 | Lv 10.1 | Lv 10.2 |
+| リバースユニバース | ナユタン星人 | 139 | Lv 3 | Lv 7 | Lv 9.1 |
+| ルミナスデイズ | ここなつ | 145 | Lv 2 | Lv 4 | Lv 7 |
+| O | O | H | レゾンデートル、前線より | 中島由貴 | 207 | Lv 4 | Lv 7 | Lv 9.0 |
+| O | O | H | Roll the Dice | lapix | 165 | Lv 5 | Lv 9.1 | Lv 10.6 |
+| ロールプレイングゲーム | そらまふうらさか | 162 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | H | 炉心融解 [ 2 ] | iroha | 165 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Wowie Zowie! | Hommarju | 128 | Lv 5 | Lv 9.8 | Lv 10.7 |
+| O | O | Wandering Gravity | Nazzo-Non-Heat | 170 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | One More Reason | GUHROOVY | 220 | Lv 5 | Lv 8 | Lv 10.6 |
+| jubeat Qubell |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | O | Ark | kors k | 145 | Lv 3 | Lv 6 | Lv 9.8 |
+| AC版ディズニー ツムツムメドレー | ©Disney | 146 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | H | aleatrik | nc ft. NRGFactory | 138 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | アキネイション | ビートまりお（COOL&CREATE） | 185 | Lv 4 | Lv 8 | Lv 10.0 |
+| O | O | Against the vulgar aggressor | GUHROOVY | 210 | Lv 3 | Lv 6 | Lv 10.4 |
+| あなたに恋をしてみました | chay | 137 | Lv 1 | Lv 5 | Lv 7 |
+| ANTI-HERO | SEKAI NO OWARI | 105 | Lv 3 | Lv 6 | Lv 8 |
+| アンビリーバーズ | 米津玄師 | 133 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | H | Invisible Border | world sequence | 156 | Lv 4 | Lv 6 | Lv 9.8 |
+| インフェルノ | 9mm Parabellum Bullet | 195 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | H | veRtrageS | Riz vs. Shiron | 190 | Lv 6 | Lv 9.4 | Lv 10.7 |
+| O | O | H | Valanga | DJ TOTTO | 186 | Lv 6 | Lv 9.1 | Lv 10.5 |
+| O | O | Vampire Killer | 浅田 靖 | 128 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | △ | H | Windy Fairy [ 2 ] | DJ TOTTO | 180 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | ULTRA HAPPY MEGAMIX | DJ Genki | 180 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | O | H | UROBOROS OVERDIVE | L.E.D. feat. YURiCa/花たん | 160 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | O | 運命 | No.5 Orchestra | 198-299 | Lv 4 | Lv 6 | Lv 10.0 |
+| エイリアンエイリアン | ナユタン星人 | 152 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | △ | H | 枝に結ぶ願い [ 2 ] | Akhuta | 204 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | O | H | Angelic Jelly | t+pazolite | 200 | Lv 4 | Lv 9.2 | Lv 10.2 |
+| O | O | Entrapment | Expander | 150 | Lv 4 | Lv 8 | Lv 9.4 |
+| Endless, Sleepless Night | samfree feat. (V)・∀・(V) かにぱん。 | 165 | Lv 3 | Lv 6 | Lv 9.3 |
+| お茶づけ☆パラダイス | A応P | 160 | Lv 3 | Lv 5 | Lv 7 |
+| O | 男と女の言い合いのうた | 猫大樹 | 160 | Lv 2 | Lv 5 | Lv 8 |
+| △ | お嫁にしなさいっ！ | ARM+夕野ヨシミ | 180 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | O | CARNIVOROUS | SOUND HOLIC feat. Nana Takahashi | 170 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | KHAMEN BREAK -SDVX Infinity MashUp- | くふおー effected by Megacycle | 180 | Lv 4 | Lv 8 | Lv 10.3 |
+| Girl A | ［Alexandros］ | 135 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | 怪盗BisCoの予告状！！ | Qrispy Joybox | 160 | Lv 2 | Lv 7 | Lv 9.2 |
+| O | O | KAMAITACHI | DJ TECHNORCH fw. GUHROOVY | 165 | Lv 5 | Lv 9.7 | Lv 10.7 |
+| O | 眼光 | 猫大樹 | 165 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | がんばれゴエモン ～ ビーストメドレー ～ | 96 | 113-190 | Lv 2 | Lv 6 | Lv 8 |
+| O | キミヱゴサーチ | ここなつ | 120 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | キミとワタシのオンガク | seiya-murai feat. ALT | 160 | Lv 3 | Lv 7 | Lv 8 |
+| △ | △ | 君の知らない物語 | (supercell) | 165 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Qubellic Prism | Nazzo-Non-Heat | 170 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | きゅん×きゅんばっきゅん☆LOVE | 松下feat.Sota & wac | 165 | Lv 3 | Lv 6 | Lv 8 |
+| △ | O | 響縁 | 豚乙女 | 180 | Lv 2 | Lv 7 | Lv 9.3 |
+| O | O | Good bye, Summer～さよならは言わない～ | 私立BEMANI学園軽音部 OB | 165 | Lv 3 | Lv 7 | Lv 8 |
+| Clattanoia | OxT | 190 | Lv 4 | Lv 7 | Lv 9.0 |
+| O | O | GRADIUS Ⅱ ～ ビーストメドレー ～ | Sota Fujimori | 190 | Lv 2 | Lv 6 | Lv 9.4 |
+| 倉野川音頭 | 日向美ビタースイーツ♪＆ひなちくん | 113 | Lv 1 | Lv 4 | Lv 7 |
+| O | O | H | Grand Chariot | xi | 191 | Lv 3 | Lv 6 | Lv 10.4 |
+| O | O | H | Glitter Flatter Scatter | Project B- | 197 | Lv 6 | Lv 9.3 | Lv 10.7 |
+| O | H | crêpe suzette | kamome sano | 202 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | 黒髪乱れし修羅となりて～凛edition～ | 日向美ビタースイーツ♪ | 150 | Lv 2 | Lv 6 | Lv 9.5 |
+| O | O | 檄 | Ryu☆ feat.青龍 | 191 | Lv 3 | Lv 8 | Lv 10.5 |
+| O | O | H | 月風魔伝 ～ ビーストメドレー ～ | Akhuta | 170 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | 厳冬記 | 猫大樹 | 150 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | H | ケンぱ！ケンぱ！拳拳ぱん打！ | ぱんぱんぱん打 | 200 | Lv 3 | Lv 5 | Lv 8 |
+| GO! GO! MANIAC | 放課後ティータイム | 250 | Lv 4 | Lv 8 | Lv 9.5 |
+| O | O | H | Cosminflation | 山本真央樹 | 195 | Lv 5 | Lv 7 | Lv 10.3 |
+| 琥珀のくちづけ | 日向美ビタースイーツ♪&日向美ブルームーン | 173 | Lv 1 | Lv 5 | Lv 8 |
+| O | H | 今夜はパジャマパーティ | 日向美ビタースイーツ♪ | 148 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | CIRCUS U CRIC | Nanako | 185 | Lv 4 | Lv 7 | Lv 8 |
+| Ψです I LIKE YOU | でんぱ組.inc | 220 | Lv 3 | Lv 5 | Lv 8 |
+| Silent Story | 発熱巫女～ず | 126 | Lv 2 | Lv 6 | Lv 7 |
+| O | SAKURAスキップ | fourfolium | 165 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | Saturday Night Love | Sota feat. Brenda V. | 128 | Lv 2 | Lv 5 | Lv 7 |
+| O | Shake! | fourfolium | 170 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | H | The Omen | RoughSketch | 185 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | じもとっこスイーツ♪ | ホララ・ホリック with 日向美ビタースイーツ♪ | 108 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Giant Otter Family | S-C-U | 188 | Lv 3 | Lv 8 | Lv 9.5 |
+| O | O | Just a Game | Y&Co. | 160 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | JACK THE RIPPER feat. Iceon | 猫大樹 | 145 | Lv 2 | Lv 6 | Lv 10.3 |
+| 衝動 | HaKU | 143 | Lv 2 | Lv 5 | Lv 9.3 |
+| Synchronized Love J Rap Jam | ジョー・リノイエ | 124 | Lv 3 | Lv 5 | Lv 8 |
+| 新宝島 | サカナクション | 149-158 | Lv 3 | Lv 5 | Lv 8 |
+| sweet sweet everytime sweet | 海老名菜々（CV:影山灯） | 110 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | スカイダイバー | ヒゲドライバー feat.ヒゲドライVAN | 180 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | Sky High | Cuvelia | 153 | Lv 4 | Lv 10.6 | Lv 10.6 |
+| H | Scream out! | A-One | 166 | Lv 2 | Lv 6 | Lv 9.5 |
+| SUSHI食べたいfeat.ソイソース | ORANGE RANGE | 135 | Lv 2 | Lv 4 | Lv 7 |
+| O | H | Struggle [ 2 ] | Masayoshi Minoshima(ALR) | 180 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | H | StrayedCatz | 削除 | 151 | Lv 4 | Lv 8 | Lv 10.6 |
+| O | O | SPACE VILLAGE | サイバー劇レコ | 170 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | 制作現場での出来事 | 猫大樹 | 150 | Lv 2 | Lv 5 | Lv 9.5 |
+| 拙者はSAMURAI FOOD | S-C-U a.k.a. Food Samurai × A応P | 136 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | ZEPHYRANTHES | TAG | 180 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | H | Sephirot | SHIKI | 154 | Lv 5 | Lv 9.4 | Lv 10.4 |
+| 零の位相 | kradness | 190-205 | Lv 4 | Lv 7 | Lv 9.0 |
+| O | そこはかとなくロマンセ | 日向美ビタースイーツ♪ | 140 | Lv 2 | Lv 6 | Lv 8 |
+| 蒼空に舞え、墨染の桜 | Silver Forest feat. さゆり | 150 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | それは花火のような恋 | 夏色バーニングラブ☆Prim | 182 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | O | Daisuke | Y&Co. | 157 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | 旅の終わりと祝祭の夜 | 月船古書堂 | 148 | Lv 5 | Lv 8 | Lv 10.3 |
+| O | O | CHERNOBOG | 漆黒のEBONY | 200 | Lv 5 | Lv 9.6 | Lv 10.7 |
+| ちょちょいとちょいだよ夢浪漫 | A応P | 152 | Lv 2 | Lv 5 | Lv 8 |
+| ちょちょちょ！ゆるゆり☆かぷりっちょ！！！ | 七森中☆ごらく部 | 190 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | Twinbee's Home Town Song | Sota Fujimori | 168 | Lv 2 | Lv 6 | Lv 9.4 |
+| O | 月に叢雲華に風 | 幽閉サテライト feat. senya | 160 | Lv 3 | Lv 7 | Lv 9.0 |
+| ディアブロ | 水曜日のカンパネラ | 106-133 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | T・S・F in にっぽん！ | 橘・シルフィンフォード（CV:古川由利奈） | 156 | Lv 3 | Lv 6 | Lv 7 |
+| Ding Dong Bell | A応P | 157 | Lv 3 | Lv 6 | Lv 7 |
+| DesireDrive | 岸田教団&THE明星ロケッツ | 184 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | Destiny lovers | くにたけみゆき | 170 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | O | 天嘩乱舞 | 栗須承之介 | 184 | Lv 3 | Lv 8 | Lv 10.0 |
+| Two souls -toward the truth- | fripSide | 165 | Lv 3 | Lv 6 | Lv 8 |
+| ドーナツホール | ハチ | 252 | Lv 4 | Lv 5 | Lv 8 |
+| 時の妖花 | ゲーム実況者わくわくバンド | 150 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | トキメキストリーム | Qrispy Joybox | 164 | Lv 4 | Lv 7 | Lv 9.6 |
+| Dreamland。feat. RED RICE（from 湘南乃風）, CICO（from BENNIE K） | ハジ→ | 141 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | H | Triple Counter | DJ YOSHITAKA meets dj TAKA | 216 | Lv 6 | Lv 9.2 | Lv 10.4 |
+| O | Now Loading!!!! | fourfolium | 193 | Lv 3 | Lv 6 | Lv 7 |
+| 夏にキスしていいですか？ | アルスマグナ | 120-160 | Lv 3 | Lv 6 | Lv 8 |
+| O | 夏休み is freedom!! | 猫大樹 | 155 | Lv 2 | Lv 5 | Lv 8 |
+| NANIMONO（feat.米津玄師） | 中田ヤスタカ | 128 | Lv 2 | Lv 4 | Lv 7 |
+| O | O | NISHIMURA -祭- CARNIVAL | S-C-U×U1 feat. VENUS | 158 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | にゃんのパレードマーチ♪ | DJ TOTTO feat. にゃん | 162 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | New York EVOLVED | NC underground | 190 | Lv 4 | Lv 9.4 | Lv 10.5 |
+| O | O | Knell | Project B- | 205 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | O | nostos | Setaria Virtuoso | 86-144 | Lv 4 | Lv 6 | Lv 9.6 |
+| ハイパーリアリスト | パスピエ | 160 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | H | 爆なな☆てすとロイヤー | ARM feat.ななひら | 200 | Lv 5 | Lv 9.1 | Lv 10.0 |
+| O | ハッピーシンセサイザ | EasyPop | 127 | Lv 4 | Lv 7 | Lv 9.2 |
+| O | O | H | Hunny Bunny | U1 overground | 160 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | バビロニア | 劇団レコード | 164 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | バビロニアの旅人たち | Babylonian Vates | 175 | Lv 3 | Lv 6 | Lv 9.0 |
+| paranoia | つなまる | 150 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | Hollywood Galaxy | dj TAKA | 186 | Lv 5 | Lv 8 | Lv 10.3 |
+| O | 反撃 | 猫大樹 | 145 | Lv 3 | Lv 5 | Lv 9.0 |
+| O | O | H | ぱんだしんけん１、２、３ ～ちえ！おっしょさんにはかなわないや！～ | おひさまくらぶ | 158 | Lv 2 | Lv 5 | Lv 8 |
+| O | パンダヒーロー | ハチ | 190 | Lv 4 | Lv 6 | Lv 9.0 |
+| O | O | H | びいすと！ | ビートまりおとARM | 200 | Lv 4 | Lv 7 | Lv 10.0 |
+| HERO | ソナーポケット | 130 | Lv 3 | Lv 6 | Lv 8 |
+| 翡翠の狼 | 米津玄師 | 121 | Lv 3 | Lv 5 | Lv 7 |
+| O | ひだまりデイズ | 妹S | 134 | Lv 2 | Lv 5 | Lv 6 |
+| O | O | 秘密がーる♡乙女 | MaMiKa(松下×mitsu×T. Kakuta) | 180 | Lv 3 | Lv 6 | Lv 8 |
+| Beautiful | Superfly | 145 | Lv 1 | Lv 5 | Lv 7 |
+| Famous Day | ［Alexandros］ | 180 | Lv 3 | Lv 5 | Lv 8 |
+| O | H | Four Leaves | Endorfin. | 181 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | H | 不可説不可説転 | OSTER project | 140 | Lv 5 | Lv 8 | Lv 9.8 |
+| O | O | FUJIMORI -祭- FESTIVAL | VENUS | 158 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | H | BLACK or WHITE? | BlackYooh vs. siromaru | 185 | Lv 4 | Lv 9.1 | Lv 10.5 |
+| O | O | Bleep Beep Bop | kors k | 175 | Lv 3 | Lv 7 | Lv 10.2 |
+| ふ・れ・ん・ど・し・た・い | 学園生活部 | 148 | Lv 3 | Lv 6 | Lv 8 |
+| H | FLOOR INFECTION Medley from SOUND VOLTEX×jubeat | United Composers from SOUND VOLTEX | 145-195 | Lv 6 | Lv 8 | Lv 10.2 |
+| O | O | Phlox | Sota Fujimori 2nd Season | 185 | Lv 4 | Lv 8 | Lv 10.1 |
+| O | O | 変じゃない!! | good-cool ft. すわひでお | 116 | Lv 2 | Lv 6 | Lv 8 |
+| H | ペンパイナッポーアッポーペン | ピコ太郎 | 136 | Lv 3 | Lv 6 | Lv 8 |
+| △ | 放課後ストライド | Last Note. | 225 | Lv 2 | Lv 5 | Lv 9.0 |
+| 僕は空気が嫁ない | cosMo@暴走P | 192 | Lv 4 | Lv 8 | Lv 9.4 |
+| O | O | 星宿る空の下で | Akhuta | 204 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | Boss Rush | USAO | 190 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | ほっしーの！ | fourfolium | 190 | Lv 3 | Lv 6 | Lv 8 |
+| O | ポメグラネイト | ここなつ | 130 | Lv 3 | Lv 6 | Lv 8 |
+| POLICY BREAK Medley from SOUND VOLTEX×jubeat | United Composers from jubeat | 93-311 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | O | Bonjour, The World!! | 中島由貴 feat. dj TAKA | 158 | Lv 3 | Lv 7 | Lv 9.0 |
+| My Precious | 本場切絵（CV:白石晴香） | 136 | Lv 3 | Lv 5 | Lv 7 |
+| O | 負けないよ…-Runners High- | 猫大樹 | 155 | Lv 3 | Lv 7 | Lv 10.5 |
+| 混ぜるな危険 | 筋肉少女帯 | 178 | Lv 3 | Lv 6 | Lv 7 |
+| △ | O | マトリョシカ | ハチ | 205-296 | Lv 3 | Lv 5 | Lv 9.0 |
+| マホロバケーション | ももいろクローバーZ | 145 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | O | 見習い天使と星降りの丘 | DJ TOTTO | 174 | Lv 3 | Lv 8 | Lv 9.7 |
+| O | O | H | Mirage of the Mirror | SHAMDEL | 122-163 | Lv 5 | Lv 8 | Lv 9.6 |
+| O | ミライプリズム | ここなつ | 140 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | 蟲の棲む処 | かめりあ feat. Nana Takahashi | 161 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | 夢有 | Des-ROW・組 | 144-170 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | Megalara Garuda | SYUNN | 180 | Lv 10.4 | Lv 10.5 | Lv 10.7 |
+| もってけ！セーラーふく | 泉こなた、柊かがみ、柊つかさ、高良みゆき | 150 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | 勇敢な髑髏 | 新井大樹 | 160 | Lv 3 | Lv 5 | Lv 10.1 |
+| O | 勇者うまるの華麗なる生活 | 土間うまる（CV:田中あいみ） | 169 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | H | RHYZING BEAT | PHQUASE | 187 | Lv 5 | Lv 8 | Lv 10.4 |
+| Runway Drive | 舞花 | 160 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | 六花にくちづけ | Akhuta | 210 | Lv 4 | Lv 6 | Lv 8 |
+| LOSER | 米津玄師 | 121 | Lv 4 | Lv 6 | Lv 8 |
+| O | 炉心融解 | iroha | 165 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Lost wing at.0 | 猫叉Master+ | 185 | Lv 4 | Lv 8 | Lv 9.3 |
+| O | O | ロプノールの商隊 | Akhuta | 186 | Lv 3 | Lv 7 | Lv 9.6 |
+| ロンロンへ ライライライ！ | ここなつ | 156 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | H | 分けるな危険！モモモモモモーイズム | ARM×狐夢想 feat. 桃井はるこ | 200 | Lv 4 | Lv 8 | Lv 9.6 |
+| ワタリドリ | ［Alexandros］ | 135 | Lv 3 | Lv 6 | Lv 8 |
+| 椀・of・Relaxation | A応P | 96 | Lv 2 | Lv 7 | Lv 9.0 |
+| jubeat prop |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| I miss you baby / Wizard | 加藤浩義 | 135-145 | Lv 3 | Lv 7 | Lv 10 |
+| O | O | Ausretious 1-まどろみ、或いは嘆色の夢- | EOOZ | 168 | Lv 4 | Lv 7 | Lv 10.4 |
+| O | O | H | アガット | Bazole | 200 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | 朝色の紙飛行機 | かめりあ | 132 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | H | 天ノ弱 [ 2 ] | 164 feat. GUMI | 200-205 | Lv 4 | Lv 7 | Lv 9.8 |
+| Amazing Parade | Czecho No Republic | 160 | Lv 3 | Lv 7 | Lv 9 |
+| O | 妖隠し -あやかしかくし- | DJ TOTTO feat.3L | 85 | Lv 3 | Lv 5 | Lv 9.1 |
+| O | O | アレスの楯 | 劇団レコード | 174 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | O | In the Breeze | 96 & Sota ft. Mayumi Morinaga | 123-142 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | O | H | We're so Happy [ 2 ] | Ryu☆ | 185 | Lv 4 | Lv 8 | Lv 10.2 |
+| Wake up! | AAA | 176 | Lv 2 | Lv 6 | Lv 8 |
+| O | エキサイティング！！も・ちゃ・ちゃ☆ | 日向美ビタースイーツ♪ | 187 | Lv 5 | Lv 7 | Lv 9.4 |
+| エクストラ・マジック・アワー | AKINO with bless4 | 180 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | H | EBONY & IVORY | OSTER project | 170 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | O | overcomplexification | かめりあ | 190 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | 女言葉の消失 | Sota Fujimori | 136 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | かくしん的☆めたまるふぉ～ぜっ！ | 土間うまる（CV:田中あいみ） | 139-199 | Lv 3 | Lv 6 | Lv 8 |
+| △ | 過食性:アイドル症候群 | スズム feat.GUMI & MAYU | 200 | Lv 5 | Lv 8 | Lv 10.0 |
+| からっぽカプセル | 内田真礼 | 136 | Lv 3 | Lv 5 | Lv 8 |
+| O | 完全無欠の無重力ダイブ | 日向美ビタースイーツ♪ | 122 | Lv 2 | Lv 5 | Lv 7 |
+| H | キセキ [ 2 ] | (GReeeeN) | 94 | Lv 2 | Lv 5 | Lv 7 |
+| △ | O | H | 君をのせて feat.sayurina [ 2 ] | 新井大樹 | 140 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | H | キモチコネクト | 東雲心菜 meets 日向美ビタースイーツ♪ | 150 | Lv 2 | Lv 6 | Lv 9.3 |
+| O | きらきらタイム☆ | さわわ | 202 | Lv 4 | Lv 7 | Lv 10.1 |
+| O | O | glacia | DJ TOTTO | 186 | Lv 6 | Lv 9.2 | Lv 10.3 |
+| O | O | H | glacia [ 2 ] | DJ TOTTO | 186 | Lv 6 | Lv 9.5 | Lv 10.6 |
+| O | Crack Traxxxx | Lite Show Magic (t+pazolite vs C-Show) | 220 | Lv 4 | Lv 8 | Lv 10.6 |
+| O | O | H | Chloé | DJ Totoriott | 176 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | O | croiX | TeamGrimoire+あま猫 | 160-195 | Lv 6 | Lv 8 | Lv 10.6 |
+| O | 激アツ☆マジヤバ☆チアガール | 日向美ビタースイーツ♪ | 170 | Lv 3 | Lv 6 | Lv 8 |
+| 恋をしたい、もう一度 | デッドボールP feat.GUMI | 145 | Lv 2 | Lv 5 | Lv 9.3 |
+| こんがらガール | Charisma.com | 146 | Lv 2 | Lv 5 | Lv 8 |
+| 最終鬼畜妹フランドール・S | ビートまりお（COOL&CREATE） | 200 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | O | H | Sacrifice for Justice | RoughSketch | 190 | Lv 3 | Lv 7 | Lv 10.3 |
+| サンキュー。 | 大原櫻子 | 128 | Lv 2 | Lv 4 | Lv 6 |
+| O | 漆黒のスペシャルプリンセスサンデー | 日向美ビタースイーツ♪ | 200 | Lv 3 | Lv 7 | Lv 9.0 |
+| O | O | H | citrus | kamome sano | 174 | Lv 4 | Lv 7 | Lv 9.7 |
+| シャイン | 宮野真守 | 134 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Just Believe | 小寺可南子 | 194 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | シュガーソングとビターステップ | UNISON SQUARE GARDEN | 132 | Lv 3 | Lv 6 | Lv 9.1 |
+| シルエット | KANA-BOON | 183 | Lv 2 | Lv 5 | Lv 7 |
+| 白い雪のプリンセスは | のぼる↑ | 200 | Lv 4 | Lv 6 | Lv 9.1 |
+| H | Synchrogazer [ 2 ] | (水樹奈々) | 159 | Lv 3 | Lv 7 | Lv 8 |
+| O | H | 水月鏡花のコノテーション | 日向美ビタースイーツ♪ | 185 | Lv 3 | Lv 6 | Lv 9.3 |
+| O | O | SWEET HOME PARTY | 劇団レコード | 134-180 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | Scarlet Moon | REDALiCE feat. Ayumi Nomiya | 180 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | H | ススススペースハリネズミ | S-C-U | 182 | Lv 4 | Lv 8 | Lv 10.5 |
+| STATIC | 164 feat.GUMI | 255 | Lv 3 | Lv 8 | Lv 9.7 |
+| Stay with Me | 加藤浩義 | 137 | Lv 3 | Lv 6 | Lv 9 |
+| O | Struggle | Masayoshi Minoshima(ALR) | 180 | Lv 5 | Lv 7 | Lv 9.4 |
+| O | O | Slluuddggee | Hommarju | 83-174 | Lv 4 | Lv 9.2 | Lv 10.3 |
+| O | 3 A.M. ディテクティブ・ゲーム | 日向美ビタースイーツ♪ | 162 | Lv 3 | Lv 6 | Lv 9.1 |
+| △ | H | 世界五分前仮説 | 有形ランペイジ | 140-195 | Lv 4 | Lv 6 | Lv 9 |
+| O | 千年ノ理 | 猫叉Master | 153 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | 全力バタンキュー | A応P | 155 | Lv 3 | Lv 5 | Lv 7 |
+| O | H | 竹取飛翔 ～ Lunatic Princess (Ryu☆Remix) | Ryu☆ | 171 | Lv 3 | Lv 6 | Lv 10.4 |
+| O | 地方創生☆チクワクティクス | 日向美ビタースイーツ♪ | 170 | Lv 3 | Lv 5 | Lv 9.5 |
+| O | 超越してしまった彼女と其を生み落した理由 | Ayatsugu_Otowa | 178 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | チョコレートスマイル | 日向美ビタースイーツ♪ & ここなつ | 196 | Lv 5 | Lv 8 | Lv 9.3 |
+| △ | △ | チルノのパーフェクトさんすう教室 | ARM(IOSYS) | 175 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | ツーマンライブ | 東雲夏陽 meets 日向美ビタースイーツ♪ | 174 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | Diargosの森 | Mutsuhiko Izumi | 140 | Lv 4 | Lv 6 | Lv 9.8 |
+| This game | 鈴木このみ | 147 | Lv 4 | Lv 7 | Lv 9 |
+| H | Daydream café [ 2 ] | Petit Rabbit’s | 150 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | H | 天空の華 | S-C-U × U1 overground | 180 | Lv 7 | Lv 9.5 | Lv 10.6 |
+| 天国と地獄 | UNISON SQUARE GARDEN | 150 | Lv 4 | Lv 7 | Lv 10 |
+| O | O | twinkle noise | ZUKI | 140 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | TWINKLING | 猫叉Master feat.ミミニャミ | 152 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | Two Pianists | 小野秀幸 | 178 | Lv 4 | Lv 7 | Lv 10.2 |
+| O | O | Too Late Snow | movies（moimoi × Xceon × Dai.） | 138 | Lv 3 | Lv 5 | Lv 9.2 |
+| O | O | H | Too Late Snow [ 2 ] | movies（moimoi × Xceon × Dai.） | 138 | Lv 4 | Lv 9.2 | Lv 10.5 |
+| O | とびっきりのふわっふわ | 日向美ビタースイーツ♪ | 110 | Lv 3 | Lv 5 | Lv 6 |
+| Dragon Night | SEKAI NO OWARI | 124 | Lv 2 | Lv 5 | Lv 8 |
+| H | Dragon Night [ 2 ] | SEKAI NO OWARI | 124 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | H | トリカゴノ鳳凰 [ 2 ] | L.E.D. Vs. 幽閉サテライト | 185 | Lv 3 | Lv 8 | Lv 10.3 |
+| O | 取り残された美術(Arranged:HiZuMi) | 幽閉サテライト feat. senya | 160 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | H | Towards the TOWER | SHAMDEL | 132 | Lv 5 | Lv 8 | Lv 9.7 |
+| ナイト・オブ・ナイツ | ビートまりお（COOL&CREATE） | 180 | Lv 4 | Lv 7 | Lv 10.2 |
+| O | O | H | †渚の小悪魔ラヴリィ～レイディオ† [ 2 ] | 夏色ビキニのPrim | 190 | Lv 6 | Lv 8 | Lv 10.3 |
+| O | O | 夏色DIARY 俺のjubeat編 | 猫叉王子 feat.時を駆けるショッチョー | 170 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | O | 日天悦扇紊舞 | Akhuta | 192 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | O | Niflheimr | Qrispy Joybox | 186 | Lv 4 | Lv 8 | Lv 10.6 |
+| H | にんじゃりばんばん [ 2 ] | きゃりーぱみゅぱみゅ | 130 | Lv 3 | Lv 6 | Lv 8 |
+| O | NEON WORLD | SOUND HOLIC feat. Nana Takahashi | 154-164 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | neko*neko | 日向美ビタースイーツ♪ | 123 | Lv 3 | Lv 6 | Lv 7 |
+| Highschool ♡ love | E-girls | 128 | Lv 3 | Lv 5 | Lv 8 |
+| O | H | 走れメロンパン [ 2 ] | 日向美ビタースイーツ♪ | 170 | Lv 4 | Lv 6 | Lv 8 |
+| Bad Apple!! feat. Nomico | Masayoshi Minoshima | 138 | Lv 2 | Lv 4 | Lv 8 |
+| O | はなまるぴっぴはよいこだけ | A応P | 172 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | パ→ピ→プ→Yeah! | ヒゲドライバー join. shully & Nimo | 160 | Lv 6 | Lv 8 | Lv 10.1 |
+| バリ3共和国 | でんぱ組.inc | 183 | Lv 4 | Lv 7 | Lv 9 |
+| O | BEAT-NEW-WORLD | ビートまりお（COOL&CREATE） | 190 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | O | ビビットストリーム | DJ TOTTO | 184 | Lv 4 | Lv 6 | Lv 8 |
+| 不可逆リプレイス | MY FIRST STORY | 200 | Lv 3 | Lv 7 | Lv 9 |
+| O | H | フラッター現象の顛末と単一指向性の感情論 | 日向美ビタースイーツ♪ | 206 | Lv 4 | Lv 6 | Lv 9.5 |
+| O | O | H | FLOWER [ 2 ] | DJ YOSHITAKA | 173 | Lv 6 | Lv 8 | Lv 10.4 |
+| O | freaky freak | kamome sano | 145 | Lv 4 | Lv 7 | Lv 10.2 |
+| O | blue moment | ソルラルBOB | 149 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | Braid & Blade | SHAMDEL | 153 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | プレインエイジア -PHQ remix- | PHQUASE | 182 | Lv 5 | Lv 9.1 | Lv 10.4 |
+| フレ降レミライ | 北高文芸部女子会 | 172 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | prop the world | S-C-U | 130 | Lv 4 | Lv 7 | Lv 9.7 |
+| O | ほおずき程度には赤い頭髪 | Akhuta | 174 | Lv 3 | Lv 8 | Lv 10.4 |
+| O | ぽかぽかレトロード | 日向美ビタースイーツ♪ | 178 | Lv 4 | Lv 6 | Lv 9.0 |
+| 僕ガ壊レル前ニ | ゲーム実況もっと！わくわく荘 | 140 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | 炎のDiargos | Mutsuhiko Izumi | 230 | Lv 4 | Lv 8 | Lv 9.6 |
+| O | ホメ猫☆センセーション | P*Light feat. mow | 200 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | MAGICAL SUMMER SMILE | wac feat. VENUS | 195 | Lv 2 | Lv 7 | Lv 8 |
+| マジLOVEレボリューションズ | ST☆RISH | 140 | Lv 3 | Lv 6 | Lv 9 |
+| MATATABISTEP | パスピエ | 135 | Lv 2 | Lv 5 | Lv 8 |
+| △ | △ | 魔理沙は大変なものを盗んでいきました | ARM＋夕野ヨシミ (IOSYS) feat. 藤咲かりん | 170 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | H | M.A.Y.U. | Ryu☆ feat.MAYU | 128 | Lv 3 | Lv 5 | Lv 8 |
+| O | H | ミライプリズム(collaboration ver.) | ここなつ meets 日向美ビタースイーツ♪ | 140 | Lv 5 | Lv 7 | Lv 8 |
+| O | MURASAKI | 蒼井翔太 | 145 | Lv 2 | Lv 5 | Lv 8 |
+| MEGA SHAKE IT ! | キュウソネコカミ | 190 | Lv 4 | Lv 7 | Lv 9 |
+| △ | メギツネ | BABYMETAL | 142 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | H | 女々しくて [ 2 ] | ゴールデンボンバー | 143 | Lv 2 | Lv 6 | Lv 9.8 |
+| O | You and Me / Punk | 加藤浩義 | 132-135 | Lv 2 | Lv 5 | Lv 9 |
+| O | H | 雪女 | かねこちはる | 200 | Lv 5 | Lv 9.2 | Lv 10.1 |
+| O | O | H | Love♥km [ 2 ] | dj TAKA feat. REN | 184 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | Lovesick Lovetune | VALLEYSTONE feat. 紫崎 雪 | 135 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | リトライ☆ランデヴー | にゃ～たん(CV:村川梨衣) | 175 | Lv 4 | Lv 6 | Lv 8 |
+| Reflection | 加藤浩義 | 135 | Lv 2 | Lv 6 | Lv 9 |
+| O | O | H | 龍と少女とデコヒーレンス | 黒猫ダンジョン | 165 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | O | 霖が哭く | Power Of Nature | 154 | Lv 6 | Lv 9.6 | Lv 10.5 |
+| レット・イット・ゴー～ありのままで～ | (松たか子) | 137 | Lv 1 | Lv 3 | Lv 6 |
+| H | レット・イット・ゴー～ありのままで～ [ 2 ] | (松たか子) | 137 | Lv 1 | Lv 3 | Lv 7 |
+| O | Russian Caravan Rhapsody | Power Of Nature | 158 | Lv 4 | Lv 7 | Lv 10.1 |
+| O | O | Rock The Club | Expander | 260 | Lv 4 | Lv 8 | Lv 9.4 |
+| O | O | H | robin [ 2 ] | S-C-U | 190 | Lv 4 | Lv 6 | Lv 9.2 |
+| O | O | 惑星☆ロリポップ | SOUND HOLIC feat. Nana Takahashi | 180 | Lv 5 | Lv 7 | Lv 9.9 |
+| jubeat saucer fulfill |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| アイネクライネ | →Pia-no-jaC← | 105 | Lv 3 | Lv 8 | Lv 9.7 |
+| O | O | 朱と碧のランページ | NU-KO | 178 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | O | athletic meet of sound toy | Mr.T | 190 | Lv 5 | Lv 8 | Lv 9.1 |
+| Ignis Danse | Yuji Masubuchi「太鼓の達人」より | 246 | Lv 5 | Lv 9.5 | Lv 10.3 |
+| Idola | iconoclasm feat.GUMI | 201 | Lv 4 | Lv 8 | Lv 10.1 |
+| We are チャリンコエンジェルス | 浦安マリンエンジェルス | 145 | Lv 3 | Lv 5 | Lv 7 |
+| VERTeX | Hiro「maimai」より | 237 | Lv 5 | Lv 8 | Lv 10.2 |
+| A to Z | OSAKA翔GANGS | 160-204 | Lv 4 | Lv 6 | Lv 9 |
+| O | O | EXORCISM | SOUND HOLIC feat. Nana Takahashi | 190 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | 枝に結ぶ願い | Akhuta | 204 | Lv 4 | Lv 8 | Lv 9.6 |
+| O | O | Energy | SAYA | 170 | Lv 3 | Lv 6 | Lv 9.6 |
+| Everybody Say EDOGAWA | EDOist | 142 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | encounter | 猫叉Master+ | 190 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | O | aura | Expander | 175 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | O | 御千手メディテーション | 昇天家族 | 150-190 | Lv 5 | Lv 9.1 | Lv 10.3 |
+| 乙女の真骨頂 | 乙女の純情 | 180 | Lv 3 | Lv 7 | Lv 8 |
+| O | 乙女繚乱 舞い咲き誇れ | 日向美ビタースイーツ♪ | 210 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | 温故知新でいこっ！ | 日向美ビタースイーツ♪ | 118 | Lv 3 | Lv 6 | Lv 8 |
+| カーニバル | ケツメイシ | 150 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | KHAMEN BREAK | くふおー | 180 | Lv 4 | Lv 7 | Lv 10.3 |
+| Garakuta Doll Play | t+pazolite 「maimai」より | 256 | Lv 5 | Lv 9.5 | Lv 10.5 |
+| 川崎純情音頭 | 川崎純情小町☆ | 132 | Lv 2 | Lv 6 | Lv 9 |
+| きたさいたま2000 | LindaAI-CUE（BNGI）「太鼓の達人」より | 222 | Lv 5 | Lv 9.6 | Lv 10.6 |
+| CAPTIVE | フルーティー♡ | 160 | Lv 3 | Lv 6 | Lv 10 |
+| △ | きょうもハレバレ | ふわりP Feat. GUMI's | 134 | Lv 3 | Lv 6 | Lv 8 |
+| キラーボール | ゲスの極み乙女。 | 150 | Lv 3 | Lv 6 | Lv 9 |
+| キライじゃないのぉ | まなみのりさ | 142 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | Cleopatrysm | ピラミッ℃ | 190 | Lv 5 | Lv 8 | Lv 10.6 |
+| △ | ケッペキショウ | すこっぷ feat.GUMI | 190 | Lv 5 | Lv 8 | Lv 10.0 |
+| 幻想系世界修復少女 | Last Note. | 193 | Lv 5 | Lv 7 | Lv 8 |
+| Got more raves？ | E.G.G.「グルーヴコースター」より | 266 | Lv 5 | Lv 7 | Lv 10.6 |
+| O | O | コドモライブ | onoken feat.asami | 140-146 | Lv 2 | Lv 6 | Lv 8 |
+| ごめんなさいのKissing You | E-Girls | 143 | Lv 2 | Lv 5 | Lv 7 |
+| 大藝術家 -The Great Artist- | 蔡依林 -Jolin Tsai- | 96 | Lv 2 | Lv 7 | Lv 8 |
+| ザッツ！KAIYODO | はちきんガールズ | 149 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | Thank You Merry Christmas | VENUS | 220 | Lv 3 | Lv 5 | Lv 9.5 |
+| O | O | SHION | DJ YOSHITAKA | 179 | Lv 4 | Lv 7 | Lv 9.3 |
+| △ | 十面相 | YM feat. GUMI | 173 | Lv 4 | Lv 8 | Lv 9.2 |
+| 瞬間 I LOVE YOU | H&A. | 167 | Lv 2 | Lv 5 | Lv 7 |
+| O | think about you | HaKU | 183 | Lv 3 | Lv 5 | Lv 9 |
+| O | O | Scars of FAUNA | 猫叉Master | 165 | Lv 4 | Lv 7 | Lv 9.2 |
+| O | O | STERLING SILVER | TAG | 175 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | Spanish Snowy Dance | Mutsuhiko Izumi | 180 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | 7 Colors | kors k feat.吉河順央 | 156 | Lv 2 | Lv 6 | Lv 9.0 |
+| O | dye it white | HaKU | 138 | Lv 2 | Lv 6 | Lv 9 |
+| O | O | time granular | ZUKI | 176 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | O | DANCE ALL NIGHT | Sota Fujimori | 135 | Lv 3 | Lv 5 | Lv 9.2 |
+| 電司 -DANCE- | LOLLIPOP F | 130 | Lv 3 | Lv 7 | Lv 9 |
+| Che Che Chelip～魔法のコトバ～ | Chelip | 125-130 | Lv 3 | Lv 6 | Lv 8 |
+| Determination | 柊木りお | 230 | Lv 3 | Lv 7 | Lv 8 |
+| Daydream café | Petit Rabbit's | 150 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Timberwolves | S-C-U | 190 | Lv 5 | Lv 8 | Lv 10.1 |
+| O | O | 10,000,000,000 | TAG feat. 96 | 205 | Lv 3 | Lv 8 | Lv 9.1 |
+| O | O | ドーパミン | U1 overground | 200 | Lv 5 | Lv 8 | Lv 10.7 |
+| O | 都会征服Girls☆ | 日向美ビタースイーツ♪ | 140 | Lv 2 | Lv 5 | Lv 8 |
+| とまどい→レシピ | みかくにんぐッ！ | 170 | Lv 3 | Lv 6 | Lv 8 |
+| ドリームキャッチャー | アイくるガールズ | 208 | Lv 2 | Lv 5 | Lv 8 |
+| Don't stop the music | Dream Girls | 123 | Lv 3 | Lv 6 | Lv 8 |
+| Dong! Dong! | Star☆T | 210 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Nature (jubeat version) | Mutsuhiko Izumi | 230 | Lv 5 | Lv 9.7 | Lv 10.5 |
+| O | O | 猫侍の逆襲 | 猫叉Master | 152 | Lv 3 | Lv 7 | Lv 9.5 |
+| HeartLatte | TnyGinA | 135 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | High School Love | DJ YOSHITAKA feat.DWP | 180 | Lv 2 | Lv 6 | Lv 8 |
+| O | 走れメロンパン | 日向美ビタースイーツ♪ | 170 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | passionate fate | Ryu☆ | 149 | Lv 3 | Lv 7 | Lv 9.1 |
+| HAPPY☆きたかた | KIRA☆GIRL | 172 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Ha・lle・lu・jah | SOUND HOLIC feat. Nana Takahashi | 150 | Lv 3 | Lv 6 | Lv 9.2 |
+| O | O | ハンガリー舞曲 第5番 (jubeat version) | H.D.5 Orchestra | 80-200 | Lv 3 | Lv 6 | Lv 9.7 |
+| O | バンブーソード・ガール | cosMo@暴走P | 208 | Lv 5 | Lv 9.1 | Lv 10.2 |
+| △ | 非公開日誌 | みきとP feat.GUMI | 190 | Lv 4 | Lv 5 | Lv 8 |
+| 嗶嗶嗶 -Bi Bi Bi- | 謝金燕 -Jeannie Hsieh- | 142 | Lv 3 | Lv 6 | Lv 8 |
+| 101回目の呪い | ゴールデンボンバー | 178 | Lv 2 | Lv 5 | Lv 9 |
+| O | O | HYDRA | 96 | 277 | Lv 3 | Lv 8 | Lv 9.2 |
+| O | O | FUNKY SUMMER BEACH | P*Light | 175 | Lv 4 | Lv 7 | Lv 10.1 |
+| ファントムヴァイブレーション | キュウソネコカミ | 192 | Lv 4 | Lv 7 | Lv 9 |
+| 全城熱愛 -Feel the Love- | 羅志祥 -Show Lo- | 130 | Lv 3 | Lv 7 | Lv 8 |
+| Field on! | サザン☆クロス | 170 | Lv 3 | Lv 6 | Lv 8 |
+| FUJIN Rumble | COSIO（ZUNTATA）「グルーヴコースター」より | 192 | Lv 4 | Lv 8 | Lv 10.6 |
+| O | O | Follow Tomorrow | HHH×MM×ST | 140 | Lv 3 | Lv 6 | Lv 8 |
+| black bullet | fripSide | 155 | Lv 3 | Lv 5 | Lv 9.1 |
+| O | O | planarian | S-C-U | 164 | Lv 2 | Lv 6 | Lv 9.2 |
+| O | O | Blue Goose | Mutsuhiko Izumi | 200 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | BLUE DRAGON | 青龍 | 191 | Lv 2 | Lv 5 | Lv 9.1 |
+| O | O | フレッフレー♪熱血チアガール | 裏マドンナだ！Primちゃん | 195 | Lv 4 | Lv 7 | Lv 10.3 |
+| Boom! Boom! Miracle Emotion | ひろしま MAPLE★S | 156 | Lv 3 | Lv 7 | Lv 8 |
+| 僕は君に恋をした | アイドル教室 | 170 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | ポチコの幸せな日常 | NU-KO | 192 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | 滅びに至るエランプシス | 日向美ビタースイーツ♪ | 158 | Lv 3 | Lv 6 | Lv 8 |
+| マーメイド | T!P | 154 | Lv 3 | Lv 5 | Lv 8 |
+| my cosmic world | silQ | 138 | Lv 3 | Lv 6 | Lv 8 |
+| My HERO | chairmans | 140 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | まるでマトリョーシカ | seiya-murai feat. ALT | 155 | Lv 3 | Lv 6 | Lv 8 |
+| O | MITOれて！いばらきっしゅだ～りん | 水戸ご当地アイドル(仮) | 173 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | Milchstraße | Buluka & Nilo | 189 | Lv 2 | Lv 5 | Lv 9.1 |
+| O | 滅亡天使 † にこきゅっぴん | 日向美ビタースイーツ♪ | 200 | Lv 2 | Lv 5 | Lv 9.0 |
+| O | O | Metric | Hommarju | 123 | Lv 3 | Lv 6 | Lv 8 |
+| もったいないとらんど | きゃりーぱみゅぱみゅ | 160 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Mono Logic | DJ NAGAI feat. Ayumi Nomiya | 186 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | unisonote | onoken | 168 | Lv 2 | Lv 6 | Lv 9.2 |
+| らいらら | KRD8 | 155 | Lv 3 | Lv 7 | Lv 9 |
+| O | ラクガキスト | cosMo＠暴走P feat.GUMI | 199 | Lv 4 | Lv 7 | Lv 10.4 |
+| LUCKY-YO!! | だいやぁ☆もんど | 112 | Lv 3 | Lv 5 | Lv 9 |
+| ラブラブキュートなハピハピサンデー | Lisapyon♡ | 165 | Lv 2 | Lv 7 | Lv 9 |
+| O | LoveLove DokiDoki | 水戸ご当地アイドル(仮) | 160 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Little Flipper | S-C-U | 165 | Lv 3 | Lv 7 | Lv 9.1 |
+| △ | ルービックキューブ | otetsu feat.GUMI | 140 | Lv 4 | Lv 6 | Lv 8 |
+| ルシャナの気持ち | Le Siana | 172 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | Resurrection | Dormir | 140 | Lv 2 | Lv 5 | Lv 8 |
+| jubeat saucer |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| RPG | SEKAI NO OWARI | 135 | Lv 1 | Lv 5 | Lv 6 |
+| 愛 | OverTheDogs | 176 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | I/O | Ryu☆ | 151 | Lv 4 | Lv 7 | Lv 8 |
+| O | 愛する覚悟 | シシド・カフカ | 103-206 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | 愛は不死鳥の様に | 真紅の薔薇の騎士Prim | 192 | Lv 6 | Lv 8 | Lv 10.5 |
+| O | O | Across the nightmare | Jimmy Weckl | 150 | Lv 5 | Lv 7 | Lv 9.7 |
+| O | O | Asterism | ZUKI | 175 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | アストライアの双皿 | ZODIACSYNDICATE | 173 | Lv 6 | Lv 9.5 | Lv 10.5 |
+| O | O | attack in the minor key | Mr.T | 164 | Lv 3 | Lv 6 | Lv 9.6 |
+| O | O | anemone | S-C-U feat. Qrispy Joybox | 200 | Lv 5 | Lv 7 | Lv 9.7 |
+| a burning bullet | LAST ALLIANCE | 209 | Lv 2 | Lv 6 | Lv 8 |
+| Ahead Of The Light | MIYAVI | 130 | Lv 3 | Lv 7 | Lv 9.3 |
+| △ | △ | 天ノ弱 | 164 feat. GUMI | 200-205 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | Amalgamation | Mystic Moon | 166 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | O | 雨ノチHello | TLION69 | 189 | Lv 3 | Lv 6 | Lv 9.8 |
+| O | O | Arousing | DJ TOTTO feat.吉河順央 | 179 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | 新たな幕開け | 新井大樹 | 150 | Lv 5 | Lv 8 | Lv 10 |
+| O | O | Our Faith | kors k | 175 | Lv 4 | Lv 8 | Lv 10.6 |
+| △ | いーあるふぁんくらぶ | みきとP | 145 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | イ号零型 | あさき | 170 | Lv 3 | Lv 5 | Lv 9.5 |
+| O | いっぽんでもニンジン | なぎらけんいち | 137 | Lv 3 | Lv 6 | Lv 9 |
+| O | イブの時代っ！ | 日向美ビタースイーツ♪ | 210 | Lv 4 | Lv 6 | Lv 8 |
+| INFORMER | lecca | 112 | Lv 2 | Lv 8 | Lv 9 |
+| インベーダーインベーダー | きゃりーぱみゅぱみゅ | 160 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | Vermilion | Remo-con | 143 | Lv 7 | Lv 9.2 | Lv 10.4 |
+| O | O | Vanity | Vivian | 125-150 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | O | VALLIS-NERIA | DJ YOSHITAKA | 185 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | We're so Happy | Ryu☆ | 185 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | O | Windy Fairy | DJ TOTTO | 180 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | Wow Wow VENUS | VENUS | 157 | Lv 2 | Lv 7 | Lv 9.3 |
+| O | Water Horizon | 青龍 | 191 | Lv 4 | Lv 8 | Lv 9.1 |
+| O | 嘘憑きとサルヴァドール | 小南泰葉 | 228 | Lv 4 | Lv 8 | Lv 10 |
+| O | O | 梅雪夜 | Qrispy Joybox feat.mao | 167 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | 8 -eight- | Tom-H@ck feat.Nadia | 230 | Lv 4 | Lv 6 | Lv 9.5 |
+| △ | ETERNAL BLAZE | (水樹奈々) | 105-155 | Lv 1 | Lv 6 | Lv 8 |
+| eternal reality | fripSide | 145 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Elemental Creation | dj TAKA meets DJ YOSHITAKA | 212 | Lv 5 | Lv 8 | Lv 10.6 |
+| O | O | Engraved Mark | Ryu☆∞DesROW | 188 | Lv 4 | Lv 8 | Lv 9.7 |
+| O | O | Endless Chain～2人でトリガーをひこう～ | 私立BEMANI学園軽音楽部 | 96-162 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Empathetic | Sota÷Des | 180 | Lv 4 | Lv 8 | Lv 9.8 |
+| O | O | O JIYA | ASMAT & emi | 151 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | O | OVERHEAT -Type J- | DOUBLE IMPACT | 155 | Lv 4 | Lv 9.2 | Lv 10.6 |
+| O | O | お米の美味しい炊き方、そしてお米を食べることによるその効果。 | 大日本鉄倶楽部【あさき&96】 | 190 | Lv 3 | Lv 7 | Lv 10.1 |
+| O | O | 朧 | HHH×MM×ST | 149 | Lv 4 | Lv 7 | Lv 9.1 |
+| △ | オレンジ | (GReeeeN) | 182 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | GAIA | 猫叉L.E.D.Master+ | 180 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | 影縫い胤撒き | Akhuta | 180 | Lv 3 | Lv 5 | Lv 9.7 |
+| O | O | Cassis | 肥塚良彦 | 176 | Lv 3 | Lv 6 | Lv 8 |
+| 風一揆 | 風男塾 | 140 | Lv 2 | Lv 6 | Lv 7 |
+| O | カタルシスの月 | 日向美ビタースイーツ♪ | 200 | Lv 4 | Lv 6 | Lv 9.2 |
+| O | O | カラフルミニッツ | Qrispy Joybox feat.mao | 152 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | カラルの月 | 猫叉劇団 | 135 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | 記憶の欠片 | Sana | 153 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | キケンな果実 | 達見 恵 featured by 佐野宏晃 | 174 | Lv 2 | Lv 6 | Lv 9.0 |
+| O | キセキ | (GReeeeN) | 94 | Lv 2 | Lv 5 | Lv 6 |
+| O | O | Gimme a Big Beat | kors k | 138 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | キミ記念日～生まれて来てくれてアリガトウ。～ | ソナーポケット | 127 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | 君の元へ | 久保田祥平 | 180 | Lv 2 | Lv 5 | Lv 7 |
+| ギャグ | 星野源 | 163 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | caramel ribbon | P*Light | 175 | Lv 3 | Lv 8 | Lv 10.1 |
+| O | O | キラキラ☆ステーション | Tatsh feat. Prico | 176 | Lv 5 | Lv 8 | Lv 9.5 |
+| O | O | quaver♪ | Risk Junk | 182-186 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | Clumsy thoughts | 猫叉Master feat. *spiLa* | 153 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | 紅蓮の焔 | 劇団レコードfeat.浅葉リオ | 155 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | O | 黒髪乱れし修羅となりて | 村正クオリア | 150 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | Chronos | TAG | 128 | Lv 4 | Lv 8 | Lv 9.3 |
+| Get Off of My Way | MAN WITH A MISSON | 135 | Lv 4 | Lv 8 | Lv 9.1 |
+| O | O | 恋する☆宇宙戦争っ!! | Prim | 200 | Lv 4 | Lv 8 | Lv 10.0 |
+| O | 恋とキングコング | 日向美ビタースイーツ♪ | 158 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | 恋はどう？モロ◎波動OK☆方程式！！ | あべにゅぅぷろじぇくと feat.佐倉紗織 produced by ave;new | 128 | Lv 3 | Lv 8 | Lv 9.8 |
+| O | O | 紅焔 | PON | 175 | Lv 2 | Lv 8 | Lv 9.6 |
+| GO | オワリカラ | 152 | Lv 3 | Lv 6 | Lv 8 |
+| Go to the top | 倖田來未 | 158 | Lv 1 | Lv 5 | Lv 7 |
+| O | O | Go For The Top | U1 overground | 180 | Lv 4 | Lv 8 | Lv 9.5 |
+| △ | O | GOLD | UVERworld | 185 | Lv 3 | Lv 7 | Lv 10 |
+| O | 虚空と光明のディスクール | 日向美ビタースイーツ♪ | 140 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | Cosmic Hurricane | TAG | 188 | Lv 4 | Lv 8 | Lv 10.0 |
+| O | O | Gott | Hommarju | 195 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | この青空の下で | TAG meets "eimy" | 165 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | この子の七つのお祝いに | あさき | 161 | Lv 5 | Lv 8 | Lv 9.8 |
+| O | O | Concertino in Blue | 佐々木博史 | 130-155 | Lv 4 | Lv 8 | Lv 9.8 |
+| O | O | Condor | Remo-con | 142 | Lv 3 | Lv 6 | Lv 9.9 |
+| O | O | Confiserie | L.E.D. vs S-C-U | 185 | Lv 6 | Lv 10.4 | Lv 10.7 |
+| 最終回STORY | MY FIRST STORY | 215 | Lv 3 | Lv 5 | Lv 8 |
+| Silent Scream | Akira Yamaoka, Mary Elizabeth McGlynn | 110 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | 防人恋歌 | Ax feat.夏川陽子 | 170 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | Sakura Sunrise | Ryu☆ | 181 | Lv 4 | Lv 8 | Lv 9.2 |
+| サブリナ | 家入レオ | 136 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | サヨナラ・ヘヴン | 猫叉Master | 111 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | SEED | DJ YOSHITAKA | 152 | Lv 7 | Lv 8 | Lv 9.8 |
+| O | O | 此岸の戯事 | Akhuta | 195 | Lv 4 | Lv 8 | Lv 10.5 |
+| sister's noise | fripSide | 144 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | Synergy For Angels | TAG×U1-ASAMi | 160 | Lv 3 | Lv 8 | Lv 9.7 |
+| O | O | 灼熱の翼 | マジックアカデミー管弦楽部×劇団レコード | 166 | Lv 3 | Lv 6 | Lv 7 |
+| Just Awake | Fear,and Loathing in Las Vegas | 191 | Lv 3 | Lv 7 | Lv 10 |
+| ジャパンパン～日本全国地元化計画～ | C&K | 130 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | 終末を追う者 | S-C-U×PON | 185 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | Show up ! - short ver - | 3 Majesty | 132 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | 少年は空を辿る | Power Of Nature | 140 | Lv 7 | Lv 9.4 | Lv 10.5 |
+| O | O | SILVER☆DREAM | jun | 192 | Lv 5 | Lv 7 | Lv 8 |
+| △ | Synchrogazer | (水樹奈々) | 159 | Lv 3 | Lv 7 | Lv 9 |
+| 人生は素晴らしい物語。(Dear Japan Remix) | ハジ→ | 107 | Lv 2 | Lv 5 | Lv 8 |
+| シンデレラ | 奥華子 | 120 | Lv 2 | Lv 5 | Lv 7 |
+| △ | Switch On! | 土屋アンナ | 190 | Lv 3 | Lv 6 | Lv 9 |
+| スーパーフレア | The Mirraz | 164 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | Sky Is The Limit | Sota F. feat.Anna | 150 | Lv 3 | Lv 6 | Lv 9.4 |
+| O | O | Squeeze | VENUS feat. Mutsuhiko Izumi | 173 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | O | squall | 猫叉Master+ | 190 | Lv 5 | Lv 6 | Lv 9.2 |
+| O | O | Stand Alone Beat Masta | GUHROOVY | 200 | Lv 6 | Lv 9.5 | Lv 10.8 |
+| O | O | Stella Sinistra | Akhuta Philharmonic Orchestra | 120-180 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | O | STULTI | MAX MAXIMIZER VS DJ TOTTO | 90-182 | Lv 3 | Lv 8 | Lv 9.6 |
+| O | O | ストレイ・マーチ | 少年ゾディアック | 180 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Straight Oath | 矢鴇つかさ feat. 三澤秋 | 182 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Snowfield Express | TIME CAPSULE Lab. | 188 | Lv 4 | Lv 6 | Lv 9.3 |
+| O | O | snow prism | Qrispy Joybox | 196 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | spring pony | S-C-U | 150 | Lv 4 | Lv 7 | Lv 9.7 |
+| △ | O | 千本桜 | 黒うさP | 154 | Lv 3 | Lv 7 | Lv 9 |
+| O | O | smooooch・∀・ | kors k | 177 | Lv 3 | Lv 8 | Lv 10.1 |
+| O | スリル | 布袋寅泰 | 174 | Lv 2 | Lv 6 | Lv 7 |
+| O | O | 晴天Bon Voyage | TOMOSUKE × seiya-murai feat. ALT | 230 | Lv 5 | Lv 7 | Lv 9.4 |
+| SAVIOR OF SONG（feat. MY FIRST STORY） | ナノ | 192 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | Second Heaven | Ryu☆ | 149 | Lv 4 | Lv 6 | Lv 9.2 |
+| O | O | ZED | USAO | 190 | Lv 4 | Lv 8 | Lv 9.6 |
+| O | O | ZZ | D.J.Amuro | 154 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | 切ないほど | ゴールデンボンバー | 139 | Lv 3 | Lv 7 | Lv 9 |
+| △ | △ | セツナトリップ | Last Note. feat. GUMI | 145 | Lv 3 | Lv 7 | Lv 9.3 |
+| O | 「善悪の彼岸」 | 小南泰葉 | 185 | Lv 2 | Lv 7 | Lv 9 |
+| 閃光のPRISONER | 南里侑香 | 183 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | 創世ノート | PON+wac | 200 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | 蒼天 | Tatsh | 176 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Sol Cosine Job 2 | DJ TECHNORCH | 190-200 | Lv 6 | Lv 9.5 | Lv 10.7 |
+| O | O | sola | 小野秀幸 | 135 | Lv 3 | Lv 7 | Lv 9.6 |
+| O | O | TYCOON | SOUND HOLIC feat. Nana Takahashi | 170 | Lv 3 | Lv 6 | Lv 9.1 |
+| O | O | Dynasty | Yooh | 189 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | 闘いの刻-jubeatREMIX- | マジックアカデミー管弦楽部×劇団レコード | 174 | Lv 3 | Lv 6 | Lv 7 |
+| O | Dance My Generation | ゴールデンボンバー | 133 | Lv 2 | Lv 8 | Lv 9.8 |
+| O | CHEAT DANCER - short ver - | X.I.P. | 120 | Lv 2 | Lv 5 | Lv 8 |
+| O | ちくわパフェだよ☆CKP | 日向美ビタースイーツ♪ | 205 | Lv 4 | Lv 7 | Lv 9.3 |
+| O | O | chaplet | DJ TOTTO | 200 | Lv 4 | Lv 9.3 | Lv 10.2 |
+| O | O | TSAR BOMBA | L.E.D. | 190 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | O | ツキミチヌ | CULTVOICE by S.S.D. PRODUCTS | 146 | Lv 2 | Lv 5 | Lv 7 |
+| △ | つけまつける | きゃりーぱみゅぱみゅ | 145 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | つぼみ | 達見 恵 featured by 佐野宏晃 | 184 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | DIAVOLO | 度胸兄弟 | 160 | Lv 4 | Lv 9.6 | Lv 10.6 |
+| DNA狂詩曲 | ももいろクローバーZ | 170 | Lv 3 | Lv 6 | Lv 8 |
+| Take Your Way | livetune adding Fukase(from SEKAI NO OWARI) | 134 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | Dispersion Star | ZUKI | 180 | Lv 2 | Lv 6 | Lv 9.5 |
+| O | O | December Breeze | dj silverberg | 182 | Lv 4 | Lv 8 | Lv 10.0 |
+| O | O | Daily Lunch Special | Lucky Vacuum | 205 | Lv 5 | Lv 8 | Lv 10.3 |
+| O | O | デッドボヲルdeホームラン | 猫叉Masterβ2 | 145 | Lv 4 | Lv 6 | Lv 9.6 |
+| O | O | 天上の果て | マジックアカデミー管弦楽部×劇団レコード | 144 | Lv 4 | Lv 7 | Lv 8 |
+| O | でんでんぱっしょん | でんぱ組.inc | 157-186 | Lv 3 | Lv 5 | Lv 9.3 |
+| O | O | Twinkle Wonderland | Qrispy Joybox feat.Sana | 188 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | True Blue | dj TAKA feat.AiMEE | 164 | Lv 4 | Lv 9.7 | Lv 10.2 |
+| O | O | Thor's Hammer | ユニバーサル度胸兄弟 | 150 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | とってもとっても、ありがとう。 | 日向美ビタースイーツ♪ | 92 | Lv 1 | Lv 5 | Lv 6 |
+| O | O | 轟け！恋のビーンボール！！ | ダイナミック野球兄弟 v.s. クロスファイヤーPrim | 180 | Lv 3 | Lv 7 | Lv 10.0 |
+| O | O | DRAGON KILLER | 96 vs. Mutsuhiko Izumi | 210 | Lv 3 | Lv 6 | Lv 9.6 |
+| O | O | Dragontail Butterfly | Tom-H@ck feat.Nadia | 170 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | Dragon Blade | Kozo Nakamura | 120 | Lv 5 | Lv 8 | Lv 10.4 |
+| ドリームメイカー | TRIPLANE | 143 | Lv 2 | Lv 4 | Lv 7 |
+| O | O | トリカゴノ鳳凰 | L.E.D. Vs. 幽閉サテライト | 185 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | Triple Journey -S-C-U EDITION- | Triumvirate | 200 | Lv 4 | Lv 9.2 | Lv 9.8 |
+| O | O | NIGHT FLIGHT | 小野秀幸 | 180 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | IX | dj TAKA VS DJ TOTTO feat.藍 | 198 | Lv 4 | Lv 9.5 | Lv 10.7 |
+| O | O | †渚の小悪魔ラヴリィ～レイディオ† | 夏色ビキニのPrim | 190 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | O | 夏・KOI・ムッシュ!! | ビーチサンダルズ | 140 | Lv 4 | Lv 6 | Lv 9.5 |
+| O | O | 虹色の花 | Akhuta y OJ | 170 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | New Gravity | Starving Trancer | 154 | Lv 3 | Lv 7 | Lv 8 |
+| △ | newsong | (tacica) | 128 | Lv 4 | Lv 6 | Lv 7 |
+| O | O | New Decade | Sota F. | 200 | Lv 3 | Lv 8 | Lv 10.1 |
+| にんじゃりばんばん | きゃりーぱみゅぱみゅ | 130 | Lv 1 | Lv 5 | Lv 7 |
+| O | O | Never Look Back in Sorrow | AIKO OI | 270 | Lv 5 | Lv 8 | Lv 10.5 |
+| O | O | neu | 少年ラジオ | 199 | Lv 4 | Lv 7 | Lv 10.2 |
+| NO WAVE≒斜陽" | 0.8秒と衝撃。 | 164 | Lv 4 | Lv 7 | Lv 8 |
+| No pain, No game | ナノ | 190 | Lv 3 | Lv 7 | Lv 8 |
+| O | ハートに火をつけて | 9mm Parabellum Bullet | 205 | Lv 3 | Lv 6 | Lv 9 |
+| O | HEART BEAT | 加藤ミリヤ | 128 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | HEART BEAT FORMULA | TAG | 230 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | HYENA | Hommarju | 178 | Lv 3 | Lv 7 | Lv 9.4 |
+| O | O | Happy | Sota Fujimori | 190 | Lv 5 | Lv 7 | Lv 8 |
+| buddy | 坂本真綾 | 156-180 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | 華爛漫 -Flowers- | TЁЯRA | 160 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | PUNISHER | TAG×PON | 180 | Lv 4 | Lv 7 | Lv 9.2 |
+| O | O | PULSE LASER | ヒゲドライバー | 165 | Lv 3 | Lv 7 | Lv 9.5 |
+| O | O | Hello world! | Music by 源屋, Vocal by SOPHY | 175 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Beastie Starter | GUHROOVY | 190 | Lv 5 | Lv 8 | Lv 10.7 |
+| O | O | ヒーロー | 鈴木友里絵 | 155 | Lv 2 | Lv 6 | Lv 8 |
+| ひかり | KREVA | 127 | Lv 2 | Lv 5 | Lv 8 |
+| ViViD | May'n | 205 | Lv 3 | Lv 6 | Lv 9.0 |
+| O | O | Pink Rose | Kiyommy＋Seiya | 116-146 | Lv 3 | Lv 6 | Lv 8 |
+| Find your way | J.Speaks | 130 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | Fantasia | TЁЯRA | 165 | Lv 3 | Lv 6 | Lv 8 |
+| FANTASTIC★DREAMER feat.SO-TA,Rhyzm Horse,Yoonji | MAYA feat.SO-TA,Rhyzm Horse,Yoonji | 128 | Lv 3 | Lv 8 | Lv 9 |
+| O | O | V | TAKA | 150 | Lv 3 | Lv 9.5 | Lv 10.5 |
+| △ | V.I.P | (シド) | 185 | Lv 1 | Lv 7 | Lv 8 |
+| O | O | フー・フローツ | Nanako | 180 | Lv 3 | Lv 5 | Lv 9.1 |
+| O | O | 405nm (Ryu☆mix) | Another Infinity | 177 | Lv 7 | Lv 9.6 | Lv 10.3 |
+| Follow Me | E-girls | 143 | Lv 3 | Lv 5 | Lv 6 |
+| O | O | ふしぎなくすり | 上野圭市 feat. SATOE | 162 | Lv 3 | Lv 5 | Lv 9.3 |
+| O | O | PRANA | TAG | 188 | Lv 5 | Lv 8 | Lv 9.8 |
+| O | O | Fly with me | TAG | 177 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | O | Plan 8 | Ryu☆ | 212 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | Brand New World | VENUS | 157 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | Flip Flap | kors k | 175 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | BLUE STRAGGLER | L.E.D. | 160 | Lv 5 | Lv 9.7 | Lv 10.3 |
+| ブルー・フィールド | Trident (渕上 舞・沼倉愛美・山村 響) | 135 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | Proof of the existence | 猫叉Master+ | 170 | Lv 4 | Lv 7 | Lv 10.3 |
+| O | O | Broken | dj TAKA feat.AiMEE | 148 | Lv 4 | Lv 8 | Lv 10.1 |
+| O | From Noon Till Dawn feat.Tabu Zombie & Kunikazu Tanaka | ストレイテナー | 184 | Lv 2 | Lv 7 | Lv 9 |
+| Baby Sweet Berry Love | 小倉 唯 | 170 | Lv 3 | Lv 5 | Lv 9.1 |
+| O | O | Baby Bleep March | seiya-murai | 180 | Lv 4 | Lv 8 | Lv 9.5 |
+| O | O | heron | S-C-U | 182 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | POINT ZERO | 猫叉Master+ | 188 | Lv 3 | Lv 6 | Lv 9.7 |
+| O | O | 亡国のヒストリア | 劇団レコード | 140 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | Holy Snow | Mutsuhiko Izumi | 130-160 | Lv 5 | Lv 8 | Lv 9.8 |
+| O | ホーンテッド★メイドランチ | 日向美ビタースイーツ♪ | 188 | Lv 3 | Lv 6 | Lv 9.4 |
+| Born to be | ナノ | 192 | Lv 3 | Lv 7 | Lv 9 |
+| O | O | 星屑のキロク | 小野秀幸 | 182 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | ほしふり | Sana | 155 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | ポップミュージック論 | ギラギラメガネ団 | 190 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Mynarco | positive MAD-crew | 181 | Lv 5 | Lv 7 | Lv 9.4 |
+| O | O | マインド・ゲーム | 96 with メカショッチョー | 180 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | O | Magnetic | Sota Fujimori | 160 | Lv 5 | Lv 8 | Lv 9.6 |
+| O | O | Mother Ship | Sota Fujimori | 152 | Lv 4 | Lv 8 | Lv 9.6 |
+| △ | マジLOVE1000% | ST☆RISH | 129 | Lv 2 | Lv 7 | Lv 8 |
+| マジLOVE2000% | ST☆RISH | 141 | Lv 3 | Lv 6 | Lv 8 |
+| MAMORE!!! | アイドリング!!! | 162 | Lv 3 | Lv 6 | Lv 8 |
+| O | 回レ！雪月花 | 歌組雪月花 | 160 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | O | 万華鏡 | Jimmy Weckl | 138 | Lv 5 | Lv 8 | Lv 9.6 |
+| O | O | Mirage | Mutsuhiko Izumi | 170 | Lv 4 | Lv 6 | Lv 9.7 |
+| O | O | milky ice bear | S-C-U | 147 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | Move That Body | Expander | 196 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | めうめうぺったんたん！！ | 日向美ビタースイーツ♪ | 185 | Lv 4 | Lv 7 | Lv 9.1 |
+| METROPOLIS | →Pia-no-jaC← | 140-160 | Lv 3 | Lv 6 | Lv 10.0 |
+| △ | 猛烈宇宙交響曲・第七楽章「無限の愛」 | ももいろクローバーZ | 174 | Lv 4 | Lv 7 | Lv 8 |
+| モンスターのかくれんぼ | Rihwa | 150 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | 野球の遊び方 そしてその歴史 ～決定版～ | あさき大監督 | 141 | Lv 3 | Lv 6 | Lv 9.5 |
+| O | O | 優勢オーバードーズ | PON | 166 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Unicorn tail Dustboxxxx RMX | Dustboxxxx | 200 | Lv 4 | Lv 8 | Lv 10.2 |
+| O | O | Right on time (Ryu☆ Remix) | Ryu☆ | 149 | Lv 4 | Lv 6 | Lv 9.4 |
+| RIGHT NOW | GOOD4NOTHING | 184 | Lv 2 | Lv 6 | Lv 9 |
+| O | O | Life Connection | world sequence | 200 | Lv 4 | Lv 6 | Lv 7 |
+| Lifetime Journey | J.Speaks | 123 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | LUV CAN SAVE U | HIDEKI NAGANUMA | 140 | Lv 4 | Lv 8 | Lv 9.6 |
+| O | O | ラキラキ | Mutsuhiko Izumi & S-C-U | 165 | Lv 3 | Lv 8 | Lv 10.6 |
+| LANA - Answer II - | TOMOSUKE×Jazzin'park | 165 | Lv 2 | Lv 5 | Lv 8 |
+| LANA - Answer I - | TOMOSUKE×Jazzin'park | 171 | Lv 2 | Lv 6 | Lv 7 |
+| LANA - キロクノカケラ - | TOMOSUKE×Jazzin'park | 84-168 | Lv 3 | Lv 6 | Lv 7 |
+| LANA - キロクノカケラ (sasakure.UK Framework Remix) - | TOMOSUKE×Jazzin'park | 200 | Lv 3 | Lv 6 | Lv 8 |
+| LANA - ココロノキオク - | TOMOSUKE×Jazzin'park | 84 | Lv 1 | Lv 4 | Lv 5 |
+| LANA - セカイノハズレ - | TOMOSUKE×Jazzin'park | 214 | Lv 3 | Lv 5 | Lv 7 |
+| LANA - ヒトリノウタ - | TOMOSUKE×Jazzin'park | 180 | Lv 2 | Lv 5 | Lv 8 |
+| リーゼントブルース | RIKI | 142 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | Lisa-RICCIA | DJ YOSHITAKA | 205 | Lv 4 | Lv 8 | Lv 10.5 |
+| O | O | Little Star | REDALiCE feat. Ayumi Nomiya | 183 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | リメンバーリメンバー | rino & m@sumi from plastic penguin | 182 | Lv 3 | Lv 6 | Lv 8 |
+| O | 凛として咲く花の如く ～ひなビタ♪ edition～ | 日向美ビタースイーツ♪ | 163 | Lv 5 | Lv 6 | Lv 9.2 |
+| O | O | le mirage | Vivian | 160 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Ray | 源屋 | 175 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | Rainbow after snow | 猫叉Master feat.林ももこ | 179 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | RED ZONE | Tatsh&NAOKI | 165 | Lv 4 | Lv 8 | Lv 10.3 |
+| O | O | 恋愛観測 | NU-KO | 188 | Lv 3 | Lv 7 | Lv 9.1 |
+| O | O | 恋閃繚乱 | 2B-Waves | 142 | Lv 4 | Lv 6 | Lv 8 |
+| △ | ロストワンの号哭 | Neru | 162 | Lv 4 | Lv 7 | Lv 9.1 |
+| O | O | robin | S-C-U | 190 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | Romancing Layer | TAG | 150 | Lv 3 | Lv 9.4 | Lv 10.2 |
+| O | O | 我が麗しのバレンシア | 劇団レコード feat. Mille Face | 130-150 | Lv 4 | Lv 5 | Lv 8 |
+| 1 2 3 ～恋がはじまる～ | (いきものがかり) | 158 | Lv 3 | Lv 6 | Lv 8 |
+| O | One Night Carnival | 氣志團 | 136 | Lv 3 | Lv 6 | Lv 8 |
+| jubeat copious APPEND |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| 以心伝心 | Little Blue boX | 220 | Lv 2 | Lv 7 | Lv 8 |
+| WAVES; Q;indivi+WISE | Q;indivi＋ | 127 | Lv 1 | Lv 6 | Lv 8 |
+| O | O | 歌の翼 | あーたん | 140 | Lv 3 | Lv 7 | Lv 9.8 |
+| O | O | 800nm | Another Infinity (Ryu☆×Starving Trancer) | 180 | Lv 5 | Lv 8 | Lv 9.1 |
+| △ | オリオンをなぞる | UNISON SQUARE GARDEN | 182 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | O | ギタ・ドラ・jubeat大夏祭りのテーマ | DNM盛り上げ隊 | 157 | Lv 6 | Lv 8 | Lv 9.8 |
+| O | O | 逆ナンされたのにドタキャン!! | good-cool ft. すわひでお | 194 | Lv 4 | Lv 8 | Lv 9.7 |
+| candii | 八王子P | 132 | Lv 3 | Lv 6 | Lv 9.7 |
+| くちばしにチェリー | EGO-WRAPPIN' | 187 | Lv 4 | Lv 7 | Lv 8 |
+| Gravity | HaKU | 175 | Lv 4 | Lv 7 | Lv 8 |
+| △ | O | CRAZY FOR YOU | (Kylee) | 162 | Lv 2 | Lv 6 | Lv 7 |
+| O | O | cloche | Qrispy Joybox | 182 | Lv 3 | Lv 6 | Lv 7 |
+| O | こどなの階段 | 南波志帆 | 138 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | The Wind of Gold | kors k | 170 | Lv 5 | Lv 8 | Lv 10.2 |
+| O | O | Summer Holiday | 達見 恵 featured by 佐野宏晃 | 109 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | 幸せのかたち | あさき | 119 | Lv 3 | Lv 6 | Lv 9.5 |
+| 女子力←パラダイス | SUPER☆GiRLS | 140 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | JOMANDA | DJ YOSHITAKA | 90-195 | Lv 7 | Lv 9.2 | Lv 10.6 |
+| ダイナマイト | → Pia-no-jaC ← | 125 | Lv 4 | Lv 7 | Lv 10 |
+| ダダパラ!! | girl next door | 154 | Lv 2 | Lv 7 | Lv 9 |
+| O | O | DOUBLE IMPACT | DOUBLE IMPACT | 265 | Lv 5 | Lv 6 | Lv 10.5 |
+| this storyends | winnie | 238 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | TWINKLE♡HEART | jun | 185 | Lv 3 | Lv 7 | Lv 9.2 |
+| O | O | ナナホシ | S-C-U | 166 | Lv 5 | Lv 7 | Lv 9.6 |
+| Heart of Gold | Alice Nine | 195 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | HEAT-BIT-HIT-BEAT | V.C.O. | 180 | Lv 5 | Lv 8 | Lv 9.2 |
+| FIGHTERS | 三代目 J Soul Brothers | 115 | Lv 3 | Lv 7 | Lv 9 |
+| O | O | 532nm | Ryu☆ | 177 | Lv 7 | Lv 8 | Lv 10.2 |
+| O | O | Plum | 肥塚良彦 | 256 | Lv 4 | Lv 6 | Lv 9.7 |
+| HEKIREKI | LAST ALLIANCE | 260 | Lv 3 | Lv 5 | Lv 9 |
+| △ | PONPONPON | きゃりーぱみゅぱみゅ | 128 | Lv 3 | Lv 5 | Lv 6 |
+| やさしくなりたい | 斉藤和義 | 132 | Lv 4 | Lv 6 | Lv 9 |
+| O | O | Riot of Color | TAG | 150 | Lv 5 | Lv 8 | Lv 10.4 |
+| O | O | Rush!! | kors k feat. 吉河順央 | 210 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | RePrise | SHOGO | 182 | Lv 4 | Lv 7 | Lv 8 |
+| jubeat copious |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| アイデンティティ | サカナクション | 140 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | アルストロメリア | TAG | 144 | Lv 5 | Lv 6 | Lv 9.5 |
+| O | O | yellow head joe | S-C-U | 187 | Lv 7 | Lv 10.4 | Lv 10.4 |
+| ESCAPE | Moon Child | 165 | Lv 4 | Lv 5 | Lv 8 |
+| O | O | electro peaceful | Mr.T | 160 | Lv 4 | Lv 7 | Lv 8 |
+| O | オムライス | オーロラ三人娘 | 177 | Lv 2 | Lv 6 | Lv 8 |
+| On and On | 中塚武 | 130 | Lv 3 | Lv 7 | Lv 8 |
+| CARTOON HEROES | (Aqua) | 128 | Lv 2 | Lv 6 | Lv 7 |
+| O | O | 陽炎 | 星野奏子 | 140 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | [E] | dj MAX STEROID | 152 | Lv 6 | Lv 8 | Lv 9.6 |
+| come again | m-flo | 130 | Lv 4 | Lv 7 | Lv 8 |
+| がんばれよ | TEE | 146 | Lv 3 | Lv 7 | Lv 8 |
+| きみはキョンシー RAM RIDER REMIX | シトラスラベンダー | 130 | Lv 2 | Lv 6 | Lv 8 |
+| キャッチーを科学する | アルカラ | 148 | Lv 3 | Lv 6 | Lv 8 |
+| GOOD LUCKY!!!!! | グッキー | 138 | Lv 2 | Lv 5 | Lv 8 |
+| グローランプ | banbi | 230 | Lv 3 | Lv 6 | Lv 8 |
+| 恋のダイヤル6700 | Dream5 | 170 | Lv 3 | Lv 6 | Lv 7 |
+| Calling | 紗羅マリー | 155 | Lv 4 | Lv 7 | Lv 8 |
+| △ | O | コネクト | (ClariS) | 175 | Lv 4 | Lv 6 | Lv 8 |
+| △ | O | シャカビーチ～Laka Laka la～ | (UVERworld) | 200 | Lv 2 | Lv 7 | Lv 8 |
+| O | SWEET CUBE | Plazma | 140 | Lv 2 | Lv 5 | Lv 9.8 |
+| △ | O | SUPER∞STREAM | (篠ノ之 箒&凰 鈴音&セシリア・オルコット&シャルロット・デュノア&ラウラ・ボーデヴィッヒ) | 180 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Starlight Parade | 肥塚良彦 | 131 | Lv 4 | Lv 6 | Lv 8 |
+| △ | O | Diver | (NICO Touches The Walls) | 149 | Lv 3 | Lv 6 | Lv 8 |
+| O | タッチ | (岩崎良美) | 161 | Lv 1 | Lv 6 | Lv 7 |
+| △ | O | ダンデライオン | (BUMP OF CHICKEN) | 128-152 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | THIS NIGHT (jubeat EDITION) | TЁЯRA | 160 | Lv 2 | Lv 5 | Lv 9.1 |
+| O | O | Devil Fish Dumpling | 96 | 166 | Lv 4 | Lv 7 | Lv 10.1 |
+| O | O | トルコ行進曲 | T.M. Orchestra | 150-199 | Lv 4 | Lv 7 | Lv 10.2 |
+| 猫がニャ～て、犬がワンッ! | neco眠る with 二階堂和美 | 212 | Lv 3 | Lv 6 | Lv 7 |
+| PASSPORT | MEG | 137 | Lv 3 | Lv 5 | Lv 7 |
+| Parachute | トクマルシューゴ | 120 | Lv 4 | Lv 5 | Lv 8 |
+| Baroque Hoedown | (Perrey&Kingsley) | 120 | Lv 3 | Lv 8 | Lv 9.7 |
+| 15 Doors | moumoon | 163 | Lv 3 | Lv 6 | Lv 8 |
+| O | PRIME TIME | capsule | 128 | Lv 3 | Lv 7 | Lv 9 |
+| △ | O | フレンズ | (レベッカ) | 157 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | FRIENDSHIP | PON | 208 | Lv 4 | Lv 7 | Lv 8 |
+| △ | ヘビーローテーション | AKB48 | 178 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | HEAVENLY MOON | Tatsh | 185 | Lv 4 | Lv 8 | Lv 10.4 |
+| O | 防衛本脳 | Daisy×Daisy | 170 | Lv 3 | Lv 6 | Lv 9 |
+| 僕らの永遠～何度生まれ変わっても、手を繋ぎたいだけの愛だから～ | WEAVER | 128 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | polygon | Sota Fujimori | 174 | Lv 3 | Lv 5 | Lv 8 |
+| maximum the hormone | マキシマム ザ ホルモン | 143-197 | Lv 4 | Lv 7 | Lv 9.6 |
+| O | マスターピース | mihimaru GT | 152 | Lv 3 | Lv 6 | Lv 9.7 |
+| O | O | 瞬 | 小野秀幸 | 178 | Lv 4 | Lv 7 | Lv 8 |
+| △ | 纒 | ET-KING | 110 | Lv 3 | Lv 8 | Lv 9 |
+| MirrorDance | androp | 135 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | 女々しくて | ゴールデンボンバー | 143 | Lv 4 | Lv 7 | Lv 8 |
+| Universe Universe | avengers in sci-fi | 180 | Lv 4 | Lv 7 | Lv 9 |
+| Love at First Sight | Fear, and Loathing in Las Vegas | 160 | Lv 3 | Lv 7 | Lv 9.7 |
+| Love Train | Marin&Riena | 121 | Lv 3 | Lv 7 | Lv 8 |
+| LOVE LOVE SHOW | THE YELLOW MONKEY | 150 | Lv 2 | Lv 5 | Lv 8 |
+| Real Clothes | Jazztronik | 118 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | 流砂の嵐 | 劇団レコード | 140-146 | Lv 5 | Lv 7 | Lv 9.4 |
+| O | O | 量子の海のリントヴルム | 黒猫ダンジョン | 280 | Lv 5 | Lv 7 | Lv 10.5 |
+| △ | O | Let's ダバダバ | (POLYSICS) | 169 | Lv 3 | Lv 6 | Lv 9 |
+| O | O | Red Goose | Mutsuhiko Izumi | 200 | Lv 5 | Lv 8 | Lv 10.5 |
+| Rocknrolla! | [Champagne] | 159 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | WONDER WALKER | L.E.D. | 165 | Lv 6 | Lv 8 | Lv 10.1 |
+| jubeat knit APPEND |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | R.P.G.～Rockin' Playing Game | SuG | 205 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | O | 愛と勇気の三度笠ポン太 | 荒牧陽子 | 160 | Lv 4 | Lv 6 | Lv 8 |
+| 今すぐKiss Me | JURIAN BEAT CRISIS | 180 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | うらもからだも落花微塵 | Nanako | 158 | Lv 4 | Lv 7 | Lv 9.7 |
+| SOS | たむらぱん | 160 | Lv 3 | Lv 7 | Lv 9 |
+| △ | O | 君をのせて feat.sayurina | 新井大樹 | 140 | Lv 1 | Lv 6 | Lv 8 |
+| CAT'S EYE | 杏里 | 145 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | キルト | Des-Sana+wpt9 | 178 | Lv 5 | Lv 7 | Lv 9.5 |
+| Cake House (Korean.Ver) | TENSI LOVE | 130 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | concon | S-C-U | 190 | Lv 6 | Lv 9.6 | Lv 10.5 |
+| Sunshine Girl | moumoon | 103 | Lv 1 | Lv 5 | Lv 8 |
+| O | O | Jailbreak | Kozo Nakamura | 250 | Lv 5 | Lv 6 | Lv 9.7 |
+| O | O | STELLAR WIND | L.E.D. | 160 | Lv 6 | Lv 9.8 | Lv 10.4 |
+| O | O | Theory of Eternity | TAG | 160 | Lv 4 | Lv 8 | Lv 9.3 |
+| タイムラグ | つしまみれ | 192-196 | Lv 3 | Lv 6 | Lv 7 |
+| Dough-Nuts Town's map | Plus-Tech Squeeze Box | 136 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | となりのトトロ feat.sayurina | 新井大樹 | 140 | Lv 2 | Lv 6 | Lv 8 |
+| O | トラヴェルマシン | ヒルクライム | 128 | Lv 4 | Lv 6 | Lv 8 |
+| O | ニンジャマンジャパンのテーマ | ニンジャマンジャパン | 170 | Lv 2 | Lv 6 | Lv 7 |
+| O | hammer ska | 10-FEET | 210 | Lv 3 | Lv 6 | Lv 9 |
+| ファンタジー | 世界の終わり | 180 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | FLOWER | DJ YOSHITAKA | 173 | Lv 6 | Lv 9.7 | Lv 10.5 |
+| MIND SHIFT | WORLD ORDER | 130 | Lv 3 | Lv 6 | Lv 7 |
+| △ | LISTEN TO THE STEREO!! | GOING UNDER GROUND | 182 | Lv 3 | Lv 6 | Lv 8 |
+| jubeat knit |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| Are U Ready? | mini | 130 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | I'm so Happy | Ryu☆ | 181 | Lv 4 | Lv 8 | Lv 10.2 |
+| アルクアラウンド | サカナクション | 132 | Lv 4 | Lv 6 | Lv 8 |
+| An imitation's superstar | VOLA & THE ORIENTAL MACHINE | 180 | Lv 3 | Lv 7 | Lv 8 |
+| Walkin',runnin',singin',fightin' | BREMEN | 136 | Lv 1 | Lv 5 | Lv 8 |
+| O | O | ALL MY HEART -この恋に、わたしの全てを賭ける- | SUPER HEROINE 彩香-AYAKA- | 160 | Lv 4 | Lv 7 | Lv 8 |
+| △ | only my railgun | fripSide | 143 | Lv 3 | Lv 6 | Lv 8 |
+| O | カーニバる？ | ナオト・インティライミ | 69-165 | Lv 3 | Lv 7 | Lv 8 |
+| 勝って泣こうゼッ! | T-Pistonz＋KMC | 136 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | KUNG-FU MAMA | seiya-murai feat.ALT | 150 | Lv 3 | Lv 7 | Lv 8 |
+| O | Kick It Out | ブンブンサテライツ | 143 | Lv 3 | Lv 7 | Lv 9.2 |
+| キラキラ☆ | Mizca | 134 | Lv 2 | Lv 6 | Lv 8 |
+| 銀河 | フジファブリック | 147 | Lv 3 | Lv 7 | Lv 9 |
+| O | O | Green Green Dance | Mutsuhiko Izumi | 165 | Lv 3 | Lv 7 | Lv 8 |
+| 元気でやってるのかい? | イルリメ | 165 | Lv 3 | Lv 8 | Lv 9.8 |
+| サマータイム | DigiCut | 123 | Lv 2 | Lv 6 | Lv 8 |
+| SAMURAI GROOVE | DUFF | 128 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | さよならトリップ | Dormir | 133 | Lv 3 | Lv 7 | Lv 8 |
+| Sandstorm | (Darude) | 136 | Lv 2 | Lv 6 | Lv 8 |
+| city talk | Half-Life | 141 | Lv 3 | Lv 6 | Lv 8 |
+| O | O | Shining Wizard | 96 | 158 | Lv 5 | Lv 8 | Lv 9.8 |
+| O | O | Shine On Me | kors k | 170 | Lv 4 | Lv 7 | Lv 8 |
+| SHINE×SHINE×SHINE×SHINE | エイプリルズ | 138 | Lv 3 | Lv 6 | Lv 8 |
+| △ | O | じょいふる | (いきものがかり) | 159 | Lv 1 | Lv 6 | Lv 8 |
+| O | O | Sweet Rain | Y&Co. feat. Karin | 155 | Lv 4 | Lv 7 | Lv 9.1 |
+| Supercalifragilisticexpialidocious | (ジュリー・アンドリュース) | 149-192 | Lv 4 | Lv 5 | Lv 9 |
+| O | Supernova | 9mm Parabellum Bullet | 193 | Lv 4 | Lv 7 | Lv 8 |
+| O | O | STREET DANCER | SILKY F | 138 | Lv 2 | Lv 6 | Lv 7 |
+| スマイル一番 イイ♀ | アンティック-珈琲店- | 153 | Lv 3 | Lv 6 | Lv 8 |
+| 大都会交響楽 | PIZZICATO FIVE | 171 | Lv 2 | Lv 6 | Lv 8 |
+| O | 大迷惑 | UNICORN | 188 | Lv 3 | Lv 6 | Lv 8 |
+| だから一歩前へ踏み出して | Hi-Fi CAMP | 130 | Lv 2 | Lv 5 | Lv 7 |
+| 日進月歩 | Jeepta | 185 | Lv 4 | Lv 7 | Lv 8 |
+| NEU! | √thumm | 133 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | 白鳥の湖 | Swan Lake Orchestra | 180-300 | Lv 4 | Lv 7 | Lv 9.7 |
+| paparuwa | Fantastic Plastic Machine | 131 | Lv 2 | Lv 7 | Lv 8 |
+| HALLUCINATION | UZUMAKI | 112 | Lv 3 | Lv 7 | Lv 8 |
+| B・M・W | SNAIL RAMP | 194 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | Far east nightbird | 猫叉Master | 180 | Lv 4 | Lv 7 | Lv 9.4 |
+| O | O | fellow | ピンクターボ | 179 | Lv 4 | Lv 5 | Lv 7 |
+| BRANDNEW DAYS | Purple Days | 132 | Lv 2 | Lv 6 | Lv 8 |
+| O | O | Prophet Vibe | Sota Fujimori feat.Calin | 154 | Lv 3 | Lv 7 | Lv 8 |
+| Promise | NEW STRIKE ZIPPER | 160 | Lv 3 | Lv 6 | Lv 7 |
+| HOT DOG | THE BAWDIES | 148 | Lv 2 | Lv 5 | Lv 7 |
+| Whatever | SOULHEAD | 120 | Lv 2 | Lv 6 | Lv 8 |
+| メンドクサイ愛情 | 大島麻衣 | 130 | Lv 2 | Lv 7 | Lv 8 |
+| △ | LOVE & JOY | 木村由姫 | 173 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | Love♥km | dj TAKA feat. REN | 184 | Lv 3 | Lv 7 | Lv 8 |
+| Love Space Ship | SHANADOO | 171 | Lv 2 | Lv 4 | Lv 7 |
+| lovely my girl | シュクレット | 177 | Lv 3 | Lv 7 | Lv 8 |
+| Runner | 爆風スランプ | 125 | Lv 2 | Lv 4 | Lv 7 |
+| O | O | Ready Go!! | 荒牧陽子 | 220 | Lv 4 | Lv 6 | Lv 8 |
+| Lost Boy | SEAMO | 100 | Lv 2 | Lv 7 | Lv 8 |
+| jubeat ripples APPEND |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| A Dance & A Beer | REDEMPTION 97 | 190 | Lv 3 | Lv 6 | Lv 8 |
+| a fact of life | FACT | 190 | Lv 3 | Lv 6 | Lv 7 |
+| 歩いて帰ろう | 斉藤和義 | 191 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | ALBIDA | DJ YOSHITAKA | 185 | Lv 5 | Lv 7 | Lv 10.1 |
+| アンビリーバボー feat.TAKUYA | mihimaru GT | 110 | Lv 1 | Lv 6 | Lv 8 |
+| Infinity | GIRL NEXT DOOR | 147 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | AIR RAID FROM THA UNDAGROUND | GUHROOVY | 180 | Lv 5 | Lv 9.7 | Lv 10.7 |
+| 紅空 | lecca | 143 | Lv 2 | Lv 5 | Lv 8 |
+| O | O | コイノチカラ | 石阪久美子 | 162 | Lv 3 | Lv 6 | Lv 8 |
+| Secret Word | GOLLBETTY | 182-194 | Lv 2 | Lv 7 | Lv 8 |
+| Share The World | 東方神起 | 120 | Lv 3 | Lv 6 | Lv 7 |
+| Jump Pump | miray | 140-152 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | 少年リップルズ | 常盤ゆう | 210 | Lv 4 | Lv 7 | Lv 9.5 |
+| O | O | スペースカーニバル | shooting star | 160 | Lv 4 | Lv 6 | Lv 8 |
+| そらとぶひかり | COLTEMÖNIKHA | 130 | Lv 2 | Lv 5 | Lv 8 |
+| MR.アンディ | UNISON SQUARE GARDEN | 121 | Lv 2 | Lv 7 | Lv 8 |
+| 夢 | 鴉 | 171 | Lv 3 | Lv 6 | Lv 7 |
+| 夢見る少女じゃいられない | 相川七瀬 | 158 | Lv 2 | Lv 5 | Lv 8 |
+| LOVE YOU | Q;indivi | 134 | Lv 1 | Lv 4 | Lv 6 |
+| O | O | Lead Me | SHOGO | 172 | Lv 3 | Lv 7 | Lv 8 |
+| 理由なき反抗 | おとぎ話 | 180-213 | Lv 4 | Lv 5 | Lv 8 |
+| jubeat ripples |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | O | eyes | 小野秀幸 | 300 | Lv 3 | Lv 7 | Lv 8 |
+| 愛 NEED | キマグレン | 120 | Lv 2 | Lv 5 | Lv 7 |
+| 愛をとりもどせ！！ | (クリスタルキング) | 141-158 | Lv 2 | Lv 5 | Lv 7 |
+| 明日ハレルヤ！ | 岡本真夜×大橋卓弥(fromスキマスイッチ) | 122 | Lv 2 | Lv 5 | Lv 6 |
+| 今 | ET-KING | 145 | Lv 3 | Lv 5 | Lv 8 |
+| O | O | INVISIBLE WORLD | SILKY F | 128 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | ウィリアム・テル序曲 | W.T. Orchestra | 120-190 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | ECO FIGHTER | 入尾信充 | 140 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | AREA 51 | 96 | 188 | Lv 6 | Lv 7 | Lv 9.5 |
+| △ | O | Garden of Love | (MAKAI feat.青山テルマ) | 128 | Lv 1 | Lv 6 | Lv 8 |
+| O | O | coming true | GUHROOVY Vs. L.E.D | 175 | Lv 5 | Lv 7 | Lv 9.7 |
+| Kiss & Ride | 中塚武 | 130 | Lv 3 | Lv 7 | Lv 9 |
+| 鬼帝の剣 | ALI PROJECT | 135 | Lv 4 | Lv 6 | Lv 8 |
+| O | キミ、メグル、ボク | (秦 基博) | 144 | Lv 1 | Lv 4 | Lv 6 |
+| GyaShan | Lollipop | 108 | Lv 2 | Lv 7 | Lv 8 |
+| O | O | Queen's Paradise | Nanako | 157 | Lv 4 | Lv 6 | Lv 7 |
+| O | O | Good-bye Chalon | 猫叉Master+ | 154 | Lv 4 | Lv 7 | Lv 8 |
+| Clover | Yum!Yum!ORANGE | 153 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | 恋のメリーゴーランド | 森野くま子 | 195 | Lv 5 | Lv 6 | Lv 7 |
+| Golden House | bma群星 | 130 | Lv 4 | Lv 6 | Lv 8 |
+| Control | kary ng | 120 | Lv 2 | Lv 5 | Lv 7 |
+| O | O | Shining Star | Sota Fujimori feat.Nagisa | 140 | Lv 4 | Lv 6 | Lv 7 |
+| O | O | 情熱大陸 | (葉加瀬太郎) | 128 | Lv 2 | Lv 7 | Lv 9.4 |
+| O | O | SWEET ANGEL | 古川もとあき | 150 | Lv 4 | Lv 5 | Lv 9.7 |
+| O | O | STARLIT DUST/スティルに捧ぐ | Des-ROW + ANT | 183 | Lv 4 | Lv 6 | Lv 8 |
+| △ | O | 素直になれたら | (JUJU) | 98 | Lv 1 | Lv 4 | Lv 6 |
+| O | O | 隅田川夏恋歌 | seiya-murai feat.ALT | 180 | Lv 4 | Lv 7 | Lv 9.8 |
+| △ | O | 空色デイズ | (中川翔子) | 174 | Lv 3 | Lv 6 | Lv 8 |
+| チャクラ | BENNIE K | 146-150 | Lv 3 | Lv 6 | Lv 8 |
+| ちょうどいいとこにいたい | たむらぱん | 179 | Lv 2 | Lv 6 | Lv 9 |
+| 友達に贈る歌 | Sonar Pocket | 178 | Lv 4 | Lv 6 | Lv 7 |
+| △ | O | 夏祭り | (ジッタリンジン) | 141-143 | Lv 2 | Lv 6 | Lv 8 |
+| にんげんっていいな | ガガガSP | 164-167 | Lv 3 | Lv 4 | Lv 6 |
+| バカサバイバー | ウルフルズ | 131 | Lv 2 | Lv 6 | Lv 8 |
+| Haru Haru | BIGBANG | 126 | Lv 2 | Lv 7 | Lv 8 |
+| O | パンキッシュ☆ | mihimaru GT | 150 | Lv 1 | Lv 6 | Lv 8 |
+| Fantasista | Dragon Ash | 190 | Lv 3 | Lv 5 | Lv 7 |
+| ふりぃ | 阿部真央 | 181 | Lv 3 | Lv 4 | Lv 7 |
+| フルカラープログラム | UNISON SQUARE GARDEN | 180-193 | Lv 3 | Lv 6 | Lv 7 |
+| △ | O | PROMiSE | (MiChi) | 140 | Lv 2 | Lv 5 | Lv 7 |
+| 星に願いを | flumpool | 137 | Lv 2 | Lv 4 | Lv 7 |
+| O | O | HOT LIMIT | (HIGH and MIGHTY COLOR) | 139 | Lv 5 | Lv 6 | Lv 8 |
+| △ | O | My Sunshine | (ROCK'A'TRENCH) | 145 | Lv 1 | Lv 4 | Lv 6 |
+| O | O | Macuilxochitl | TOMOSUKE | 148 | Lv 7 | Lv 8 | Lv 10.3 |
+| マスタッシュ | 木村カエラ | 152 | Lv 3 | Lv 6 | Lv 7 |
+| Musical Messenger | 九州男 | 130 | Lv 3 | Lv 6 | Lv 8 |
+| O | more more more | capsule | 135 | Lv 3 | Lv 6 | Lv 8 |
+| △ | O | Lovin' Life | (FUNKY MONKEY BABYS) | 96 | Lv 2 | Lv 5 | Lv 7 |
+| 労働 CALLING | 怒髪天 | 156 | Lv 3 | Lv 7 | Lv 8 |
+| O | O | Russian Snowy Dance | Mutsuhiko Izumi | 170-240 | Lv 5 | Lv 8 | Lv 10.0 |
+| ロボットハニー | Aira Mitsuki | 131 | Lv 1 | Lv 5 | Lv 8 |
+| ワープ | lego big morl | 173-183 | Lv 2 | Lv 5 | Lv 7 |
+| jubeat 初代 |
+| 通 | plus | hold | Music | Artist | BPM | BASIC | ADVANCED | EXTREME |
+| O | O | Icicles | Jimmy Weckl | 158 | Lv 4 | Lv 6 | Lv 8 |
+| O | O | あいのうた | 肥塚良彦 | 130 | Lv 3 | Lv 4 | Lv 8 |
+| △ | O | I my me mine | (POLYSICS) | 167 | Lv 3 | Lv 6 | Lv 8 |
+| I'M IN THE MOOD FOR DANCING | (Nolans) | 105 | Lv 2 | Lv 4 | Lv 6 |
+| O | O | I love マミー | 荒牧陽子 | 160 | Lv 4 | Lv 5 | Lv 8 |
+| △ | O | A Perfect Sky | (BONNIE PINK) | 90 | Lv 3 | Lv 5 | Lv 7 |
+| O | O | IN THE NAME OF LOVE | Y&Co. feat. Erica | 155 | Lv 5 | Lv 6 | Lv 8 |
+| O | O | In Scottish Highlands | Thomas Howard Lichtenstein | 145 | Lv 3 | Lv 6 | Lv 9.8 |
+| △ | O | YELL ～エール～ | (コブクロ) | 109 | Lv 2 | Lv 5 | Lv 6 |
+| O | O | Evans | DJ YOSHITAKA | 185 | Lv 6 | Lv 8 | Lv 10.6 |
+| △ | O | endscape | (UVERworld) | 177 | Lv 2 | Lv 5 | Lv 6 |
+| 風になりたい | THE BOOM | 69-109 | Lv 2 | Lv 3 | Lv 5 |
+| O | O | GIGA BREAK | 96 | 135 | Lv 6 | Lv 7 | Lv 9.7 |
+| Kiss Kiss | Chris Brown featuring T-Pain | 140 | Lv 2 | Lv 3 | Lv 6 |
+| △ | O | キスしてほしい | (中ノ森BAND) | 194 | Lv 3 | Lv 5 | Lv 7 |
+| O | 気分上々↑↑ | mihimaru GT | 125 | Lv 3 | Lv 4 | Lv 5 |
+| キューティーハニー | (倖田來未) | 155 | Lv 3 | Lv 5 | Lv 6 |
+| Good bye little girl | Mi | 110 | Lv 1 | Lv 3 | Lv 4 |
+| O | O | Crosswind | Mutsuhiko Izumi | 107 | Lv 3 | Lv 7 | Lv 9.8 |
+| △ | O | 粉雪 | (レミオロメン) | 82 | Lv 3 | Lv 4 | Lv 6 |
+| △ | O | こんなに近くで… | (Crystal Kay) | 102 | Lv 2 | Lv 3 | Lv 5 |
+| 魁！ミッドナイト | RIKI | 140 | Lv 3 | Lv 5 | Lv 6 |
+| O | O | SigSig | kors k | 179 | Lv 5 | Lv 7 | Lv 9.1 |
+| シャナナ☆ | MINMI | 156 | Lv 2 | Lv 5 | Lv 6 |
+| O | O | Jumping Boogie | Kozo Nakamura | 198 | Lv 5 | Lv 7 | Lv 8 |
+| Scatman (Ski-Ba-Bop-Ba-Dop-Bop) | Scatman John | 136 | Lv 4 | Lv 5 | Lv 7 |
+| O | O | Snow Goose | Mutsuhiko Izumi | 200 | Lv 5 | Lv 7 | Lv 8 |
+| △ | O | SPEED KING | (Rip Slyme) | 204 | Lv 3 | Lv 6 | Lv 7 |
+| O | O | Special One | kors k feat. Suzuyo Miyamoto | 128 | Lv 4 | Lv 5 | Lv 6 |
+| O | O | Slang | Kozo Nakamura | 160 | Lv 4 | Lv 7 | Lv 9.8 |
+| O | 全力少年 | (スキマスイッチ) | 133 | Lv 2 | Lv 5 | Lv 6 |
+| △ | O | 抱いてセニョリータ | (山下智久) | 144 | Lv 2 | Lv 4 | Lv 6 |
+| △ | O | 太陽の地図 | (MISIA) | 128 | Lv 3 | Lv 4 | Lv 5 |
+| ちっぽけな勇気 | FUNKY MONKEY BABYS | 111 | Lv 1 | Lv 5 | Lv 7 |
+| O | O | Chance and Dice | 日本少年 | 150 | Lv 5 | Lv 6 | Lv 7 |
+| O | O | 天国と地獄 | Mutsuhiko Izumi | 195 | Lv 3 | Lv 8 | Lv 9.4 |
+| 天体観測 | (BUMP OF CHICKEN) | 165 | Lv 2 | Lv 4 | Lv 5 |
+| O | O | TRUE♥LOVE | jun feat.Schanita | 188 | Lv 3 | Lv 7 | Lv 9.7 |
+| O | O | Happy Happy | ki☆ki | 130 | Lv 2 | Lv 5 | Lv 8 |
+| △ | O | PEACH | (大塚愛) | 146 | Lv 2 | Lv 4 | Lv 6 |
+| △ | O | 光のロック | (サンボマスター) | 185 | Lv 2 | Lv 4 | Lv 8 |
+| △ | O | 一色 | (NANA starring MIKA NAKASHIMA) | 108 | Lv 2 | Lv 4 | Lv 7 |
+| △ | O | BELIEVE IN LOVE | (Ai + BAND) | 178 | Lv 3 | Lv 4 | Lv 6 |
+| △ | O | ふがいないや | (YUKI) | 159 | Lv 2 | Lv 5 | Lv 7 |
+| BLOOD on FIRE | AAA | 155 | Lv 3 | Lv 4 | Lv 6 |
+| FREE FREE | 鈴木亜美 joins 中田ヤスタカ(capsule) | 131 | Lv 3 | Lv 4 | Lv 6 |
+| BLUE BIRD | (浜崎あゆみ) | 122 | Lv 2 | Lv 4 | Lv 6 |
+| PLAY THE GAME | ロードオブメジャー | 160 | Lv 1 | Lv 5 | Lv 7 |
+| O | O | bass 2 bass | Ryu☆ | 140 | Lv 5 | Lv 6 | Lv 8 |
+| 冒険者たち | Do As Infinity | 176 | Lv 2 | Lv 4 | Lv 6 |
+| △ | O | POP STAR | (平井堅) | 139 | Lv 1 | Lv 4 | Lv 7 |
+| O | O | Polaris | Mutsuhiko Izumi | 180 | Lv 2 | Lv 5 | Lv 8 |
+| My Love | 川嶋あい | 140 | Lv 2 | Lv 4 | Lv 6 |
+| △ | O | 負けないで | (ZARD) | 125 | Lv 3 | Lv 4 | Lv 5 |
+| Love so sweet | (嵐) | 139 | Lv 2 | Lv 4 | Lv 6 |
+| △ | O | Real voice | (絢香) | 131 | Lv 3 | Lv 4 | Lv 5 |
+| O | O | 凛として咲く花の如く | 紅色リトマス | 163 | Lv 4 | Lv 6 | Lv 9.1 |
+| rose | ANNA inspi' NANA(BLACK STONES) | 172 | Lv 1 | Lv 4 | Lv 7 |
+| Y.M.C.A. | VILLAGE PEOPLE | 123-126 | Lv 2 | Lv 5 | Lv 7 |
+
+最終更新：2026年05月26日 23:42

@@ -24,7 +24,10 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from core.malody_writer import convert_song, mcz_safe_filename
 from core.song_catalog import find_extracted_song_dir, scan_game_catalog
-from core.song_debut import resolve_debut_folder, resolve_debut_folder_for_id
+from core.song_debut import (
+    resolve_debut_folder_for_id,
+    resolve_debut_folder_from_mcz_stem,
+)
 from core.song_pack import detect_song_source
 from core.unpacker import extract_song, load_music_info, load_word_dictionary, find_metadata_xml
 
@@ -92,7 +95,7 @@ def _reclassify_existing_mcz(report: dict) -> None:
     ]
     for mcz in sorted(mcz_files):
         title = mcz.stem
-        folder = resolve_debut_folder(title)
+        folder = resolve_debut_folder_from_mcz_stem(title)
         if not folder:
             continue
         dest_dir = BRANCH_ROOT / folder
