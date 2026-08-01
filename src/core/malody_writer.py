@@ -30,58 +30,63 @@ from .audio_gain import pack_audio_for_mcz
 from .song_pack import detect_song_source, load_chart_song, needs_export_gain, resolve_mapper
 from .unpacker import _finalize_song_info, resolve_display_title, resolve_artist
 
-# Malody Jubeat 谱面使用 1/4 拍精度 (与 extra.divide=4 一致)
-MALODY_BEAT_DIVIDE = 4
-MALODY_BEAT_SNAP = 4
+# Malody Jubeat 谱面：
+# - extra.divide=4 仅控制 Malody 编辑器的网格吸附精度，与 beat 分母无关
+# - Malody .mc 支持任意分母的最简分数 beat（jubeatools 测试数据中即有 [m,0,288]）
+# - MALODY_BEAT_SNAP 是 jubeatools 加载 EVE 时的 tick 量化精度
+#   48 = lcm(2,3,4,6,8,12,16,24)，可无损表示 jubeat 常见的所有分割
+#   （jubeat EVE 原生 240 tick/拍 = 48×5，48 是其因子，可整除）
+#   jubeatools 会自动把 beat 化简为最简分数（如 2/24 → 1/12）
+MALODY_BEAT_DIVIDE = 4  # 仅用于 extra.divide 字段，不再用于量化 beat
+MALODY_BEAT_SNAP = 48
 
 
 def _beat_to_float(beat) -> float:
     return beat[0] + beat[1] / beat[2]
 
 
-def _float_to_beat(value: float, divide: int = MALODY_BEAT_DIVIDE) -> List[int]:
-    """将拍数转换为 Malody 分数拍格式 [小节, 分子, 分母]"""
-    if value < 0:
-        value = 0.0
-    measure = int(value)
-    frac = value - measure
-    num = round(frac * divide)
-    if num >= divide:
-        measure += 1
-        num = 0
-    return [measure, num, divide]
-
-
 def _normalize_malody_chart(json_chart: dict) -> None:
-    """将 beat 统一量化到 1/4 拍，并精简 BPM 段（Malody 无法处理 1/240 精度）"""
-    divide = MALODY_BEAT_DIVIDE
+    """精简 BPM 段、剔除非法长按、按 beat 排序。
 
+    不再量化 beat：jubeatools 的 beats_to_fraction_tuple 已经把每个 beat 输出为
+    最简分数 [小节, 分子, 分母]，Malody .mc 原生支持任意分母的最简分数 beat
+    （jubeatools 自带测试数据中即有 [m,0,288]）。早期"量化到 1/4 拍"的兜底
+    会让 24 分音符 / 三连音等非 1/4 整数倍位置发生合并丢失（见 issue #1）。
+    """
+    # BPM 段：按 beat 排序、合并同位置、去浮点噪声（不丢真实变速点）
+    # threshold=0.01 只去 TEMPO 整数化引入的浮点噪声（如 120.00024），
+    # 不再用 1.0（会把 120→120.5 的真实半 BPM 变速丢掉）。
+    # 不再截断到 16 段——截断会丢曲末变速，导致谱面后段节拍错位
+    # （如ドーパミン 27 个变速点截到 16 个后，beat 236 之后的 200 个音符全错位）。
     normalized_time: List[dict] = []
     last_bpm = None
     for entry in sorted(json_chart.get("time", []), key=lambda e: _beat_to_float(e["beat"])):
-        beat = _float_to_beat(_beat_to_float(entry["beat"]), divide)
+        beat = entry["beat"]  # 保留原始最简分数，不重写
         bpm = float(entry["bpm"])
-        if last_bpm is not None and abs(bpm - last_bpm) < 1.0:
+        if last_bpm is not None and abs(bpm - last_bpm) < 0.01:
             continue
-        if normalized_time and beat == normalized_time[-1]["beat"]:
+        if normalized_time and _beat_to_float(beat) == _beat_to_float(normalized_time[-1]["beat"]):
             normalized_time[-1]["bpm"] = bpm
         else:
             normalized_time.append({"beat": beat, "bpm": bpm})
         last_bpm = bpm
 
     if not normalized_time:
-        normalized_time = [{"beat": [0, 0, divide], "bpm": 120.0}]
-    json_chart["time"] = normalized_time[:16]
+        normalized_time = [{"beat": [0, 0, 1], "bpm": 120.0}]
+    json_chart["time"] = normalized_time
 
+    # 音符：保留原始 beat；endbeat <= beat 的退化长按降级为 tap（不丢弃），然后排序
+    # jubeat 极短长按（duration_tick=1，1/240 拍）经 beat_snap=48 量化后 endbeat==beat，
+    # 直接删除会丢音符（如灼熱 Beach Side Bunny 655 个 dur=0 长按被删导致谱面少 654 音符）。
+    # 这些 1-tick 长按在 jubeat 原版里等同于瞬间点击，降级为 tap 是正确语义。
     normalized_notes: List[dict] = []
     for note in json_chart.get("note", []):
         n = dict(note)
-        if "beat" in n:
-            n["beat"] = _float_to_beat(_beat_to_float(n["beat"]), divide)
         if "endbeat" in n:
-            n["endbeat"] = _float_to_beat(_beat_to_float(n["endbeat"]), divide)
-            if _beat_to_float(n["endbeat"]) <= _beat_to_float(n["beat"]):
-                continue
+            if _beat_to_float(n["endbeat"]) <= _beat_to_float(n.get("beat", [0, 0, 1])):
+                # 退化长按：移除 endbeat/endindex，降级为 tap 保留音符
+                n.pop("endbeat", None)
+                n.pop("endindex", None)
         normalized_notes.append(n)
 
     normalized_notes.sort(
@@ -95,11 +100,17 @@ def _normalize_malody_chart(json_chart: dict) -> None:
 
 
 def _simplify_timing_for_malody(
-    timing: song.Timing, threshold: float = 1.0, max_events: int = 16
+    timing: song.Timing, threshold: float = 0.01, max_events: int = 100
 ) -> song.Timing:
-    """精简 BPM 变化列表，避免 Malody 因过多变速段卡死
+    """精简 BPM 变化列表，去除浮点噪声和同位置重复。
 
-    Jubeat 谱面常有数百个渐变 TEMPO 事件，Malody 只需关键 BPM 节点。
+    jubeat EVE 的 TEMPO 单位是整数微秒/拍，BPM = 6e7/TEMPO 常带小数
+    （如 6e7/499999 = 120.00024）。threshold=0.01 只去这类浮点噪声，
+    不丢真实变速点。
+
+    max_events=100：Malody 实测能承载上百个 BPM 事件；jubeat 单曲最多约 70 个
+    TEMPO 事件。早期 max_events=16 + 递归放大 threshold 到 8 会把差值 <8 的真实
+    变速点（如 180→186）和曲末变速全部丢弃，导致谱面后段节拍与音频脱节。
     """
     if not timing.events:
         return timing
@@ -117,11 +128,6 @@ def _simplify_timing_for_malody(
         if abs(float(ev.BPM) - float(prev.BPM)) < threshold:
             continue
         simplified.append(ev)
-
-    if len(simplified) > max_events and threshold < 8:
-        return _simplify_timing_for_malody(
-            timing, threshold=threshold * 2, max_events=max_events
-        )
 
     return song.Timing(
         events=simplified,
@@ -217,7 +223,7 @@ def _generate_mc_bytes(
             }
         }
 
-    # 5. 将节拍统一量化到 1/4 拍，避免 Malody 解析 1/240 精度时卡死
+    # 5. 精简 BPM 段、剔除非法长按、按 beat 排序（保留 jubeatools 输出的最简分数 beat）
     _normalize_malody_chart(json_chart)
 
     # 6. 修正 Sound 事件中的音频文件名
