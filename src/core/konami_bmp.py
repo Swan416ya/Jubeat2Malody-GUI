@@ -81,11 +81,13 @@ def decode_oki4s(
             for ch in range(2):
                 shift = 4 if ch == 0 else 0
                 sample, steps[ch] = _expand_nibble(byte_val, shift, hists[ch], steps[ch])
+                hists[ch] = sample
                 struct.pack_into("<h", out, (i * channels + ch) * 2, sample)
         else:
             byte_val = adpcm[i // 2] if (i // 2) < len(adpcm) else 0
             shift = 0 if (i & 1) else 4
             sample, steps[0] = _expand_nibble(byte_val, shift, hists[0], steps[0])
+            hists[0] = sample
             struct.pack_into("<h", out, i * 2, sample)
 
         if on_progress and i % report_every == 0:
